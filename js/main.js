@@ -13,7 +13,7 @@ function main() {
   //$(canvas).click(click);
   //$(canvas).mousemove(mousemove);
 
-  var board = new Board(4, 4);
+  var board = new Board(10,10);
   var boardDrawer = new BoardDrawer(ctx);
 
   var loop;

@@ -34,8 +34,8 @@ function BoardDrawer(ctx) {
         var xOff = TILE_SIZE * 1.5;
         var yOff = TILE_SIZE * 1.72;
 
-        var x = xOff / 2 + xOff * col;
-        var y = yOff / 2 + yOff * row;
+        var x = xOff * col;
+        var y = yOff * row;
 
         if (col % 2 === 1) {
           y += TILE_SIZE * .86;
