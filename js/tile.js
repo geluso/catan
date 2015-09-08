@@ -1,6 +1,11 @@
 var TILE_SIZE = 100;
 var SIDES = 6;
 
+function Tile(resource, token) {
+  this.resource = resource;
+  this.token = token;
+}
+
 function TileGenerator() {
   var resources = new ResourceGenerator();
   var tokens = new TokenGenerator(2, 12);
@@ -12,11 +17,6 @@ function TileGenerator() {
     var tile = new Tile(resource, token);
     return tile;
   }
-}
-
-function Tile(resource, token) {
-  this.resource = resource;
-  this.token = token;
 }
 
 function TileDrawer(ctx) {
