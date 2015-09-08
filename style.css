@@ -2,11 +2,3 @@ body {
   margin: 0;
   padding: 0;
 }
-
-.board {
-  text-align: center;
-}
-
-#canvas {
-  border: solid black 1px;
-}
