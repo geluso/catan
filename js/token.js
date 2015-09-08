@@ -9,9 +9,15 @@ function TokenGenerator(min, max) {
   this.max = max;
 
   this.randomToken = function() {
-    var range = this.max - this.min;
+    var range = this.max - this.min - 1;
 
     var value = this.min + Math.round(range * Math.random());
+
+    // bump sevens up
+    if (value > 6) {
+      value++
+    }
+
     var token = new Token(value);
     return token;
   };
@@ -32,7 +38,7 @@ function TokenDrawer(ctx) {
     ctx.fill(path);
     ctx.stroke(path);
 
-    if (token.value === 6 || token.value === 7) {
+    if (token.value === 6 || token.value === 8) {
       ctx.fillStyle = "red";
     } else {
       ctx.fillStyle = "black";
@@ -62,7 +68,7 @@ function TokenDrawer(ctx) {
       offset = 4;
     } else if (value === 6 || value === 8) {
       dots = 5;
-      offset = 5;
+      offset = 6;
     }
 
     for (var i = 0; i < dots; i++)  {
