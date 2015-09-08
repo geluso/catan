@@ -29,14 +29,20 @@ function BoardDrawer(ctx) {
   this.draw = function(board) {
     this.ctx.save();
 
-    var offset = 210;
     for (var row = 0; row < board.rows; row++) {
       for (var col = 0; col < board.columns; col++) {
-        var x = offset / 2 + offset * col;
-        var y = offset / 2 + offset * row;
+        var xOff = 150;
+        var yOff = 172;
 
-        x = Math.round(x);
-        y = Math.round(y);
+        var x = xOff / 2 + xOff * col;
+        var y = yOff / 2 + yOff * row;
+
+        if (col % 2 === 1) {
+          y += 86;
+        }
+
+        x = Math.floor(x);
+        y = Math.floor(y);
 
         ctx.translate(x, y);
 

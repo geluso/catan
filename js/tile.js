@@ -34,7 +34,6 @@ function TileDrawer(ctx) {
     for (var i = 0; i < SIDES; i++) {
       this.ctx.rotate(2 * Math.PI / SIDES);
       this.ctx.lineTo(TILE_SIZE, 0);
-      this.ctx.strokeText(i, TILE_SIZE, 0);
     }
 
     this.ctx.fillStyle = tile.resource.color;
