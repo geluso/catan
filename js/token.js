@@ -1,4 +1,4 @@
-var TOKEN_SIZE = 20;
+var TOKEN_SIZE = 16;
 
 function Token(value) {
   this.value = value;
@@ -33,9 +33,14 @@ function TokenDrawer(ctx) {
     ctx.stroke(path);
 
     if (token.value === 6 || token.value === 7) {
-      ctx.strokeStyle = "red";
+      ctx.fillStyle = "red";
+    } else {
+      ctx.fillStyle = "black";
     }
 
-    this.ctx.strokeText(token.value, 0, 0);
+    this.ctx.textAlign = "center";
+    this.ctx.textBaseline = "middle";
+    this.ctx.font = "15px sans-serif";
+    this.ctx.fillText(token.value, 0, 0);
   }
 }

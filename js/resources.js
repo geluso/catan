@@ -32,7 +32,12 @@ var RESOURCES = [BRICK, WHEAT, WOOD, SHEEP, ORE];
 
 function ResourceGenerator() {
   this.randomResource = function() {
-    var resource = RESOURCES[Math.round((RESOURCES.length - 1)* Math.random())];
-    return resource;
+    if (Math.random() < 1 / 20) {
+      return DESERT;
+    } else {
+      var choice = Math.round((RESOURCES.length - 1)* Math.random());
+      var resource = RESOURCES[choice];
+      return resource;
+    }
   }
 }

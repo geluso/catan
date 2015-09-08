@@ -40,7 +40,9 @@ function TileDrawer(ctx) {
     this.ctx.fill();
     this.ctx.stroke();
 
-    this.tokenDrawer.draw(tile.token);
+    if (tile.resource !== DESERT) {
+      this.tokenDrawer.draw(tile.token);
+    }
 
     this.ctx.restore();
   }
