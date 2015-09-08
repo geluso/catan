@@ -1,4 +1,4 @@
-function Board(cols, rows) {
+function Board(rows, cols) {
 
   this.tiles = [];
   this.tileLookup = {};

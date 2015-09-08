@@ -1,19 +1,16 @@
 $(document).ready(main);
 
-var WIDTH = 600;
-var HEIGHT = WIDTH;
-
 function main() {
   var canvas = document.getElementById("canvas");
-  canvas.width = WIDTH;
-  canvas.height = HEIGHT;
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
 
   var ctx = canvas.getContext("2d");
 
-  //$(canvas).click(click);
-  //$(canvas).mousemove(mousemove);
+  var rows = canvas.height / TILE_SIZE * 1.5;
+  var cols = canvas.width / TILE_SIZE * 1.72;
 
-  var board = new Board(10,10);
+  var board = new Board(rows, cols);
   var boardDrawer = new BoardDrawer(ctx);
 
   var loop;
