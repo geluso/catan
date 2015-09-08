@@ -1,4 +1,4 @@
-var TILE_SIZE = 100;
+var TILE_SIZE = 50;
 var SIDES = 6;
 
 function Tile(resource, token) {

@@ -31,14 +31,14 @@ function BoardDrawer(ctx) {
 
     for (var row = 0; row < board.rows; row++) {
       for (var col = 0; col < board.columns; col++) {
-        var xOff = 150;
-        var yOff = 172;
+        var xOff = TILE_SIZE * 1.5;
+        var yOff = TILE_SIZE * 1.72;
 
         var x = xOff / 2 + xOff * col;
         var y = yOff / 2 + yOff * row;
 
         if (col % 2 === 1) {
-          y += 86;
+          y += TILE_SIZE * .86;
         }
 
         x = Math.floor(x);
