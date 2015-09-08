@@ -19,6 +19,16 @@ function Board(rows, cols) {
       this.tileLookup[row][col] = tile;
     }
   }
+
+  this.getTile = function(x, y) {
+    for (var i = 0; i < this.tiles.length; i++) {
+      var xx = (x - this.tiles[i].x);
+      var yy = (y - this.tiles[i].y);
+      if (Math.sqrt(xx * xx, yy * yy) < TILE_SIZE) {
+        return this.tiles[i];
+      }
+    }
+  }
 }
 
 function BoardDrawer(ctx) {
@@ -48,6 +58,10 @@ function BoardDrawer(ctx) {
 
         var tile = board.tileLookup[row][col];
         tileDrawer.draw(tile);
+
+        // record the screen coordinates of the tiles center.
+        tile.x = x;
+        tile.y = y;
 
         ctx.translate(-x, -y);
       }

@@ -4,6 +4,7 @@ var SIDES = 6;
 function Tile(resource, token) {
   this.resource = resource;
   this.token = token;
+  this.hover = false;
 }
 
 function TileGenerator() {
@@ -25,7 +26,13 @@ function TileDrawer(ctx) {
 
   this.draw = function(tile) {
     this.ctx.save();
-    this.ctx.stokeStyle = "black";
+
+    if (tile.hover) {
+      this.ctx.lineWidth = "4";
+      this.ctx.strokeStyle = "blue";
+    } else {
+      this.ctx.strokeStyle = "black";
+    }
 
     this.ctx.beginPath();
     this.ctx.translate(tile.x, tile.y);
