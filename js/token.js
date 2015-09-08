@@ -42,5 +42,39 @@ function TokenDrawer(ctx) {
     this.ctx.textBaseline = "middle";
     this.ctx.font = "15px sans-serif";
     this.ctx.fillText(token.value, 0, 0);
+
+    this.drawDots(token.value);
+  }
+
+  this.drawDots = function(value) {
+    var dots, offset;
+    if (value === 2 || value === 12) {
+      dots = 1;
+      offset = 0;
+    } else if (value === 3 || value === 11) {
+      dots = 2;
+      offset = 1;
+    } else if (value === 4 || value === 10) {
+      dots = 3;
+      offset = 3;
+    } else if (value === 5 || value === 9) {
+      dots = 4;
+      offset = 4;
+    } else if (value === 6 || value === 8) {
+      dots = 5;
+      offset = 5;
+    }
+
+    for (var i = 0; i < dots; i++)  {
+      var radius = 1; // Arc radius
+      var startAngle = 0; // Starting point on circle
+      var endAngle = 2 * Math.PI; // End point on circle
+
+      var path = new Path2D();
+      path.arc(i * 3 - offset, 9, radius, startAngle, endAngle);
+
+      ctx.fillStyle = "Black";
+      ctx.fill(path);
+    }
   }
 }
