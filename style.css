@@ -1,0 +1,7 @@
+.board {
+  text-align: center;
+}
+
+#canvas {
+  border: solid black 1px;
+}
