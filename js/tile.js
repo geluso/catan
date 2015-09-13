@@ -47,6 +47,21 @@ function TileDrawer(ctx) {
     this.ctx.fill();
     this.ctx.stroke();
 
+    // draw roads
+    for (var i = 0; i < SIDES; i++) {
+      this.ctx.rotate(2 * Math.PI / SIDES);
+      this.ctx.fillStyle = "blue";
+
+      var width = .7 * TILE_SIZE;
+      var height = .1 * TILE_SIZE;
+
+      var x = -width / 2;
+      var y = -TILE_SIZE + height;
+
+      this.ctx.fillRect(x, y, width, height);
+      this.ctx.strokeRect(x, y, width, height);
+    }
+
     if (tile.resource !== DESERT) {
       this.tokenDrawer.draw(tile.token);
     }
