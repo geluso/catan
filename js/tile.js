@@ -62,6 +62,23 @@ function TileDrawer(ctx) {
       this.ctx.strokeRect(x, y, width, height);
     }
 
+    // draw settlement
+    var rotation = 2 * Math.PI / SIDES;
+    this.ctx.rotate(rotation / 2);
+    for (var i = 0; i < SIDES; i++) {
+      this.ctx.rotate(rotation);
+      this.ctx.fillStyle = "blue";
+
+      var width = .2 * TILE_SIZE;
+      var height = .2 * TILE_SIZE;
+
+      var x = -width / 2;
+      var y = -TILE_SIZE - height / 2;
+
+      this.ctx.fillRect(x, y, width, height);
+      this.ctx.strokeRect(x, y, width, height);
+    }
+
     if (tile.resource !== DESERT) {
       this.tokenDrawer.draw(tile.token);
     }
