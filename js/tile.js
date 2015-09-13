@@ -5,6 +5,10 @@ function Tile(resource, token) {
   this.resource = resource;
   this.token = token;
   this.hover = false;
+
+  this.roads = [];
+  this.settlements = [];
+  this.cities = [];
 }
 
 function TileGenerator() {
@@ -50,33 +54,58 @@ function TileDrawer(ctx) {
     // draw roads
     for (var i = 0; i < SIDES; i++) {
       this.ctx.rotate(2 * Math.PI / SIDES);
-      this.ctx.fillStyle = "blue";
 
-      var width = .7 * TILE_SIZE;
-      var height = .1 * TILE_SIZE;
+      if (tile.roads[i]) {
+        var width = .6 * TILE_SIZE;
+        var height = .1 * TILE_SIZE;
 
-      var x = -width / 2;
-      var y = -TILE_SIZE + height;
+        var x = -width / 2;
+        var y = -TILE_SIZE + height;
 
-      this.ctx.fillRect(x, y, width, height);
-      this.ctx.strokeRect(x, y, width, height);
+        this.ctx.fillStyle = tile.roads[i].player;
+        this.ctx.fillRect(x, y, width, height);
+        this.ctx.strokeRect(x, y, width, height);
+      }
     }
+
+    this.ctx.save();
+    // draw settlement
+    var rotation = 2 * Math.PI / SIDES;
+    this.ctx.rotate(rotation / 2);
+    for (var i = 0; i < SIDES; i++) {
+      this.ctx.rotate(rotation);
+
+      if (tile.settlements[i]) {
+        var width = .2 * TILE_SIZE;
+        var height = .2 * TILE_SIZE;
+
+        var x = -width / 2;
+        var y = -TILE_SIZE - height / 2;
+
+        this.ctx.fillStyle = tile.settlements[i].player;
+        this.ctx.fillRect(x, y, width, height);
+        this.ctx.strokeRect(x, y, width, height);
+      }
+    }
+    this.ctx.restore();
 
     // draw settlement
     var rotation = 2 * Math.PI / SIDES;
     this.ctx.rotate(rotation / 2);
     for (var i = 0; i < SIDES; i++) {
       this.ctx.rotate(rotation);
-      this.ctx.fillStyle = "blue";
 
-      var width = .2 * TILE_SIZE;
-      var height = .2 * TILE_SIZE;
+      if (tile.cities[i]) {
+        var width = 2 * .2 * TILE_SIZE;
+        var height = .2 * TILE_SIZE;
 
-      var x = -width / 2;
-      var y = -TILE_SIZE - height / 2;
+        var x = -width / 2;
+        var y = -TILE_SIZE - height / 2;
 
-      this.ctx.fillRect(x, y, width, height);
-      this.ctx.strokeRect(x, y, width, height);
+        this.ctx.fillStyle = tile.settlements[i].player;
+        this.ctx.fillRect(x, y, width, height);
+        this.ctx.strokeRect(x, y, width, height);
+      }
     }
 
     if (tile.resource !== DESERT) {
