@@ -21,13 +21,19 @@ function Board(rows, cols) {
   }
 
   this.getTile = function(x, y) {
+    console.log("getting tile:", x, y);
+    var tile;
+
     for (var i = 0; i < this.tiles.length; i++) {
-      var xx = (x - this.tiles[i].x);
-      var yy = (y - this.tiles[i].y);
-      if (Math.sqrt(xx * xx, yy * yy) < TILE_SIZE) {
-        return this.tiles[i];
+      var xx = Math.abs(this.tiles[i].x - x);
+      var yy = Math.abs(this.tiles[i].y - y);
+      if (xx < TILE_SIZE && yy < TILE_SIZE) {
+        tile = this.tiles[i];
       }
     }
+
+    console.log("got tile:", tile.x, tile.y);
+    return tile;
   }
 }
 
@@ -54,16 +60,13 @@ function BoardDrawer(ctx) {
         x = Math.floor(x);
         y = Math.floor(y);
 
-        ctx.translate(x, y);
-
         var tile = board.tileLookup[row][col];
-        tileDrawer.draw(tile);
 
         // record the screen coordinates of the tiles center.
         tile.x = x;
         tile.y = y;
 
-        ctx.translate(-x, -y);
+        tileDrawer.draw(tile);
       }
     }
 

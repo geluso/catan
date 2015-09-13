@@ -1,5 +1,10 @@
 $(document).ready(main);
 
+var DEBUG = false;
+function debug() {
+  DEBUG = !DEBUG;
+}
+
 var MOUSE_X = 0;
 var MOUSE_Y = 0;
 
@@ -17,8 +22,9 @@ function main() {
     MOUSE_X = e.offsetX;
     MOUSE_Y = e.offsetY;
 
+    return;
     var tile = board.getTile(MOUSE_X, MOUSE_Y);
-    tile.hover = true;
+    tile.hover = !tile.hover;
   });
 
   $(document).click(function(e) {
@@ -26,6 +32,7 @@ function main() {
     MOUSE_Y = e.offsetY;
 
     var tile = board.getTile(MOUSE_X, MOUSE_Y);
+    tile.hover = !tile.hover;
   });
 
   var board = new Board(rows, cols);
@@ -33,6 +40,10 @@ function main() {
 
   var loop;
   loop = function() {
+    if (DEBUG) {
+      debugger
+    }
+
     boardDrawer.draw(board);
     window.requestAnimationFrame(loop);
   }
