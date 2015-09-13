@@ -1,6 +1,8 @@
 var TILE_SIZE = 50;
 var SIDES = 6;
 
+var PLAYERS = ["red", "orange", "green", "blue", "white", "orange"];
+
 function Tile(resource, token) {
   this.resource = resource;
   this.token = token;
@@ -9,6 +11,15 @@ function Tile(resource, token) {
   this.roads = [];
   this.settlements = [];
   this.cities = [];
+
+  for (var i = 0; i < SIDES; i++) {
+    this.roads[i] = {player: _.sample(PLAYERS)};
+    if (Math.random() < .5) {
+      this.settlements[i] = {player: _.sample(PLAYERS)};
+    } else {
+      this.cities[i] = {player: _.sample(PLAYERS)};
+    }
+  }
 }
 
 function TileGenerator() {
@@ -102,7 +113,7 @@ function TileDrawer(ctx) {
         var x = -width / 2;
         var y = -TILE_SIZE - height / 2;
 
-        this.ctx.fillStyle = tile.settlements[i].player;
+        this.ctx.fillStyle = tile.cities[i].player;
         this.ctx.fillRect(x, y, width, height);
         this.ctx.strokeRect(x, y, width, height);
       }
