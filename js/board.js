@@ -3,6 +3,9 @@ function Board(rows, cols) {
   this.tiles = [];
   this.tileLookup = {};
 
+  this.corners = [];
+  this.edges = [];
+
   this.columns = cols;
   this.rows = rows;
 

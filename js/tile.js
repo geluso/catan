@@ -1,6 +1,11 @@
 var TILE_SIZE = 50;
 var SIDES = 6;
 
+var EDGE_LENGTH = TILE_SIZE;
+var HALF_EDGE = EDGE_LENGTH / 2;
+
+var TILE_HEIGHT = Math.sqrt(3) / 2 * HALF_EDGE;
+
 var PLAYERS = ["red", "orange", "green", "blue", "white", "orange"];
 
 function Tile(resource, token) {
@@ -8,17 +13,63 @@ function Tile(resource, token) {
   this.token = token;
   this.hover = false;
 
+  this.x = undefined;
+  this.y = undefined;
+
   this.roads = [];
   this.settlements = [];
   this.cities = [];
 
   for (var i = 0; i < SIDES; i++) {
+    break;
     this.roads[i] = {player: _.sample(PLAYERS)};
     if (Math.random() < .5) {
       this.settlements[i] = {player: _.sample(PLAYERS)};
     } else {
       this.cities[i] = {player: _.sample(PLAYERS)};
     }
+  }
+
+  this.getCorners = function() {
+    if (this.x === undefined && this.y === undefined) {
+      return [];
+    }
+
+    var corners = [];
+
+    yOff = Math.sin(2 * Math.PI / SIDES) * EDGE_LENGTH;
+    
+    // c1
+    var x = this.x + HALF_EDGE;
+    var y = this.y - yOff;
+    corners.push(new Corner(x, y));
+
+    // c2
+    x = this.x + EDGE_LENGTH;
+    y = this.y;
+    corners.push(new Corner(x, y));
+
+    // c3
+    x = this.x + HALF_EDGE;
+    y = this.y + yOff;
+    corners.push(new Corner(x, y));
+
+    // c4
+    x = this.x - HALF_EDGE;
+    y = this.y + yOff;
+    corners.push(new Corner(x, y));
+
+    // c5
+    x = this.x - EDGE_LENGTH;
+    y = this.y;
+    corners.push(new Corner(x, y));
+
+    // c6
+    x = this.x - HALF_EDGE;
+    y = this.y - yOff;
+    corners.push(new Corner(x, y));
+
+    return corners;
   }
 }
 
@@ -40,6 +91,14 @@ function TileDrawer(ctx) {
   this.tokenDrawer = new TokenDrawer(ctx);
 
   this.draw = function(tile) {
+    //if (tile.x !== 0 || tile.y !== 0) {
+    //  return;
+    //}
+
+    //tile.x = 200
+    //tile.y = 200
+    //tile.hover = true
+
     this.ctx.save();
 
     if (tile.hover) {
@@ -111,12 +170,32 @@ function TileDrawer(ctx) {
         var height = .2 * TILE_SIZE;
 
         var x = -width / 2;
-        var y = -TILE_SIZE - height / 2;
+        var y = -tile_size - height / 2;
 
         this.ctx.fillStyle = tile.cities[i].player;
         this.ctx.fillRect(x, y, width, height);
         this.ctx.strokeRect(x, y, width, height);
       }
+    }
+
+    if (tile.hover) {
+      var corners = tile.getCorners();
+      for (var i = 0; i < corners.length; i++) {
+        var x = corners[i].x;
+        var y = corners[i].y;
+
+        var radius = 4;
+        var startAngle = 0; // Starting point on circle
+        var endAngle = 2 * Math.PI; // End point on circle
+
+        var path = new Path2D();
+        path.arc(x, y, radius, startAngle, endAngle);
+
+        ctx.fillStyle = "Khaki";
+        ctx.fill(path);
+      };
+
+      debugger
     }
 
     if (tile.resource !== DESERT) {

@@ -2,7 +2,7 @@ $(document).ready(main);
 
 var DEBUG = false;
 function debug() {
-  DEBUG = !DEBUG;
+  DEBUG = true;
 }
 
 var MOUSE_X = 0;
@@ -41,6 +41,7 @@ function main() {
   var loop;
   loop = function() {
     if (DEBUG) {
+      DEBUG = false;
       debugger
     }
 
