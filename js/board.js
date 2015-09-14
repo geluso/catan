@@ -21,7 +21,6 @@ function Board(rows, cols) {
   }
 
   this.getTile = function(x, y) {
-    console.log("getting tile:", x, y);
     var tile;
 
     for (var i = 0; i < this.tiles.length; i++) {
@@ -32,7 +31,6 @@ function Board(rows, cols) {
       }
     }
 
-    console.log("got tile:", tile.x, tile.y);
     return tile;
   }
 }
