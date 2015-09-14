@@ -13,7 +13,22 @@ function Board(rows, cols) {
   var tileGen = new TileGenerator();
   for (var row = 0; row < rows; row++) {
     for (var col = 0; col < cols; col++) {
+      var xOff = TILE_SIZE * 1.5;
+      var yOff = TILE_SIZE * 1.72;
+
+      var x = xOff * col;
+      var y = yOff * row;
+
+      if (col % 2 === 1) {
+        y += TILE_SIZE * .86;
+      }
+
+      x = Math.floor(x);
+      y = Math.floor(y);
+
       var tile = tileGen.randomTile();
+      tile.x = x;
+      tile.y = y;
 
       this.tiles.push(tile);
       this.tileLookup[row][col] = tile;
@@ -45,25 +60,7 @@ function BoardDrawer(ctx) {
 
     for (var row = 0; row < board.rows; row++) {
       for (var col = 0; col < board.columns; col++) {
-        var xOff = TILE_SIZE * 1.5;
-        var yOff = TILE_SIZE * 1.72;
-
-        var x = xOff * col;
-        var y = yOff * row;
-
-        if (col % 2 === 1) {
-          y += TILE_SIZE * .86;
-        }
-
-        x = Math.floor(x);
-        y = Math.floor(y);
-
         var tile = board.tileLookup[row][col];
-
-        // record the screen coordinates of the tiles center.
-        tile.x = x;
-        tile.y = y;
-
         tileDrawer.draw(tile);
       }
     }
