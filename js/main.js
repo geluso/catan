@@ -38,12 +38,13 @@ function main() {
     board.state(board, thing);
   });
 
-  $(".messages").text("Pick your first settlement.");
-
   var board = new Board(rows, cols);
   var boardDrawer = new BoardDrawer(ctx);
 
   board.state = StatePlace;
+  board.state.state = StatePlace.Start;
+  board.state();
+
   initResources();
 
   $(".roll").click(function() {
