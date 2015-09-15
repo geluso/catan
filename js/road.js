@@ -9,8 +9,8 @@ function RoadDrawer(ctx) {
   this.drawRoads = function(roads) {
     this.ctx.save();
 
-    for (var i = 0; i < roads.length; i++) {
-      var road = roads[i];
+    for (var edge in roads) {
+      var road = roads[edge];
       this.draw(road);
     }
 
@@ -23,12 +23,12 @@ function RoadDrawer(ctx) {
 
     ctx.save();
 
-    ctx.fillStyle = "black";
-    ctx.fill(path);
-
     ctx.translate(x, y);
     ctx.rotate(road.edge.angle);
-    ctx.fillRect(-Road.Length / 2, -Road.WIDTH / 2, Road.LENGTH, Road.WIDTH);
+
+    ctx.fillStyle = road.player;
+    ctx.fillRect(-Road.LENGTH / 2, -Road.WIDTH / 2, Road.LENGTH, Road.WIDTH);
+    ctx.strokeRect(-Road.LENGTH / 2, -Road.WIDTH / 2, Road.LENGTH, Road.WIDTH);
 
     ctx.restore();
   };

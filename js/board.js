@@ -13,7 +13,6 @@ function Board(rows, cols) {
   this.settlements = {};
   this.cities = {};
 
-
   this.columns = cols;
   this.rows = rows;
 

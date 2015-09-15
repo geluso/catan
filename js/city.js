@@ -9,8 +9,8 @@ function CityDrawer(ctx) {
   this.drawCities = function(cities) {
     this.ctx.save();
 
-    for (var i = 0; i < cities.length; i++) {
-      var city = cities[i];
+    for (var corner in cities) {
+      var city = cities[corner];
       this.draw(city);
     }
 
@@ -18,17 +18,12 @@ function CityDrawer(ctx) {
   };
 
   this.draw = function(city) {
-    var x = city.corner.x;
-    var y = city.corner.y;
-
-    this.ctx.save();
-    this.ctx.translate(x, y);
+    var x = city.corner.x - City.WIDTH / 2;
+    var y = city.corner.y - City.HEIGHT / 2;
 
     this.ctx.fillStyle = city.player;
     this.ctx.fillRect(x, y, City.WIDTH, City.HEIGHT);
     this.ctx.strokeRect(x, y, City.WIDTH, City.HEIGHT);
-
-    this.ctx.restore();
   };
 }
 
