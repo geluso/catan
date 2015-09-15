@@ -68,3 +68,13 @@ function updateResources() {
     $(selector).text(available);
   });
 }
+
+function halveResources() {
+  _.each(ALL_RESOURCES, function(resource) {
+    var available = RESOURCES[resource.name];
+    available = Math.ceil(available / 2);
+    RESOURCES[resource.name] = available;
+  });
+
+  updateResources();
+}

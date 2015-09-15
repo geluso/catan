@@ -35,13 +35,18 @@ body {
   display: inline-block;
 }
 
-.resource {
+.resources .resource {
   width: 20px;
   height: 20px;
   border: solid black 1px;
   background-color: white;
 }
 
-.value {
+.resources .value {
   font-size: 30px;
+}
+
+.roll button {
+  font-size: 30px;
+  margin-left: 1em;
 }
