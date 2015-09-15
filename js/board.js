@@ -9,9 +9,9 @@ function Board(rows, cols) {
   // a list of all tiles, corners, and edges
   this.everything = [];
 
-  this.roads = [];
-  this.settlements = [];
-  this.cities = [];
+  this.roads = {};
+  this.settlements = {};
+  this.cities = {};
 
 
   this.columns = cols;

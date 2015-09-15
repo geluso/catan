@@ -28,11 +28,15 @@ function main() {
     MOUSE_Y = e.offsetY;
 
     var thing = board.getThing(MOUSE_X, MOUSE_Y);
-    thing.hover = !thing.hover;
+
+    if (thing instanceof Corner) {
+      var corner = thing;
+      var settlement = new Settlement(corner, "red");
+      board.settlements[corner.key()] = settlement;
+    }
   });
 
-  $(".messages").text("generating board...");
-  $(".messages").text("red pick a place");
+  $(".messages").text("pick your first settlement");
 
   var board = new Board(rows, cols);
   var boardDrawer = new BoardDrawer(ctx);

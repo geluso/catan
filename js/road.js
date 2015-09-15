@@ -1,6 +1,3 @@
-var ROAD_LENGTH = 20;
-var ROAD_WIDTH = 4;
-
 function Road(edge, player) {
   this.edge = edge;
   this.player = player;
@@ -31,8 +28,11 @@ function RoadDrawer(ctx) {
 
     ctx.translate(x, y);
     ctx.rotate(road.edge.angle);
-    ctx.fillRect(-ROAD_LENGTH / 2, -ROAD_WIDTH / 2, ROAD_LENGTH, ROAD_WIDTH);
+    ctx.fillRect(-Road.Length / 2, -Road.WIDTH / 2, Road.LENGTH, Road.WIDTH);
 
     ctx.restore();
   };
 }
+
+Road.LENGTH = 20;
+Road.WIDTH = 4;

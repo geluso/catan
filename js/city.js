@@ -1,6 +1,3 @@
-var WIDTH = 2 * .2 * TILE_SIZE;
-var HEIGHT = .2 * TILE_SIZE;
-
 function City(corner, player) {
   this.corner = corner;
   this.player = player;
@@ -28,9 +25,13 @@ function CityDrawer(ctx) {
     this.ctx.translate(x, y);
 
     this.ctx.fillStyle = city.player;
-    this.ctx.fillRect(x, y, WIDTH, HEIGHT);
-    this.ctx.strokeRect(x, y, WIDTH, HEIGHT);
+    this.ctx.fillRect(x, y, City.WIDTH, City.HEIGHT);
+    this.ctx.strokeRect(x, y, City.WIDTH, City.HEIGHT);
 
     this.ctx.restore();
   };
 }
+
+City.WIDTH = 2 * .2 * TILE_SIZE;
+City.HEIGHT = .2 * TILE_SIZE;
+
