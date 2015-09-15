@@ -33,16 +33,38 @@ var WATER = {
   color: "CornflowerBlue"
 };                
 
-var RESOURCES = [BRICK, WHEAT, WOOD, SHEEP, ORE];
+var ALL_RESOURCES = [BRICK, WHEAT, WOOD, SHEEP, ORE];
+var RESOURCES = {};
 
 function ResourceGenerator() {
   this.randomResource = function() {
     if (Math.random() < 1 / 20) {
       return DESERT;
     } else {
-      var choice = Math.round((RESOURCES.length - 1)* Math.random());
-      var resource = RESOURCES[choice];
+      var choice = Math.round((ALL_RESOURCES.length - 1)* Math.random());
+      var resource = ALL_RESOURCES[choice];
       return resource;
     }
   }
+}
+
+function initResources() {
+  _.each(ALL_RESOURCES, function(resource) {
+    var selector = ".resources .resource." + resource.name;
+    var style = {'background-color': resource.color};
+    $(selector).css(style);
+
+    RESOURCES[resource.name] = 0;
+  });
+
+  updateResources();
+}
+
+function updateResources() {
+  _.each(ALL_RESOURCES, function(resource) {
+    var selector = ".resources .value." + resource.name;
+
+    var available = RESOURCES[resource.name];
+    $(selector).text(available);
+  });
 }

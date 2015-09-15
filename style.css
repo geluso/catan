@@ -1,24 +1,47 @@
 body {
   margin: 0;
   padding: 0;
+
+  font-size: 20pt;
+  color: white;
+  font-family: sans-serif;
 }
 
-.messages {
+.info {
   width: 100%;
 
   position: absolute;
-  top: 0;
   left: 0;
 
-  font-size: 20pt;
   padding: .5em;
   text-align: center;
-  color: white;
-  font-family: sans-serif;
 
   background-color: rgba(0,0,0,.5);
 }
 
-.messages.error {
+.info.error {
   color: red;
+}
+
+.messages {
+  top: 0;
+}
+
+.resources {
+  bottom: 0;
+}
+
+.resources div {
+  display: inline-block;
+}
+
+.resource {
+  width: 20px;
+  height: 20px;
+  border: solid black 1px;
+  background-color: white;
+}
+
+.value {
+  font-size: 30px;
 }

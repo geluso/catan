@@ -63,6 +63,8 @@ function main() {
   var board = new Board(rows, cols);
   var boardDrawer = new BoardDrawer(ctx);
 
+  initResources();
+
   var loop;
   loop = function() {
     if (DEBUG) {
