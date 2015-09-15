@@ -139,15 +139,19 @@ function BoardDrawer(ctx) {
 
     this.ctx.clearRect(0, 0, 2000, 3000);
 
+    this.ctx.font="12px Arial";
+    for (var i = 0; i < board.tiles.length; i++) {
+      var tile = board.tiles[i];
+      this.ctx.fillText(i, tile.x, tile.y);
+    }
+
     for (var i = 0; i < board.corners.length; i++) {
       var corner = board.corners[i];
-      this.ctx.font="12px Arial";
       this.ctx.fillText(i, corner.x, corner.y);
     }
 
     for (var i = 0; i < board.edges.length; i++) {
       var edge = board.edges[i];
-      this.ctx.font="12px Arial";
       this.ctx.fillText(i, edge.x, edge.y);
     }
 
