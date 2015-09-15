@@ -40,11 +40,7 @@ function main() {
   initResources();
 
   $(".roll").click(function() {
-    if (_.size(board.settlements) + _.size(board.cities) === 0) {
-      $(".messages").text("choose settlements before rolls will make any effect");
-    } else {
-      StateRoll(board);
-    }
+    StateRoll(board);
   });
 
   var loop;

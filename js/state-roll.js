@@ -1,4 +1,9 @@
 function StateRoll(board) {
+  if (_.size(board.settlements) + _.size(board.cities) === 0) {
+    $(".messages").text("choose settlements before rolls will make any effect");
+    return;
+  }
+
   var die = [1,2,3,4,5,6];
   var d1 = _.sample(die);
   var d2 = _.sample(die);
