@@ -132,11 +132,13 @@ function TileDrawer(ctx) {
   this.tokenDrawer = new TokenDrawer(ctx);
 
   this.draw = function(tile) {
-    tile.hover = true
-
     this.ctx.save();
 
-    this.ctx.strokeStyle = "black";
+    if (tile.hover) {
+      this.ctx.strokeStyle = "blue";
+    } else {
+      this.ctx.strokeStyle = "black";
+    }
 
     this.ctx.beginPath();
     this.ctx.translate(tile.x, tile.y);
