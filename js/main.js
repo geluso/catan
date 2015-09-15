@@ -29,33 +29,7 @@ function main() {
 
     var thing = board.getThing(MOUSE_X, MOUSE_Y);
 
-    if (thing instanceof Corner) {
-      var corner = thing;
-      var key = corner.key();
-
-      // upgrade settlements to cities
-      if (board.settlements[key]) {
-        // remove old settlement
-        delete board.settlements[key];
-
-        // replace it with the new city;
-        var city = new City(corner, "red");
-        board.cities[key] = city;
-      } else {
-        if (board.settlements[key] instanceof City) {
-          return;
-        }
-
-        var settlement = new Settlement(corner, "red");
-        board.settlements[key] = settlement;
-      }
-    } else if (thing instanceof Edge) {
-      var edge = thing;
-      var key = edge.key();
-
-      var road = new Road(edge, "red");
-      board.roads[key] = road;
-    }
+    StatePlace(board, thing);
   });
 
   $(".messages").text("pick your first settlement");
@@ -69,7 +43,7 @@ function main() {
     if (_.size(board.settlements) + _.size(board.cities) === 0) {
       $(".messages").text("choose settlements before rolls will make any effect");
     } else {
-      Roll(board);
+      StateRoll(board);
     }
   });
 
