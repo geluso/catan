@@ -21,10 +21,6 @@ function main() {
   $(document).mousemove(function(e) {
     MOUSE_X = e.offsetX;
     MOUSE_Y = e.offsetY;
-
-    return;
-    var tile = board.getTile(MOUSE_X, MOUSE_Y);
-    tile.hover = !tile.hover;
   });
 
   $(document).click(function(e) {
