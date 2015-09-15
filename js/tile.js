@@ -60,9 +60,6 @@ function TileDrawer(ctx) {
 
   this.draw = function(tile) {
     var stroke = "black";
-    if (tile.hover) {
-      stroke = "blue";
-    }
 
     tile.shape.fillStroke(this.ctx, tile.resource.color, stroke);
 
