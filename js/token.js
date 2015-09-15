@@ -26,7 +26,11 @@ function TokenGenerator(min, max) {
 function TokenDrawer(ctx) {
   this.ctx = ctx;
 
-  this.draw = function(token) {
+  this.draw = function(token, x, y) {
+    this.ctx.save();
+
+    this.ctx.translate(x, y);
+
     var radius = TOKEN_SIZE; // Arc radius
     var startAngle = 0; // Starting point on circle
     var endAngle = 2 * Math.PI; // End point on circle
@@ -50,6 +54,8 @@ function TokenDrawer(ctx) {
     this.ctx.fillText(token.value, 0, 0);
 
     this.drawDots(token.value);
+
+    this.ctx.restore();
   }
 
   this.drawDots = function(value) {

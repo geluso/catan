@@ -1,7 +1,12 @@
 function Board(rows, cols) {
 
-  this.tiles = [];
   this.tileLookup = {};
+
+  this.tiles = [];
+
+  this.roads = [];
+  this.settlements = [];
+  this.cities = [];
 
   this.corners = [];
   this.edges = [];
@@ -29,9 +34,7 @@ function Board(rows, cols) {
       x = Math.floor(x);
       y = Math.floor(y);
 
-      var tile = tileGen.randomTile();
-      tile.x = x;
-      tile.y = y;
+      var tile = tileGen.randomTile(x, y);
 
       this.tiles.push(tile);
       this.tileLookup[row][col] = tile;
@@ -57,16 +60,17 @@ function BoardDrawer(ctx) {
   this.ctx = ctx;
 
   var tileDrawer = new TileDrawer(ctx);
+  var roadDrawer = new RoadDrawer(ctx);
+  var settlementDrawer = new SettlementDrawer(ctx);
+  var cityDrawer = new CityDrawer(ctx);
 
   this.draw = function(board) {
     this.ctx.save();
 
-    for (var row = 0; row < board.rows; row++) {
-      for (var col = 0; col < board.columns; col++) {
-        var tile = board.tileLookup[row][col];
-        tileDrawer.draw(tile);
-      }
-    }
+    tileDrawer.drawTiles(board.tiles);
+    roadDrawer.drawRoads(board.roads);
+    settlementDrawer.drawSettlements(board.settlements);
+    cityDrawer.drawCities(board.cities);
 
     this.ctx.restore();
   };
