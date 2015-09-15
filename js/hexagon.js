@@ -1,8 +1,10 @@
 function Hexagon(x, y, size) {
   var SIDES = 6;
 
-  this.x = x;
-  this.y = y;
+  var p = new Point(x, y);
+  this.x = p.x;
+  this.y = p.y;
+
   this.size = size;
 
   this.strokeShape = function(ctx) {
@@ -64,32 +66,38 @@ function Hexagon(x, y, size) {
     // c1
     var x = HALF_EDGE;
     var y = -yOff;
-    corners.push(new Corner(x, y));
+    var corner = new Corner(x, y);
+    corners.push(corner);
 
     // c2
     x = EDGE_LENGTH;
     y = 0;
-    corners.push(new Corner(x, y));
+    corner = new Corner(x, y);
+    corners.push(corner);
 
     // c3
     x = HALF_EDGE;
     y = yOff;
-    corners.push(new Corner(x, y));
+    corner = new Corner(x, y);
+    corners.push(corner);
 
     // c4
     x = -HALF_EDGE;
     y = yOff;
-    corners.push(new Corner(x, y));
+    corner = new Corner(x, y);
+    corners.push(corner);
 
     // c5
     x = -EDGE_LENGTH;
     y = 0;
-    corners.push(new Corner(x, y));
+    corner = new Corner(x, y);
+    corners.push(corner);
 
     // c6
     x = -HALF_EDGE;
     y = -yOff;
-    corners.push(new Corner(x, y));
+    corner = new Corner(x, y);
+    corners.push(corner);
 
     return corners;
 
@@ -99,8 +107,8 @@ function Hexagon(x, y, size) {
     var corners = this.getRelativeCorners();
 
     for (var i = 0; i < corners.length; i++) {
-      corners[i].x += this.x;
-      corners[i].y += this.y;
+      var corner = corners[i];
+      corners[i] = new Corner(corner.x + this.x, corner.y + this.y);
     }
 
     return corners;
@@ -128,8 +136,10 @@ function Hexagon(x, y, size) {
     var edges = this.getRelativeEdges();
 
     for (var i = 0; i < edges.length; i++) {
-      edges[i].x += this.x;
-      edges[i].y += this.y;
+      var edge = edges[i];
+      var c1 = {x: edge.c1.x + this.x, y: edge.c1.y + this.y};
+      var c2 = {x: edge.c2.x + this.x, y: edge.c2.y + this.y};
+      edges[i] = new Edge(c1, c2);
     }
 
     return edges;
