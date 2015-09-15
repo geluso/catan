@@ -31,6 +31,9 @@ function main() {
     thing.hover = !thing.hover;
   });
 
+  $(".messages").text("generating board...");
+  $(".messages").text("red pick a place");
+
   var board = new Board(rows, cols);
   var boardDrawer = new BoardDrawer(ctx);
 

@@ -2,3 +2,23 @@ body {
   margin: 0;
   padding: 0;
 }
+
+.messages {
+  width: 100%;
+
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  font-size: 20pt;
+  padding: .5em;
+  text-align: center;
+  color: white;
+  font-family: sans-serif;
+
+  background-color: rgba(0,0,0,.5);
+}
+
+.messages.error {
+  color: red;
+}
