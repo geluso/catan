@@ -92,20 +92,12 @@ function Tile(resource, token) {
     var corners = this.getRelativeCorners();
     var edges = [];
 
-    function edgeFromCorners(c1, c2) {
-      var x = (c1.x + c2.x) / 2;
-      var y = (c1.y + c2.y) / 2;
-
-      var edge = new Edge(x, y);
-      return edge;
-    }
-
-    edges[0] = edgeFromCorners(corners[corners.length - 1], corners[0]);
-    edges[1] = edgeFromCorners(corners[0], corners[1]);
-    edges[2] = edgeFromCorners(corners[1], corners[2]);
-    edges[3] = edgeFromCorners(corners[2], corners[3]);
-    edges[4] = edgeFromCorners(corners[3], corners[4]);
-    edges[5] = edgeFromCorners(corners[4], corners[5]);
+    edges[0] = new Edge(corners[corners.length - 1], corners[0]);
+    edges[1] = new Edge(corners[0], corners[1]);
+    edges[2] = new Edge(corners[1], corners[2]);
+    edges[3] = new Edge(corners[2], corners[3]);
+    edges[4] = new Edge(corners[3], corners[4]);
+    edges[5] = new Edge(corners[4], corners[5]);
 
     return edges;
   };
@@ -144,12 +136,7 @@ function TileDrawer(ctx) {
 
     this.ctx.save();
 
-    if (tile.hover) {
-      this.ctx.lineWidth = "4";
-      this.ctx.strokeStyle = "blue";
-    } else {
-      this.ctx.strokeStyle = "black";
-    }
+    this.ctx.strokeStyle = "black";
 
     this.ctx.beginPath();
     this.ctx.translate(tile.x, tile.y);
@@ -240,7 +227,7 @@ function TileDrawer(ctx) {
         var path = new Path2D();
         path.arc(x, y, radius, startAngle, endAngle);
 
-        ctx.fillStyle = "Khaki";
+        ctx.fillStyle = "white";
         ctx.fill(path);
       };
 
@@ -258,6 +245,14 @@ function TileDrawer(ctx) {
 
         ctx.fillStyle = "black";
         ctx.fill(path);
+
+        ctx.save();
+
+        ctx.translate(edges[i].x, edges[i].y);
+        ctx.rotate(edges[i].angle);
+        ctx.fillRect(-10, -2, 20, 4);
+
+        ctx.restore();
       };
     }
 
