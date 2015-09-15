@@ -83,6 +83,43 @@ function Tile(resource, token) {
 
     return corners;
   }
+
+  this.getRelativeEdges = function() {
+    if (this.x === undefined && this.y === undefined) {
+      return [];
+    }
+
+    var corners = this.getRelativeCorners();
+    var edges = [];
+
+    function edgeFromCorners(c1, c2) {
+      var x = (c1.x + c2.x) / 2;
+      var y = (c1.y + c2.y) / 2;
+
+      var edge = new Edge(x, y);
+      return edge;
+    }
+
+    edges[0] = edgeFromCorners(corners[corners.length - 1], corners[0]);
+    edges[1] = edgeFromCorners(corners[0], corners[1]);
+    edges[2] = edgeFromCorners(corners[1], corners[2]);
+    edges[3] = edgeFromCorners(corners[2], corners[3]);
+    edges[4] = edgeFromCorners(corners[3], corners[4]);
+    edges[5] = edgeFromCorners(corners[4], corners[5]);
+
+    return edges;
+  };
+
+  this.getEdges = function() {
+    var edges = this.getRelativeEdges();
+
+    for (var i = 0; i < edges.length; i++) {
+      edges[i].x += this.x;
+      edges[i].y += this.y;
+    }
+
+    return edges;
+  };
 }
 
 function TileGenerator() {
@@ -207,7 +244,21 @@ function TileDrawer(ctx) {
         ctx.fill(path);
       };
 
-      debugger
+      var edges = tile.getEdges();
+      for (var i = 0; i < edges.length; i++) {
+        var x = edges[i].x;
+        var y = edges[i].y;
+
+        var radius = 4;
+        var startAngle = 0; // Starting point on circle
+        var endAngle = 2 * Math.PI; // End point on circle
+
+        var path = new Path2D();
+        path.arc(x, y, radius, startAngle, endAngle);
+
+        ctx.fillStyle = "black";
+        ctx.fill(path);
+      };
     }
 
   }
