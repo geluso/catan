@@ -3,13 +3,16 @@ function Board(rows, cols) {
   this.tileLookup = {};
 
   this.tiles = [];
+  this.corners = [];
+  this.edges = [];
+
+  // a list of all tiles, corners, and edges
+  this.everything = [];
 
   this.roads = [];
   this.settlements = [];
   this.cities = [];
 
-  this.corners = [];
-  this.edges = [];
 
   this.columns = cols;
   this.rows = rows;
@@ -62,6 +65,8 @@ function Board(rows, cols) {
     this.edges = _.union(this.edges, edges);
   }
 
+  this.everything = _.union(this.tiles, this.corners, this.edges);
+
   this.getTile = function(x, y) {
     var tile;
 
@@ -74,6 +79,24 @@ function Board(rows, cols) {
     }
 
     return tile;
+  }
+
+  this.getThing = function(x1, y1) {
+    var closest;
+    var minDistance = Infinity;
+    for (var i = 0; i < this.everything.length; i++) {
+      var x2 = this.everything[i].x;
+      var y2 = this.everything[i].y;
+
+      var distance = Point.distance(x1, y1, x2, y2);
+
+      if (distance < minDistance) {
+        closest = this.everything[i];
+        minDistance = distance;
+      }
+    }
+
+    return closest;
   }
 }
 
@@ -92,5 +115,13 @@ function BoardDrawer(ctx) {
     roadDrawer.drawRoads(board.roads);
     settlementDrawer.drawSettlements(board.settlements);
     cityDrawer.drawCities(board.cities);
+
+    for (var i = 0; i < board.everything.length; i++) {
+      if (board.everything[i].hover) {
+        var thing = board.everything[i];
+
+        Point.draw(this.ctx, thing.x, thing.y, 4);
+      }
+    }
   };
 }

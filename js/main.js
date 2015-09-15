@@ -27,8 +27,8 @@ function main() {
     MOUSE_X = e.offsetX;
     MOUSE_Y = e.offsetY;
 
-    var tile = board.getTile(MOUSE_X, MOUSE_Y);
-    tile.hover = !tile.hover;
+    var thing = board.getThing(MOUSE_X, MOUSE_Y);
+    thing.hover = !thing.hover;
   });
 
   var board = new Board(rows, cols);
