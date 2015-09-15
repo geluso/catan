@@ -15,8 +15,8 @@ function main() {
 
   var ctx = canvas.getContext("2d");
 
-  var rows = Math.ceil(canvas.height / TILE_SIZE * 1.5);
-  var cols = Math.ceil(canvas.width / TILE_SIZE * 1.72);
+  var rows = Math.ceil(canvas.height / (TILE_SIZE * 1.72));
+  var cols = Math.ceil(canvas.width / (TILE_SIZE * Math.sqrt(2)));
 
   $(document).mousemove(function(e) {
     MOUSE_X = e.offsetX;
