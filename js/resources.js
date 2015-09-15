@@ -54,7 +54,7 @@ function initResources() {
     var style = {'background-color': resource.color};
     $(selector).css(style);
 
-    RESOURCES[resource.name] = 0;
+    RESOURCES[resource.name] = 10;
   });
 
   updateResources();
