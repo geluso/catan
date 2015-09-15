@@ -47,7 +47,7 @@ function Board(rows, cols) {
     }
   }
 
-  // gather all corners and edges
+  // gather and dedupe all corners and edges
   for (var i = 0; i < this.tiles.length; i++) {
     var tile = this.tiles[i];
 
@@ -61,50 +61,6 @@ function Board(rows, cols) {
     var edges = tile.shape.getEdges();
     this.edges = _.union(this.edges, edges);
   }
-
-  function inspectForDupes(list) {
-    var threshold = 30;
-
-    var dupes = 0;
-    var totalDistance = 0;
-    var maxDistance = 0;
-
-    for (var i = 0; i < list.length; i++) {
-      var c1 = list[i];
-      for (var j = 0; j < list.length; j++) {
-        var c2 = list[j];
-        if (c1 !== c2) {
-          var xx = c1.x - c2.x;
-          var yy = c1.y - c2.y;
-
-          var distance = Math.sqrt(Math.pow(xx, 2) + Math.pow(yy, 2));
-
-          if (distance < threshold) {
-            dupes++;
-            totalDistance += distance
-            maxDistance = Math.max(distance, maxDistance);
-            console.log("dupe:", c1, c2);
-          }
-        }
-      }
-    }
-
-    var aveDistance = totalDistance / list.length;
-
-    console.log("total dupes:", dupes);
-    console.log("ave dis:", aveDistance);
-    console.log("max   dis:", maxDistance);
-  }
-
-  console.log("inspecting corners:", this.corners.length);
-  inspectForDupes(this.corners);
-  console.log("");
-
-  console.log("inspecting edges", this.edges.length);
-  inspectForDupes(this.edges);
-  console.log("");
-
-  debugger
 
   this.getTile = function(x, y) {
     var tile;
@@ -136,28 +92,5 @@ function BoardDrawer(ctx) {
     roadDrawer.drawRoads(board.roads);
     settlementDrawer.drawSettlements(board.settlements);
     cityDrawer.drawCities(board.cities);
-
-    this.ctx.clearRect(0, 0, 2000, 3000);
-
-    this.ctx.font="12px Arial";
-    for (var i = 0; i < board.tiles.length; i++) {
-      var tile = board.tiles[i];
-      this.ctx.fillStyle = "black";
-      this.ctx.fillText(i, tile.x, tile.y);
-    }
-
-    for (var i = 0; i < board.corners.length; i++) {
-      var corner = board.corners[i];
-      this.ctx.fillStyle = "red";
-      this.ctx.fillText(i, corner.x, corner.y);
-    }
-
-    for (var i = 0; i < board.edges.length; i++) {
-      var edge = board.edges[i];
-      this.ctx.fillStyle = "blue";
-      this.ctx.fillText(i, edge.x, edge.y);
-    }
-
-    this.ctx.restore();
   };
 }
