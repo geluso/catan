@@ -118,6 +118,9 @@ Resources.buyCity = function() {
     $(".messages").text("Built City.");
 
     RESOURCES[ORE.name] = Math.max(0, RESOURCES[ORE.name] - 1);
+    RESOURCES[ORE.name] = Math.max(0, RESOURCES[ORE.name] - 1);
+    RESOURCES[ORE.name] = Math.max(0, RESOURCES[ORE.name] - 1);
+    RESOURCES[WHEAT.name] = Math.max(0, RESOURCES[WHEAT.name] - 1);
     RESOURCES[WHEAT.name] = Math.max(0, RESOURCES[WHEAT.name] - 1);
 
     updateResources();

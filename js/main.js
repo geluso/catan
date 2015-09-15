@@ -36,6 +36,7 @@ function main() {
     var thing = board.getThing(MOUSE_X, MOUSE_Y);
 
     board.state(board, thing);
+    updateScore(board);
   });
 
   var board = new Board(rows, cols);
@@ -49,6 +50,7 @@ function main() {
 
   $(".roll").click(function() {
     StateRoll(board);
+    updateScore(board);
   });
 
   var loop;
