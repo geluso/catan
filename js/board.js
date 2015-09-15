@@ -122,5 +122,30 @@ function BoardDrawer(ctx) {
         Point.draw(this.ctx, thing.x, thing.y, 4);
       }
     }
+
+    if (board.hovering) {
+      var thing = board.hovering;
+      if (thing instanceof Corner) {
+        var corner = thing;
+
+        // if there's no settlement nor city.
+        if (!board.settlements[corner] && !board.cities[corner]) {
+          var settlement = board.settlements[corner];
+          settlementDrawer.ghost(corner)
+        // if there's only no city.
+        } else if (!board.cities[corner]) {
+          var city = board.cites[corner];
+          cityDrawer.ghost(corner)
+        }
+      } else if (thing instanceof Edge) {
+        var edge = thing;
+        var road = board.roads[edge];
+
+        // if there's no road.
+        if (!road) {
+          roadDrawer.ghost(edge);
+        }
+      }
+    }
   };
 }

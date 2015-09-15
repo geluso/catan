@@ -25,6 +25,12 @@ function CityDrawer(ctx) {
     this.ctx.fillRect(x, y, City.WIDTH, City.HEIGHT);
     this.ctx.strokeRect(x, y, City.WIDTH, City.HEIGHT);
   };
+
+  this.ghost = function(corner) {
+    this.ctx.globalAlpha = .5;
+    this.draw({corner: corner, player: "red"});
+    this.ctx.globalAlpha = 1;
+  }
 }
 
 City.WIDTH = 2 * .2 * TILE_SIZE;

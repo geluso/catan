@@ -21,6 +21,12 @@ function main() {
   $(document).mousemove(function(e) {
     MOUSE_X = e.offsetX;
     MOUSE_Y = e.offsetY;
+
+    var thing = board.getThing(MOUSE_X, MOUSE_Y);
+
+    if (!(thing instanceof Tile)) {
+      board.hovering = thing;
+    }
   });
 
   $(document).click(function(e) {

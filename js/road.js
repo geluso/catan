@@ -32,6 +32,12 @@ function RoadDrawer(ctx) {
 
     ctx.restore();
   };
+
+  this.ghost = function(edge) {
+    this.ctx.globalAlpha = .5;
+    this.draw({edge: edge, player: "red"});
+    this.ctx.globalAlpha = 1;
+  }
 }
 
 Road.LENGTH = 20;

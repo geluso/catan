@@ -25,6 +25,12 @@ function SettlementDrawer(ctx) {
     this.ctx.fillRect(x, y, Settlement.WIDTH, Settlement.HEIGHT);
     this.ctx.strokeRect(x, y, Settlement.WIDTH, Settlement.HEIGHT);
   };
+
+  this.ghost = function(corner) {
+    this.ctx.globalAlpha = .5;
+    this.draw({corner: corner, player: "red"});
+    this.ctx.globalAlpha = 1;
+  }
 }
 
 Settlement.WIDTH = .2 * TILE_SIZE;
