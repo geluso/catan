@@ -3,16 +3,15 @@ function Edge(c1, c2) {
   var y = (c1.y + c2.y) / 2;
   var p = new Point(x, y);
 
-  var key = [p.x, p.y].join(",");
+  this.x = p.x;
+  this.y = p.y;
 
+  var key = this.key();
   if (Edge.lookup[key]) {
     return Edge.lookup[key];
   } else {
     Edge.lookup[key] = this;
   }
-
-  this.x = p.x;
-  this.y = p.y;
 
   this.c1 = c1;
   this.c2 = c2;
@@ -26,6 +25,11 @@ function Edge(c1, c2) {
     }
     return angle;
   }
+}
+
+Edge.prototype.key = function() {
+  var key = [this.x, this.y].join(",");
+  return key;
 }
 
 Edge.lookup = {};
