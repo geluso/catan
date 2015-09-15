@@ -28,6 +28,11 @@ var DESERT = {
   color: "Khaki"
 };                
 
+var WATER = {
+  name: "water",
+  color: "CornflowerBlue"
+};                
+
 var RESOURCES = [BRICK, WHEAT, WOOD, SHEEP, ORE];
 
 function ResourceGenerator() {

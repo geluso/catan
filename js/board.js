@@ -34,7 +34,13 @@ function Board(rows, cols) {
       x = Math.floor(x);
       y = Math.floor(y);
 
-      var tile = tileGen.randomTile(x, y);
+      var tile;
+      if (row < 2 || row > rows - 3 ||
+          col < 2 || col > cols - 4) {
+        tile = tileGen.waterTile(x, y);
+      } else {
+        tile = tileGen.randomTile(x, y);
+      }
 
       this.tiles.push(tile);
       this.tileLookup[row][col] = tile;

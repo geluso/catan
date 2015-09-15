@@ -25,9 +25,19 @@ function TileGenerator() {
 
   this.randomTile = function(x, y) {
     var resource = resources.randomResource(); 
-    var token = tokens.randomToken();
+
+    var token;
+    if (resource !== DESERT) {
+      token = tokens.randomToken();
+    }
 
     var tile = new Tile(x, y, resource, token);
+    return tile;
+  }
+
+  this.waterTile = function(x, y) {
+    var resource = WATER;
+    var tile = new Tile(x, y, resource);
     return tile;
   }
 }
@@ -56,7 +66,7 @@ function TileDrawer(ctx) {
 
     tile.shape.fillStroke(this.ctx, tile.resource.color, stroke);
 
-    if (tile.resource !== DESERT) {
+    if (tile.token) {
       this.tokenDrawer.draw(tile.token, tile.x, tile.y);
     }
   }
