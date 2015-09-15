@@ -29,14 +29,15 @@ function main() {
 
     var thing = board.getThing(MOUSE_X, MOUSE_Y);
 
-    StatePlace(board, thing);
+    board.state(board, thing);
   });
 
-  $(".messages").text("pick your first settlement");
+  $(".messages").text("Pick your first settlement.");
 
   var board = new Board(rows, cols);
   var boardDrawer = new BoardDrawer(ctx);
 
+  board.state = StatePlace;
   initResources();
 
   $(".roll").click(function() {

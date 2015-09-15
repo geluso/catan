@@ -1,4 +1,4 @@
-function StatePlace(board, thing) {
+function StateBuild(board, thing) {
   if (thing instanceof Corner) {
     var corner = thing;
     var key = corner.key();
@@ -11,6 +11,10 @@ function StatePlace(board, thing) {
       // replace it with the new city;
       var city = new City(corner, "red");
       board.cities[key] = city;
+
+      if (!Resources.buyCity()) {
+        $(".messages").text("Can't afford City.");
+      }
     } else {
       if (board.settlements[key] instanceof City) {
         return;
@@ -18,6 +22,10 @@ function StatePlace(board, thing) {
 
       var settlement = new Settlement(corner, "red");
       board.settlements[key] = settlement;
+
+      if (!Resources.buySettlement()) {
+        $(".messages").text("Can't afford Settlement.");
+      }
     }
   } else if (thing instanceof Edge) {
     var edge = thing;
@@ -25,5 +33,9 @@ function StatePlace(board, thing) {
 
     var road = new Road(edge, "red");
     board.roads[key] = road;
+
+    if (!Resources.buyRoad()) {
+      $(".messages").text("Can't afford Road.");
+    }
   }
 }

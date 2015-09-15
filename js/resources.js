@@ -78,3 +78,51 @@ function halveResources() {
 
   updateResources();
 }
+
+var Resources = {};
+
+Resources.buyRoad = function() {
+  if (RESOURCES[BRICK.name] > 0 && RESOURCES[WOOD.name] > 0) {
+    $(".messages").text("Built Road.");
+
+    RESOURCES[BRICK.name] = Math.max(0, RESOURCES[BRICK.name] - 1);
+    RESOURCES[WOOD.name] = Math.max(0, RESOURCES[WOOD.name] - 1);
+
+    updateResources();
+    return true;
+  } else {
+    return false;
+  }
+};
+
+Resources.buySettlement = function() {
+  if (RESOURCES[BRICK.name] > 0 && RESOURCES[WOOD.name] > 0 &&
+      RESOURCES[WHEAT.name] > 0 && RESOURCES[SHEEP.name] > 0) {
+
+    $(".messages").text("Built Settlement.");
+
+    RESOURCES[BRICK.name] = Math.max(0, RESOURCES[BRICK.name] - 1);
+    RESOURCES[WOOD.name] = Math.max(0, RESOURCES[WOOD.name] - 1);
+    RESOURCES[WHEAT.name] = Math.max(0, RESOURCES[WHEAT.name] - 1);
+    RESOURCES[SHEEP.name] = Math.max(0, RESOURCES[SHEEP.name] - 1);
+
+    updateResources();
+    return true;
+  } else {
+    return false;
+  }
+};
+
+Resources.buyCity = function() {
+  if (RESOURCES[ORE.name] > 2 && RESOURCES[WHEAT.name] > 1) {
+    $(".messages").text("Built City.");
+
+    RESOURCES[ORE.name] = Math.max(0, RESOURCES[ORE.name] - 1);
+    RESOURCES[WHEAT.name] = Math.max(0, RESOURCES[WHEAT.name] - 1);
+
+    updateResources();
+    return true;
+  } else {
+    return false;
+  }
+};
