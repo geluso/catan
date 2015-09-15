@@ -30,7 +30,7 @@ function Tile(resource, token) {
     }
   }
 
-  this.getCorners = function() {
+  this.getRelativeCorners = function() {
     if (this.x === undefined && this.y === undefined) {
       return [];
     }
@@ -40,34 +40,46 @@ function Tile(resource, token) {
     yOff = Math.sin(2 * Math.PI / SIDES) * EDGE_LENGTH;
     
     // c1
-    var x = this.x + HALF_EDGE;
-    var y = this.y - yOff;
+    var x = HALF_EDGE;
+    var y = -yOff;
     corners.push(new Corner(x, y));
 
     // c2
-    x = this.x + EDGE_LENGTH;
-    y = this.y;
+    x = EDGE_LENGTH;
+    y = 0;
     corners.push(new Corner(x, y));
 
     // c3
-    x = this.x + HALF_EDGE;
-    y = this.y + yOff;
+    x = HALF_EDGE;
+    y = yOff;
     corners.push(new Corner(x, y));
 
     // c4
-    x = this.x - HALF_EDGE;
-    y = this.y + yOff;
+    x = -HALF_EDGE;
+    y = yOff;
     corners.push(new Corner(x, y));
 
     // c5
-    x = this.x - EDGE_LENGTH;
-    y = this.y;
+    x = -EDGE_LENGTH;
+    y = 0;
     corners.push(new Corner(x, y));
 
     // c6
-    x = this.x - HALF_EDGE;
-    y = this.y - yOff;
+    x = -HALF_EDGE;
+    y = -yOff;
     corners.push(new Corner(x, y));
+
+    return corners;
+
+  }
+
+  this.getCorners = function() {
+    var corners = this.getRelativeCorners();
+
+    for (var i = 0; i < corners.length; i++) {
+      corners[i].x += this.x;
+      corners[i].y += this.y;
+    }
 
     return corners;
   }
@@ -91,13 +103,7 @@ function TileDrawer(ctx) {
   this.tokenDrawer = new TokenDrawer(ctx);
 
   this.draw = function(tile) {
-    //if (tile.x !== 0 || tile.y !== 0) {
-    //  return;
-    //}
-
-    //tile.x = 200
-    //tile.y = 200
-    //tile.hover = true
+    tile.hover = true
 
     this.ctx.save();
 
@@ -178,6 +184,12 @@ function TileDrawer(ctx) {
       }
     }
 
+    if (tile.resource !== DESERT) {
+      this.tokenDrawer.draw(tile.token);
+    }
+
+    this.ctx.restore();
+
     if (tile.hover) {
       var corners = tile.getCorners();
       for (var i = 0; i < corners.length; i++) {
@@ -198,10 +210,5 @@ function TileDrawer(ctx) {
       debugger
     }
 
-    if (tile.resource !== DESERT) {
-      this.tokenDrawer.draw(tile.token);
-    }
-
-    this.ctx.restore();
   }
 }
