@@ -13,7 +13,7 @@ function StateRoll(board) {
 
 
   if (roll === 7) {
-    $(".messages").text("Rolled: 7. All resources halved");
+    $(".messages").text("Rolled: 7. All resources halved.");
     halveResources();
     return;
   }
