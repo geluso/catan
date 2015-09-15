@@ -40,5 +40,5 @@ function RoadDrawer(ctx) {
   }
 }
 
-Road.LENGTH = 20;
-Road.WIDTH = 4;
+Road.LENGTH = 24;
+Road.WIDTH = 6;

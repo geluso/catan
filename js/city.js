@@ -33,6 +33,6 @@ function CityDrawer(ctx) {
   }
 }
 
-City.WIDTH = 2 * .2 * TILE_SIZE;
-City.HEIGHT = .2 * TILE_SIZE;
+City.WIDTH = 2 * Settlement.WIDTH;
+City.HEIGHT = Settlement.WIDTH;
 

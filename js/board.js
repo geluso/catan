@@ -127,21 +127,22 @@ function BoardDrawer(ctx) {
       var thing = board.hovering;
       if (thing instanceof Corner) {
         var corner = thing;
+        var key = corner.key();
 
         // if there's no settlement nor city.
-        if (!board.settlements[corner] && !board.cities[corner]) {
-          var settlement = board.settlements[corner];
+        if (!board.settlements[key] && !board.cities[key]) {
+          var settlement = board.settlements[key];
           settlementDrawer.ghost(corner)
         // if there's only no city.
-        } else if (!board.cities[corner]) {
-          var city = board.cites[corner];
+        } else if (!board.cities[key]) {
+          var city = board.cities[key];
           cityDrawer.ghost(corner)
         }
       } else if (thing instanceof Edge) {
         var edge = thing;
-        var road = board.roads[edge];
+        var key = edge.key();
 
-        // if there's no road.
+        var road = board.roads[edge];
         if (!road) {
           roadDrawer.ghost(edge);
         }
