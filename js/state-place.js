@@ -73,13 +73,12 @@ StatePlace.Done = 5;
 StatePlace.state = StatePlace.FirstSettlement;
 
 StatePlace.placeFirstRoad = function(board, edge) {
-  var road = new Road(edge, "red");
-  var key = edge.key();
-  board.roads[key] = road;
-
-  $(".messages").text("Place your second Settlement.");
-
-  StatePlace.state = StatePlace.SecondSettlement;
+  if (board.placeRoad(edge, "red")) {
+    $(".messages").text("Place your second Settlement.");
+    StatePlace.state = StatePlace.SecondSettlement;
+  } else {
+    $(".messages").text("Road can't be placed here.");
+  }
 }
 
 StatePlace.placeSecondRoad = function(board, edge) {

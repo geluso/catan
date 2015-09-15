@@ -97,6 +97,18 @@ function Board(rows, cols) {
 
     return closest;
   }
+
+  this.placeRoad = function(edge, player) {
+    var road = new Road(edge, "red");
+    var key = edge.key();
+
+    if (!this.roads[key]) {
+      this.roads[key] = road;
+      return true;
+    } else {
+      return false;
+    }
+  };
 }
 
 function BoardDrawer(ctx) {
