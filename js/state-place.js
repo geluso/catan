@@ -93,7 +93,7 @@ StatePlace.placeSecondRoad = function(board, edge) {
   board.state = StateBuild;
 }
 
-StatePlace.shouldGhostCorner = function(board, thing) {
+StatePlace.shouldGhostCorner = function(board, corner) {
   if (StatePlace.state === StatePlace.FirstSettlement ||
       StatePlace.state === StatePlace.SecondSettlement) {
     return true;
@@ -101,14 +101,36 @@ StatePlace.shouldGhostCorner = function(board, thing) {
   return false;
 };
 
-StatePlace.shouldGhostRoad = function(board, thing) {
+StatePlace.shouldGhostRoad = function(board, edge) {
+  var result = false;
+
   if (StatePlace.state === StatePlace.FirstRoad ||
       StatePlace.state === StatePlace.SecondRoad) {
-    return true;
+    // the road can be placed if it's touching a settlement.
+    _.each(board.settlements, function(settlement) {
+      if (settlement.corner.equals(edge.c1) || settlement.corner.equals(edge.c2)) {
+        result = true;
+      }
+    });
+
+    _.each(board.cities, function(city) {
+      if (city.corner.equals(edge.c1) || city.corner.equals(edge.c2)) {
+        result = true;
+      }
+    });
+
+    // or if it's touching an existing road network.
+    _.each(board.roads, function(road) {
+      var neighbors = board.edgeGraph[road.edge.key()];
+      if (_.contains(neighbors, edge)) {
+        result = true;
+      }
+    });
   }
-  return false;
+
+  return result;
 };
 
-StatePlace.shouldGhostRobber = function(board, thing) {
+StatePlace.shouldGhostRobber = function(board, tile) {
   return false;
 };

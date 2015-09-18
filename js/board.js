@@ -8,6 +8,7 @@ function Board(rows, cols) {
 
   this.edgeGraph = {};
   this.cornerGraph = {};
+  this.cornerToEdges = {};
 
   // a list of all tiles, corners, and edges
   this.everything = [];
@@ -77,11 +78,15 @@ function Board(rows, cols) {
   // build network of neighboring corners
   _.each(this.corners, function(corner) {
     that.cornerGraph[corner.key()] = [];
+    that.cornerToEdges[corner.key()] = [];
   });
 
   _.each(this.edges, function(edge) {
     that.cornerGraph[edge.c1.key()].push(edge.c2);
     that.cornerGraph[edge.c2.key()].push(edge.c1);
+
+    that.cornerToEdges[edge.c1.key()].push(edge);
+    that.cornerToEdges[edge.c2.key()].push(edge);
   });
 
   this.everything = _.union(this.tiles, this.corners, this.edges);
