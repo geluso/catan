@@ -158,27 +158,36 @@ function BoardDrawer(ctx) {
     if (board.hovering) {
       var thing = board.hovering;
       if (thing instanceof Corner) {
-        var corner = thing;
-        var key = corner.key();
+        if (board.state.shouldGhostCorner(board, thing)) {
+          var corner = thing;
+          var key = corner.key();
 
-        // if there's no settlement nor city.
-        if (!board.settlements[key] && !board.cities[key]) {
-          var settlement = board.settlements[key];
-          settlementDrawer.ghost(corner)
-        // if there's only no city.
-        } else if (!board.cities[key]) {
-          var city = board.cities[key];
-          cityDrawer.ghost(corner)
+          // if there's no settlement nor city.
+          if (!board.settlements[key] && !board.cities[key]) {
+            var settlement = board.settlements[key];
+            settlementDrawer.ghost(corner)
+          // if there's only no city.
+          } else if (!board.cities[key]) {
+            var city = board.cities[key];
+            cityDrawer.ghost(corner)
+          }
         }
       } else if (thing instanceof Edge) {
-        var edge = thing;
-        var key = edge.key();
+        if (board.state.shouldGhostRoad(board, thing)) {
+          var edge = thing;
+          var key = edge.key();
 
-        var road = board.roads[edge];
-        if (!road) {
-          roadDrawer.ghost(edge);
+          var road = board.roads[edge];
+          if (!road) {
+            roadDrawer.ghost(edge);
+          }
+        }
+      } else if (thing instanceof Tile) {
+        if (board.state.shouldGhostRobber(board, thing)) {
+
         }
       }
+
     }
   };
 }

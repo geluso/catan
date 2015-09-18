@@ -24,6 +24,7 @@ function StatePlace(board, thing) {
       $(".messages").text("Must place Road.");
     }
   }
+
 }
 
 StatePlace.PlaceSettlement = function(board, thing) {
@@ -91,3 +92,23 @@ StatePlace.placeSecondRoad = function(board, edge) {
   StatePlace.state = StatePlace.Done;
   board.state = StateBuild;
 }
+
+StatePlace.shouldGhostCorner = function(board, thing) {
+  if (StatePlace.state === StatePlace.FirstSettlement ||
+      StatePlace.state === StatePlace.SecondSettlement) {
+    return true;
+  }
+  return false;
+};
+
+StatePlace.shouldGhostRoad = function(board, thing) {
+  if (StatePlace.state === StatePlace.FirstRoad ||
+      StatePlace.state === StatePlace.SecondRoad) {
+    return true;
+  }
+  return false;
+};
+
+StatePlace.shouldGhostRobber = function(board, thing) {
+  return false;
+};
