@@ -1,6 +1,10 @@
 function Point(x, y) {
   this.x = Math.round(x);
   this.y = Math.round(y);
+
+  this.equals = function(p2) {
+    return this.x === p2.x && this.y === p2.y;
+  };
 }
 
 Point.distance = function(x1, y1, x2, y2) {

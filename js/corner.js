@@ -1,7 +1,7 @@
 function Corner(x, y) {
-  var p = new Point(x, y);
-  this.x = p.x;
-  this.y = p.y;
+  this.p = new Point(x, y);
+  this.x = this.p.x;
+  this.y = this.p.y;
 
   var key = this.key();
   if (Corner.lookup[key]) {
@@ -11,7 +11,7 @@ function Corner(x, y) {
   }
 
   this.equals = function(c2) {
-    return this.x === c2.x && this.y === c2.y;
+    return this.p.equals(c2.p);
   };
 }
 
