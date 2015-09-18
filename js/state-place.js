@@ -94,11 +94,24 @@ StatePlace.placeSecondRoad = function(board, edge) {
 }
 
 StatePlace.shouldGhostCorner = function(board, corner) {
+  var result = false;
+
   if (StatePlace.state === StatePlace.FirstSettlement ||
       StatePlace.state === StatePlace.SecondSettlement) {
-    return true;
+    result = true;
+
+    var takenCornerKeys = _.union(_.keys(board.settlements), _.keys(board.cities));
+
+    // can't place right next to other settements or citites.
+    _.each(takenCornerKeys, function(key) {
+      var neighbors = board.cornerGraph[key];
+      if (_.contains(neighbors, corner)) {
+        result = false;
+      }
+    });
   }
-  return false;
+
+  return result;
 };
 
 StatePlace.shouldGhostRoad = function(board, edge) {
