@@ -6,6 +6,8 @@ function Board(rows, cols) {
   this.corners = [];
   this.edges = [];
 
+  this.edgeGraph = {};
+
   // a list of all tiles, corners, and edges
   this.everything = [];
 
@@ -63,6 +65,14 @@ function Board(rows, cols) {
     var edges = tile.shape.getEdges();
     this.edges = _.union(this.edges, edges);
   }
+
+  // build network of neighboring edges
+  this.edgeGraph = {};
+  var that = this;
+  _.each(this.edges, function(edge) {
+    var neighbors = edge.getNeighborEdges(that);
+    that.edgeGraph[edge.key()] = neighbors;
+  });
 
   this.everything = _.union(this.tiles, this.corners, this.edges);
 

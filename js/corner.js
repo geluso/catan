@@ -9,11 +9,15 @@ function Corner(x, y) {
   } else {
     Corner.lookup[key] = this;
   }
+
+  this.equals = function(c2) {
+    return this.x === c2.x && this.y === c2.y;
+  };
 }
 
 Corner.prototype.key = function() {
   var key = [this.x, this.y].join(",");
   return key;
-}             
+};
 
 Corner.lookup = {};

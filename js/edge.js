@@ -13,8 +13,8 @@ function Edge(c1, c2) {
     Edge.lookup[key] = this;
   }
 
-  this.c1 = c1;
-  this.c2 = c2;
+  this.c1 = new Corner(c1.x, c1.y);
+  this.c2 = new Corner(c2.x, c2.y);
 
   this.angle = angle(c1.x, c1.y, c2.x, c2.y);
 
@@ -24,6 +24,22 @@ function Edge(c1, c2) {
       angle = 2 * Math.PI + angle;
     }
     return angle;
+  }
+
+  this.getNeighborEdges = function(board) {
+    // an adge is a neighbor if it shares either of two corners
+    var edges = [];
+    var that = this;
+    _.each(board.edges, function(edge) {
+      if (edge.c1.equals(that.c1) || edge.c1.equals(that.c2) ||
+          edge.c2.equals(that.c1) || edge.c2.equals(that.c2)) {
+        edges.push(edge);
+      }
+    });
+
+    _.remove(edges, this);
+
+    return edges;
   }
 }
 
