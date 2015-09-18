@@ -48,9 +48,12 @@ function main() {
 
   initResources();
 
+  var trade = new Trade();
+
   $(".roll").click(function() {
     StateRoll(board);
     updateScore(board);
+    trade.updateTradeDisplay();
   });
 
   var loop;

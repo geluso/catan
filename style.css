@@ -19,19 +19,19 @@ body {
   background-color: rgba(0,0,0,.5);
 }
 
+.top { 
+  top: 0;
+}
+
+.bottom { 
+  bottom: 0;
+}
+
 .info.error {
   color: red;
 }
 
-.messages {
-  top: 0;
-}
-
-.resources {
-  bottom: 0;
-}
-
-.resources div {
+.info div {
   display: inline-block;
 }
 
@@ -46,11 +46,27 @@ body {
   font-size: 30px;
 }
 
-.roll button {
+.roll button, .trade button {
   font-size: 30px;
   margin-left: 1em;
 }
 
 .scoreboard {
-  margin-left: 1em;
+  margin-left: 2em;
 }
+
+.trade {
+  margin-left: 2em;
+}
+
+.trade .resource {
+  font-size: 17px;
+  color: black;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+button {
+  cursor: pointer;
+}
+

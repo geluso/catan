@@ -129,3 +129,11 @@ Resources.buyCity = function() {
     return false;
   }
 };
+
+Resources.resourceFromString = function(name) {
+  for (var i = 0; i < ALL_RESOURCES.length; i++) {
+    if (ALL_RESOURCES[i].name === name) {
+      return ALL_RESOURCES[i];
+    }
+  }
+};

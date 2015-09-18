@@ -26,6 +26,7 @@
     <script src="js/state-roll.js" type="text/javascript"></script>
     <script src="js/state-build.js" type="text/javascript"></script>
 
+    <script src="js/trade.js" type="text/javascript"></script>
     <script src="js/score.js" type="text/javascript"></script>
 
     <script src="js/mouse.js" type="text/javascript"></script>
@@ -36,21 +37,50 @@
       <canvas id="canvas"></canvas>
     </div>
 
-    <div class="info messages"></div>
-    <div class="info resources">
-      <div class="resource brick"></div>
-      <div class="value brick"></div>
-      <div class="resource wood"></div>
-      <div class="value wood"></div>
-      <div class="resource sheep"></div>
-      <div class="value sheep"></div>
-      <div class="resource wheat"></div>
-      <div class="value wheat"></div>
-      <div class="resource ore"></div>
-      <div class="value ore"></div>
+    <div class="info top">
+      <div class="messages"></div>
 
       <div class="roll">
         <button>roll!</button>
+      </div>
+    </div>
+
+
+    <div class="info bottom">
+      <div class="resources">
+        <div class="value brick"></div>
+        <div class="resource brick"></div>
+
+        <div class="value wood"></div>
+        <div class="resource wood"></div>
+        <div class="value sheep"></div>
+        <div class="resource sheep"></div>
+        <div class="value wheat"></div>
+        <div class="resource wheat"></div>
+        <div class="value ore"></div>
+        <div class="resource ore"></div>
+      </div>
+
+      <div class="trade resources">
+        offer
+        <div class="offer">
+          <div class="resource brick">0</div>
+          <div class="resource wood">0</div>
+          <div class="resource sheep selected">4</div>
+          <div class="resource wheat">0</div>
+          <div class="resource ore">0</div>
+        </div>
+
+        for
+        <div class="receive">
+          <div class="resource brick selected">1</div>
+          <div class="resource wood">0</div>
+          <div class="resource sheep">0</div>
+          <div class="resource wheat">0</div>
+          <div class="resource ore">0</div>
+        </div>
+
+        <button>trade</button>
       </div>
 
       <div class="scoreboard">
