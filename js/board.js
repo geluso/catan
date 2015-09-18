@@ -3,10 +3,11 @@ function Board(rows, cols) {
   this.tileLookup = {};
 
   this.tiles = [];
-  this.corners = [];
   this.edges = [];
+  this.corners = [];
 
   this.edgeGraph = {};
+  this.cornerGraph = {};
 
   // a list of all tiles, corners, and edges
   this.everything = [];
@@ -67,11 +68,20 @@ function Board(rows, cols) {
   }
 
   // build network of neighboring edges
-  this.edgeGraph = {};
   var that = this;
   _.each(this.edges, function(edge) {
     var neighbors = edge.getNeighborEdges(that);
     that.edgeGraph[edge.key()] = neighbors;
+  });
+
+  // build network of neighboring corners
+  _.each(this.corners, function(corner) {
+    that.cornerGraph[corner.key()] = [];
+  });
+
+  _.each(this.edges, function(edge) {
+    that.cornerGraph[edge.c1.key()].push(edge.c2);
+    that.cornerGraph[edge.c2.key()].push(edge.c1);
   });
 
   this.everything = _.union(this.tiles, this.corners, this.edges);
