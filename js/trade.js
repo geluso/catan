@@ -4,16 +4,33 @@ function Trade() {
 
   this.tradeRatio = {};
 
+  var that = this;
   $(".trade .offer .resource").click(function(e) {
     var resourceName = e.target.classList[1];
-    trade.setOffering(resourceName);
+    that.setOffering(resourceName);
   })
 
   $(".trade .receive .resource").click(function(e) {
     var resourceName = e.target.classList[1];
-    trade.setReceiving(resourceName);
+    that.setReceiving(resourceName);
   })
 
+  $(".trade button").click(function() {
+    that.trade();
+  });
+
+  this.trade = function() {
+    if (this.tradeDisabled) {
+      $(".messages").text("Not enough resources for that trade.");
+      return;
+    }
+
+    RESOURCES[this.offering.name] -= this.tradeRatio[this.offering.name];
+    RESOURCES[this.receiving.name]++;
+
+    updateResources();
+    this.updateTradeDisplay();
+  }
 
   this.setOffering = function(resourceName) {
     this.offering = Resources.resourceFromString(resourceName);
@@ -65,10 +82,12 @@ function Trade() {
     });
 
     if (RESOURCES[this.offering.name] < this.tradeRatio[this.offering.name]) {
-      $(".trade button").attr("disabled", true);
+      this.tradeDisabled = true;
     } else {
-      $(".trade button").attr("disabled", false);
+      this.tradeDisabled = false;
     }
+
+    $(".trade button").attr("disabled", this.tradeDisabled);
   }
 
   this.setStartingTradeRatios(Trade.STARTING_TRADE_RATIO);
