@@ -35,17 +35,6 @@ body {
   display: inline-block;
 }
 
-.resources .resource {
-  width: 20px;
-  height: 20px;
-  border: solid black 1px;
-  background-color: white;
-}
-
-.resources .value {
-  font-size: 30px;
-}
-
 .roll button, .trade button {
   font-size: 30px;
   margin-left: 1em;
@@ -59,7 +48,11 @@ body {
   margin-left: 2em;
 }
 
-.trade .resource {
+.resource {
+  width: 20px;
+  height: 20px;
+  border: solid black 1px;
+
   font-size: 17px;
   color: black;
   font-weight: bold;
