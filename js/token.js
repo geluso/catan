@@ -85,7 +85,12 @@ function TokenDrawer(ctx) {
       var path = new Path2D();
       path.arc(i * 3 - offset, 9, radius, startAngle, endAngle);
 
-      ctx.fillStyle = "Black";
+      if (value === 6 || value === 8) {
+        ctx.fillStyle = "red";
+      } else {
+        ctx.fillStyle = "black";
+      }
+
       ctx.fill(path);
     }
   }
