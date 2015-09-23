@@ -1,15 +1,18 @@
 function updateScore(board) {
-  var score = 0;
-
-  _.each(board.settlements, function() {
-    score += 1;
+  var scores = {};
+  _.each(PLAYERS, function(playerColor) {
+    scores[playerColor] = 0;
   });
 
-  _.each(board.cities, function() {
-    score += 2;
+  _.each(board.settlements, function(settlement) {
+    scores[settlement.player] += 1;
   });
 
-  $(".score").text(score);
+  _.each(board.cities, function(city) {
+    scores[city.player] += 2;
+  });
+
+  $(".score").text(scores[PLAYERS[0]]);
 
   return score;
 }
