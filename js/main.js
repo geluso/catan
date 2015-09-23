@@ -35,23 +35,23 @@ function main() {
 
     var thing = board.getThing(MOUSE_X, MOUSE_Y);
 
-    board.state(board, thing);
+    board.state.execute(thing);
     updateScore(board);
   });
 
   var board = new Board(rows, cols);
   var boardDrawer = new BoardDrawer(ctx);
 
-  board.state = StatePlace;
-  board.state.state = StatePlace.Start;
-  board.state();
+  board.state = new StatePlace(board);
+  board.state.start();
 
   initResources();
 
   var trade = new Trade();
 
+  var roller = new StateRoll(board);
   $(".roll").click(function() {
-    StateRoll(board);
+    roller.execute();
     updateScore(board);
     trade.updateTradeDisplay();
   });

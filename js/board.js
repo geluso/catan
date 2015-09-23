@@ -136,6 +136,29 @@ function Board(rows, cols) {
   };
 }
 
+Board.prototype.canPlaceSettlement = function(cornerKey) {
+  return !this.isCornerOccupied(cornerKey) &&
+         this.isTwoAway(cornerKey);
+};
+
+Board.prototype.isCornerOccupied = function(cornerKey) {
+  return this.settlements[cornerKey] || this.cities[cornerKey];
+};
+
+Board.prototype.isTwoAway = function(cornerKey) {
+  // assume it is two away from anything, until proven guilty.
+  var result = true;
+
+  var neighbors = this.cornerGraph[cornerKey];
+  _.each(neighbors, function(neighbor) {
+    if (this.isCornerOccupied(neighbor.key())) {
+      result = false;
+    }
+  }, this);
+
+  return result;
+};
+
 function BoardDrawer(ctx) {
   this.ctx = ctx;
 
@@ -163,7 +186,7 @@ function BoardDrawer(ctx) {
     if (board.hovering) {
       var thing = board.hovering;
       if (thing instanceof Corner) {
-        if (board.state.shouldGhostCorner(board, thing)) {
+        if (board.state.shouldGhostCorner(thing)) {
           var corner = thing;
           var key = corner.key();
 
@@ -178,7 +201,7 @@ function BoardDrawer(ctx) {
           }
         }
       } else if (thing instanceof Edge) {
-        if (board.state.shouldGhostRoad(board, thing)) {
+        if (board.state.shouldGhostRoad(thing)) {
           var edge = thing;
           var key = edge.key();
 
@@ -188,7 +211,7 @@ function BoardDrawer(ctx) {
           }
         }
       } else if (thing instanceof Tile) {
-        if (board.state.shouldGhostRobber(board, thing)) {
+        if (board.state.shouldGhostRobber(thing)) {
 
         }
       }

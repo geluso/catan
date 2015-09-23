@@ -1,5 +1,9 @@
 function StateRoll(board) {
-  if (_.size(board.settlements) + _.size(board.cities) === 0) {
+  this.board = board;
+}
+
+StateRoll.prototype.execute = function() {
+  if (_.size(this.board.settlements, this) + _.size(this.board.cities, this) === 0) {
     $(".messages").text("choose settlements before rolls will make any effect");
     return;
   }
@@ -19,7 +23,7 @@ function StateRoll(board) {
   }
 
   var tiles = [];
-  _.each(board.tiles, function(tile) {
+  _.each(this.board.tiles, function(tile) {
     if (tile.token) {
       if (tile.token.value === roll) {
         tiles.push(tile);
@@ -37,14 +41,13 @@ function StateRoll(board) {
     _.each(corners, function(corner) {
       var key = corner.key()
 
-      if (board.settlements[key]) {
+      if (this.board.settlements[key]) {
         RESOURCES[tile.resource.name] += 1;
-      } else if (board.cities[key]) {
+      } else if (this.board.cities[key]) {
         RESOURCES[tile.resource.name] += 2;
       }
-
-    });
-  });
+    }, this);
+  }, this);
 
   updateResources();
 }
