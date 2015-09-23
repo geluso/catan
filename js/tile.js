@@ -6,7 +6,7 @@ var HALF_EDGE = EDGE_LENGTH / 2;
 
 var TILE_HEIGHT = Math.sqrt(3) / 2 * HALF_EDGE;
 
-var PLAYERS = ["red", "orange", "green", "blue", "white", "brown"];
+var PLAYERS = ["red", "orange", "green", "blue", "white", "SaddleBrown"];
 
 function Tile(x, y, resource, token) {
   this.resource = resource;
