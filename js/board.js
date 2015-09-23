@@ -124,7 +124,7 @@ function Board(rows, cols) {
   }
 
   this.placeRoad = function(edge, player) {
-    var road = new Road(edge, "red");
+    var road = new Road(edge, player);
     var key = edge.key();
 
     if (!this.roads[key]) {

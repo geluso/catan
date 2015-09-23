@@ -8,7 +8,15 @@ StatePlace.Done = 5;
 function StatePlace(board) {
   // score all board positions according to probabilities
   this.board = board;
-  this.ai = new AI(board, "blue");
+
+  this.ais = [];
+  _.each(PLAYERS, function(playerColor) {
+    if (playerColor !== "red") {
+      var ai = new AI(this.board, playerColor);
+      this.ais.push(ai);
+    }
+  }, this);
+
   this.state = StatePlace.Start;
 }
 
@@ -72,11 +80,18 @@ StatePlace.prototype.PlaceSettlement = function(thing) {
 }
 
 StatePlace.prototype.AIPlaceSettlement = function() {
-  var cornerKey = this.ai.bestAvailableCorner();
-  var corner = Corner.lookup[cornerKey];
-  
-  var settlement = new Settlement(corner, this.ai.color);
-  this.board.settlements[cornerKey] = settlement;
+  _.each(this.ais, function(ai) {
+    var cornerKey = ai.bestAvailableCorner();
+    var corner = Corner.lookup[cornerKey];
+    
+    var settlement = new Settlement(corner, ai.color);
+    this.board.settlements[cornerKey] = settlement;
+
+    var roads = this.board.cornerToEdges[cornerKey];
+    var roadChoice = _.sample(roads);
+
+    this.board.placeRoad(roadChoice, ai.color)
+  }, this);
 }
 
 StatePlace.prototype.PlaceRoad = function(thing) {
