@@ -12,7 +12,7 @@ function updateScore(board) {
     scores[city.player] += 2;
   });
 
-  $(".score").text(scores[PLAYERS[0]]);
-
+  var score = scores[PLAYERS[0]];
+  $(".score").text(score);
   return score;
 }
