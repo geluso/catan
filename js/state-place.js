@@ -8,15 +8,6 @@ StatePlace.Done = 5;
 function StatePlace(board) {
   // score all board positions according to probabilities
   this.board = board;
-
-  this.ais = [];
-  _.each(PLAYERS, function(playerColor) {
-    if (playerColor !== "red") {
-      var ai = new AI(this.board, playerColor);
-      this.ais.push(ai);
-    }
-  }, this);
-
   this.state = StatePlace.Start;
 }
 
@@ -80,7 +71,7 @@ StatePlace.prototype.PlaceSettlement = function(thing) {
 }
 
 StatePlace.prototype.AIPlaceSettlement = function() {
-  _.each(this.ais, function(ai) {
+  _.each(this.board.ais, function(ai) {
     var cornerKey = ai.bestAvailableCorner();
     var corner = Corner.lookup[cornerKey];
     
