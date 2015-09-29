@@ -1,5 +1,3 @@
-var NARRATE_TURNS = false;
-
 function StateTurn(game) {
   this.game = game;
 
@@ -9,7 +7,7 @@ function StateTurn(game) {
 
 StateTurn.prototype.startTurn = function() {
   this.currentTurn = PLAYERS[this.index];
-  if (NARRATE_TURNS) {
+  if (LOG_TURNS) {
     console.log(this.currentTurn, "starts turn");
   }
 
@@ -27,7 +25,7 @@ StateTurn.prototype.endTurn = function() {
     this.index = 0;
   }
 
-  if (NARRATE_TURNS) {
+  if (LOG_TURNS) {
     console.log(this.currentTurn, "ends turn");
   }
 }

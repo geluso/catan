@@ -44,29 +44,64 @@ AI.prototype.evaluatePostions = function() {
 };
 
 AI.prototype.enumerate = function() {
-  var options = _.union(
-    this.enumerateRoads(),
-    this.enumerateSettlements(),
-    this.enumerateCities(),
-    this.enumerateTrades()
-  );
+  var roads = this.enumerateRoads();
+  var settlements = this.enumerateSettlements();
+  var cities = this.enumerateCities();
+  var trades = this.enumerateTrades();
+
+  var allOptions = _.union(roads, settlements, cities, trades);
+  //var choice = _.sample(_.union(options));
 
   // random choices for now.
-  if (options.length === 0) {
-    if (NARRATE_TURNS) {
+  if (allOptions.length === 0) {
+    if (LOG_EMPTY_TURNS) {
       console.log(this.color, "can't do anything.");
     }
   } else {
-    var choice = _.sample(_.union(options));
-    if (choice instanceof Actions.BuildRoad) {
-      if (NARRATE_TURNS) {
-        console.log(this.color, "buys road.");
+    if (cities.length > 0) {
+      if (LOG_BUILDS) {
+        console.log(this.color, "builds city.");
       }
 
+      // pay for it.
+      Resources.buyCity(this.color);
+
+      // build it.
+      var choice = _.sample(cities);
+      var city = new City(choice.corner, this.color);
+      this.board.cities[choice.corner.key()] = city;
+
+    } else if (settlements.length > 0) {
+      if (LOG_BUILDS) {
+        console.log(this.color, "builds settlement.");
+      }
+
+      // pay for it.
+      Resources.buySettlement(this.color);
+
+      // build it.
+      var choice = _.sample(settlements);
+      var settlement = new Settlement(choice.corner, this.color);
+      this.board.settlements[choice.corner.key()] = settlement;
+
+    } else if (roads.length > 0) {
+      if (LOG_BUILDS) {
+        console.log(this.color, "builds road.");
+      }
+
+      var choice = _.sample(roads);
       Resources.buyRoad(this.color);
       this.board.placeRoad(choice.edge, this.color);
     }
   }
+};
+
+AI.prototype.roads = function() {
+  var roads = _.filter(this.board.roads, function(road) {
+    return road.player === this.color;
+  }, this);
+
+  return roads;
 };
 
 AI.prototype.enumerateRoads = function() {
@@ -74,12 +109,10 @@ AI.prototype.enumerateRoads = function() {
     return [];
   }
 
-  var myRoads = _.filter(this.board.roads, function(road) {
-    return road.player === this.color;
-  }, this);
-
+  var roads = this.roads();
   var roadExtensions = [];
-  _.each(myRoads, function(road) {
+
+  _.each(roads, function(road) {
     var neighbors = road.edge.getNeighborEdges(this.board);
     _.each(neighbors, function(neighbor) {
       if (!this.board.roads[neighbor.key()]) {
@@ -93,10 +126,33 @@ AI.prototype.enumerateRoads = function() {
   return roadExtensions;
 };
 
+AI.prototype.settlements = function() {
+  var settlements = _.filter(this.board.settlements, function(settlement) {
+    return settlement.player === this.color;
+  }, this);
+
+  return settlements;
+};
+
 AI.prototype.enumerateSettlements = function() {
   if (!Resources.canBuySettlement(this.color)) {
     return [];
   }
+
+  var roads = this.roads();
+  var newSettlements = [];
+
+  _.each(roads, function(road) {
+    if (this.board.canPlaceSettlement(road.edge.c1.key())) {
+      var action = new Actions.BuildSettlement(this.color, road.edge.c1)
+      newSettlements.push(action);
+    }
+
+    if (this.board.canPlaceSettlement(road.edge.c2.key())) {
+      var action = new Actions.BuildSettlement(this.color, road.edge.c2)
+      newSettlements.push(action);
+    }
+  }, this);
 
   return [];
 };
@@ -106,7 +162,13 @@ AI.prototype.enumerateCities = function() {
     return [];
   }
 
-  return [];
+  // any settlement can be upgraded to a city.
+  var settlements = this.settlements();
+  var newCities = _.map(settlements, function(settlement) {
+    return new Actions.BuildCity(this.color, settlement.corner);
+  }, this);
+
+  return newCities;
 };
 
 AI.prototype.enumerateTrades = function() {

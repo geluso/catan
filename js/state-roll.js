@@ -14,7 +14,7 @@ StateRoll.prototype.execute = function() {
   var d2 = _.sample(die);
   var roll = d1 + d2;
 
-  if (NARRATE_TURNS) {
+  if (LOG_TURNS) {
     console.log(this.game.turn.currentTurn, "rolls", roll);
   }
 
