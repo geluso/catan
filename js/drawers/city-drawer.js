@@ -1,8 +1,3 @@
-function City(corner, player) {
-  this.corner = corner;
-  this.player = player;
-}
-
 function CityDrawer(ctx) {
   this.ctx = ctx;
 
@@ -32,3 +27,6 @@ function CityDrawer(ctx) {
     this.ctx.globalAlpha = 1;
   }
 }
+
+City.WIDTH = 2 * Settlement.WIDTH;
+City.HEIGHT = Settlement.WIDTH;
