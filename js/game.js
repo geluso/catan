@@ -12,13 +12,13 @@ function Game(board) {
   this.state.start();
 
   var roller = new StateRoll(this);
-  $(".roll").click(function() {
+  $("button.roll").click(function() {
     roller.execute();
     updateScore(board);
     trade.updateTradeDisplay();
   });
 
-  $(".endturn").click(function() {
+  $("button.endturn").click(function() {
     game.endTurn();
     updateScore(board);
     trade.updateTradeDisplay();

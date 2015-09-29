@@ -15,7 +15,7 @@ function Trade() {
     that.setReceiving(resourceName);
   })
 
-  $(".trade button").click(function() {
+  $("button.trade").click(function() {
     that.trade();
   });
 
@@ -87,7 +87,7 @@ function Trade() {
       this.tradeDisabled = false;
     }
 
-    $(".trade button").attr("disabled", this.tradeDisabled);
+    $("button.trade").attr("disabled", this.tradeDisabled);
   }
 
   this.setStartingTradeRatios(Trade.STARTING_TRADE_RATIO);

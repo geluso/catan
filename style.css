@@ -35,17 +35,13 @@ body {
   display: inline-block;
 }
 
-.roll button, .trade button {
-  font-size: 30px;
-  margin-left: 1em;
-}
-
 .scoreboard {
   margin-left: 2em;
 }
 
 .trade {
-  margin-left: 2em;
+  margin-left: 1em;
+  margin-right: 1em;
 }
 
 .resource {
@@ -59,7 +55,8 @@ body {
   cursor: pointer;
 }
 
-button {
+.actions button {
   cursor: pointer;
+  font-size: 30px;
 }
 
