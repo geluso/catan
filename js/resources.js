@@ -1,4 +1,4 @@
-var LOG_RESOURCES = true;
+var LOG_RESOURCES = false;
 var ROBBER_LIMIT = 7;
 
 var BRICK = {
@@ -85,7 +85,7 @@ function updateResources() {
   if (LOG_RESOURCES) {
     console.log("");
     _.each(PLAYERS, function(player) {
-      console.log(player, RESOURCES[player]);
+      console.log(totalResources(player), player, RESOURCES[player]);
     });
   }
 }
