@@ -10,29 +10,29 @@ function Scores(game) {
 }
 
 Scores.prototype.update = function() {
-  _.each(PLAYERS, function(playerColor) {
-    this.scores[playerColor] = 0;
+  _.each(PLAYERS, function(player) {
+    this.scores[player] = 0;
   }, this);
 
   _.each(this.board.settlements, function(settlement) {
     this.scores[settlement.player] += 1;
 
-    if (this.scores[settlement.playerColor] > this.maxScore) {
-      this.maxScore = this.scores[settlement.playerColor];
-      this.leader = settlement.playerColor;
+    if (this.scores[settlement.player] > this.maxScore) {
+      this.maxScore = this.scores[settlement.player];
+      this.leader = settlement.player;
     }
   }, this);
 
   _.each(this.board.cities, function(city) {
     this.scores[city.player] += 2;
 
-    if (this.scores[city.playerColor] > this.maxScore) {
-      this.maxScore = this.scores[city.playerColor];
-      this.leader = city.playerColor;
+    if (this.scores[city.player] > this.maxScore) {
+      this.maxScore = this.scores[city.player];
+      this.leader = city.player;
     }
   }, this);
 
-  var score = this.scores[PLAYERS[0]];
+  var score = this.scores[MAIN_PLAYER];
   $(".score").text(score);
   return score;
 }
