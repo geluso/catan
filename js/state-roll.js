@@ -43,9 +43,11 @@ StateRoll.prototype.execute = function() {
       var key = corner.key()
 
       if (this.board.settlements[key]) {
-        RESOURCES[tile.resource.name] += 1;
+        var player = this.board.settlements[key].player;
+        RESOURCES[player][tile.resource.name] += 1;
       } else if (this.board.cities[key]) {
-        RESOURCES[tile.resource.name] += 2;
+        var player = this.board.settlements[key].player;
+        RESOURCES[player][tile.resource.name] += 2;
       }
     }, this);
   }, this);

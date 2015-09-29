@@ -4,13 +4,15 @@ function StateBuild(game, thing) {
 }
 
 StateBuild.prototype.execute = function(thing) {
+  var player = this.game.currentPlayer;
+
   if (thing instanceof Corner) {
     var corner = thing;
     var key = corner.key();
 
     // upgrade settlements to cities
     if (this.board.settlements[key]) {
-      if (!Resources.buyCity()) {
+      if (!Resources.buyCity(player)) {
         $(".messages").text("Can't afford City.");
       } else {
         // remove old settlement
@@ -25,7 +27,7 @@ StateBuild.prototype.execute = function(thing) {
         return;
       }
 
-      if (!Resources.buySettlement()) {
+      if (!Resources.buySettlement(player)) {
         $(".messages").text("Can't afford Settlement.");
       } else {
         var settlement = new Settlement(corner, "red");
@@ -33,7 +35,7 @@ StateBuild.prototype.execute = function(thing) {
       }
     }
   } else if (thing instanceof Edge) {
-    if (!Resources.buyRoad()) {
+    if (!Resources.buyRoad(player)) {
       $(".messages").text("Can't afford Road.");
     } else {
       var edge = thing;

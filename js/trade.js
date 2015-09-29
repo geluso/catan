@@ -25,8 +25,8 @@ function Trade() {
       return;
     }
 
-    RESOURCES[this.offering.name] -= this.tradeRatio[this.offering.name];
-    RESOURCES[this.receiving.name]++;
+    RESOURCES[MAIN_PLAYER][this.offering.name] -= this.tradeRatio[this.offering.name];
+    RESOURCES[MAIN_PLAYER][this.receiving.name]++;
 
     updateResources();
     this.updateTradeDisplay();
@@ -81,7 +81,7 @@ function Trade() {
       }
     });
 
-    if (RESOURCES[this.offering.name] < this.tradeRatio[this.offering.name]) {
+    if (RESOURCES[MAIN_PLAYER][this.offering.name] < this.tradeRatio[this.offering.name]) {
       this.tradeDisabled = true;
     } else {
       this.tradeDisabled = false;

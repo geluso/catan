@@ -1,3 +1,5 @@
+var LOG_RESOURCES = false;
+
 var BRICK = {
   name: "brick",
   color: "Brown"
@@ -49,12 +51,23 @@ function ResourceGenerator() {
 }
 
 function initResources() {
+  // initialize each player
+  _.each(PLAYERS, function(player) {
+    RESOURCES[player] = {};
+  });
+
+  // initialize resources for each player
+  _.each(PLAYERS, function(player) {
+    _.each(ALL_RESOURCES, function(resource) {
+      RESOURCES[player][resource.name] = 0;
+    });
+  });
+
+  // style the display of resources properly
   _.each(ALL_RESOURCES, function(resource) {
     var selector = ".resources .resource." + resource.name;
     var style = {'background-color': resource.color};
     $(selector).css(style);
-
-    RESOURCES[resource.name] = 10;
   });
 
   updateResources();
@@ -64,16 +77,28 @@ function updateResources() {
   _.each(ALL_RESOURCES, function(resource) {
     var selector = ".resources .value." + resource.name;
 
-    var available = RESOURCES[resource.name];
+    var available = RESOURCES[MAIN_PLAYER][resource.name];
     $(selector).text(available);
   });
+
+  if (LOG_RESOURCES) {
+    console.log("");
+    _.each(PLAYERS, function(player) {
+      console.log(player, RESOURCES[player]);
+    });
+  }
 }
 
 function halveResources() {
-  _.each(ALL_RESOURCES, function(resource) {
-    var available = RESOURCES[resource.name];
-    available = Math.ceil(available / 2);
-    RESOURCES[resource.name] = available;
+  _.each(PLAYERS, function(player) {
+    _.each(ALL_RESOURCES, function(resource) {
+      // count available
+      var available = RESOURCES[player][resource.name];
+      available = Math.ceil(available / 2);
+
+      // update what's left
+      RESOURCES[player][resource.name] = available;
+    });
   });
 
   updateResources();
@@ -81,12 +106,12 @@ function halveResources() {
 
 var Resources = {};
 
-Resources.buyRoad = function() {
-  if (RESOURCES[BRICK.name] > 0 && RESOURCES[WOOD.name] > 0) {
+Resources.buyRoad = function(player) {
+  if (RESOURCES[player][BRICK.name] > 0 && RESOURCES[player][WOOD.name] > 0) {
     $(".messages").text("Built Road.");
 
-    RESOURCES[BRICK.name] = Math.max(0, RESOURCES[BRICK.name] - 1);
-    RESOURCES[WOOD.name] = Math.max(0, RESOURCES[WOOD.name] - 1);
+    RESOURCES[player][BRICK.name] = Math.max(0, RESOURCES[player][BRICK.name] - 1);
+    RESOURCES[player][WOOD.name] = Math.max(0, RESOURCES[player][WOOD.name] - 1);
 
     updateResources();
     return true;
@@ -95,16 +120,16 @@ Resources.buyRoad = function() {
   }
 };
 
-Resources.buySettlement = function() {
-  if (RESOURCES[BRICK.name] > 0 && RESOURCES[WOOD.name] > 0 &&
-      RESOURCES[WHEAT.name] > 0 && RESOURCES[SHEEP.name] > 0) {
+Resources.buySettlement = function(player) {
+  if (RESOURCES[player][BRICK.name] > 0 && RESOURCES[player][WOOD.name] > 0 &&
+      RESOURCES[player][WHEAT.name] > 0 && RESOURCES[player][SHEEP.name] > 0) {
 
     $(".messages").text("Built Settlement.");
 
-    RESOURCES[BRICK.name] = Math.max(0, RESOURCES[BRICK.name] - 1);
-    RESOURCES[WOOD.name] = Math.max(0, RESOURCES[WOOD.name] - 1);
-    RESOURCES[WHEAT.name] = Math.max(0, RESOURCES[WHEAT.name] - 1);
-    RESOURCES[SHEEP.name] = Math.max(0, RESOURCES[SHEEP.name] - 1);
+    RESOURCES[player][BRICK.name] = Math.max(0, RESOURCES[player][BRICK.name] - 1);
+    RESOURCES[player][WOOD.name] = Math.max(0, RESOURCES[player][WOOD.name] - 1);
+    RESOURCES[player][WHEAT.name] = Math.max(0, RESOURCES[player][WHEAT.name] - 1);
+    RESOURCES[player][SHEEP.name] = Math.max(0, RESOURCES[player][SHEEP.name] - 1);
 
     updateResources();
     return true;
@@ -113,15 +138,15 @@ Resources.buySettlement = function() {
   }
 };
 
-Resources.buyCity = function() {
-  if (RESOURCES[ORE.name] > 2 && RESOURCES[WHEAT.name] > 1) {
+Resources.buyCity = function(player) {
+  if (RESOURCES[player][ORE.name] > 2 && RESOURCES[player][WHEAT.name] > 1) {
     $(".messages").text("Built City.");
 
-    RESOURCES[ORE.name] = Math.max(0, RESOURCES[ORE.name] - 1);
-    RESOURCES[ORE.name] = Math.max(0, RESOURCES[ORE.name] - 1);
-    RESOURCES[ORE.name] = Math.max(0, RESOURCES[ORE.name] - 1);
-    RESOURCES[WHEAT.name] = Math.max(0, RESOURCES[WHEAT.name] - 1);
-    RESOURCES[WHEAT.name] = Math.max(0, RESOURCES[WHEAT.name] - 1);
+    RESOURCES[player][ORE.name] = Math.max(0, RESOURCES[player][ORE.name] - 1);
+    RESOURCES[player][ORE.name] = Math.max(0, RESOURCES[player][ORE.name] - 1);
+    RESOURCES[player][ORE.name] = Math.max(0, RESOURCES[player][ORE.name] - 1);
+    RESOURCES[player][WHEAT.name] = Math.max(0, RESOURCES[player][WHEAT.name] - 1);
+    RESOURCES[player][WHEAT.name] = Math.max(0, RESOURCES[player][WHEAT.name] - 1);
 
     updateResources();
     return true;

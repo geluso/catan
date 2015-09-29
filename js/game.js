@@ -11,23 +11,26 @@ function Game(board) {
     }
   }, this);
 
+  this.currentPlayer = MAIN_PLAYER;
+
   // set up resources and trades
   initResources();
-  var trade = new Trade();
+  this.trade = new Trade();
 
   this.state = new StatePlace(this);
   this.state.start();
 
+  var that = this;
   var roller = new StateRoll(this);
   $("button.roll").click(function() {
     roller.execute();
     updateScore(board);
-    trade.updateTradeDisplay();
+    that.trade.updateTradeDisplay();
   });
 
   $("button.endturn").click(function() {
     game.endTurn();
     updateScore(board);
-    trade.updateTradeDisplay();
+    that.trade.updateTradeDisplay();
   });
 }
