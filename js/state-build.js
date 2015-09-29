@@ -45,6 +45,13 @@ StateBuild.prototype.execute = function(thing) {
       this.board.roads[key] = road;
     }
   }
+
+  this.game.scores.update();
+  this.game.trade.update();
+
+  if (game.scores.maxScore >= Scores.GOAL) {
+    $(".messages").text(this.game.scores.winText());
+  }
 }
 
 StateBuild.prototype.shouldGhostRoad = function(edge) {

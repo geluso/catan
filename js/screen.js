@@ -30,7 +30,7 @@ function Screen(width, height, game) {
     var thing = game.board.getThing(MOUSE_X, MOUSE_Y);
 
     game.state.execute(thing);
-    updateScore(game.board);
+    game.scores.update(game.board);
   });
 }
 

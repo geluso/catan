@@ -13,10 +13,14 @@ function Game(board) {
 
   this.currentPlayer = MAIN_PLAYER;
 
-  // set up resources and trades
+  // set up resources
   initResources();
-  this.trade = new Trade();
 
+  // set up trade and score
+  this.trade = new Trade();
+  this.scores = new Scores(this);
+
+  // begin game with first state
   this.state = new StatePlace(this);
   this.state.start();
 
@@ -24,13 +28,9 @@ function Game(board) {
   var roller = new StateRoll(this);
   $("button.roll").click(function() {
     roller.execute();
-    updateScore(board);
-    that.trade.updateTradeDisplay();
   });
 
   $("button.endturn").click(function() {
     game.endTurn();
-    updateScore(board);
-    that.trade.updateTradeDisplay();
   });
 }

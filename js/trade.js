@@ -29,17 +29,17 @@ function Trade() {
     RESOURCES[MAIN_PLAYER][this.receiving.name]++;
 
     updateResources();
-    this.updateTradeDisplay();
+    this.update();
   }
 
   this.setOffering = function(resourceName) {
     this.offering = Resources.resourceFromString(resourceName);
-    this.updateTradeDisplay();
+    this.update();
   };
 
   this.setReceiving = function(resourceName) {
     this.receiving = Resources.resourceFromString(resourceName);
-    this.updateTradeDisplay();
+    this.update();
   };
 
   this.setStartingTradeRatios = function() {
@@ -60,10 +60,10 @@ function Trade() {
 
   this.setSpecificResourceTradeRatio = function(resourceName) {
     this.tradeRatio[resourceName] = Trade.SPECIFIC_RESOURCE_TRADE_RATIO;
-    updateTradeDisplay();
+    this.update();
   };
 
-  this.updateTradeDisplay = function() {
+  this.update = function() {
     var that = this;
     _.each($(".trade .offer .resource"), function(element) {
       $(element).text("0");
