@@ -37,8 +37,21 @@ StatePlace.prototype.execute = function(thing) {
     if (thing instanceof Edge) {
       this.PlaceRoad(thing);
 
-      // AI takes quick turns.
-      this.AIPlaceSettlement();
+      // AIs take turns.
+      if (this.state === StatePlace.FirstRoad) {
+        // AIs place first settlement
+        this.AIPlaceFirstSettlement();
+
+        // state goes to player placing second settlement
+        this.state = StatePlace.SecondSettlement;
+      } else if (this.state === StatePlace.SecondRoad) {
+        // AIs place second settlement
+        this.AIPlaceSecondSettlement();
+
+        // game proceeds to general rolling and building phase.
+        this.state = StatePlace.Done;
+        this.game.state = new StateBuild(this.game);
+      }
     } else {
       $(".messages").text("Must place Road.");
     }
@@ -82,7 +95,7 @@ StatePlace.prototype.initStartingResources = function(settlement) {
 
         // award resources for second-placed settlement
         if (this.board.settlements[key] === settlement) {
-          var player = this.board.settlements[key].player;
+          var player = settlement.player;
           RESOURCES[player][tile.resource.name] += 1;
         }
       }, this);
@@ -92,20 +105,36 @@ StatePlace.prototype.initStartingResources = function(settlement) {
   updateResources();
 };
 
-StatePlace.prototype.AIPlaceSettlement = function() {
+StatePlace.prototype.AIPlaceSettlement = function(ai) {
+  // pick the best spot for a new settlement.
+  var cornerKey = ai.bestAvailableCorner();
+  var corner = Corner.lookup[cornerKey];
+  
+  var settlement = new Settlement(corner, ai.color);
+  this.board.settlements[cornerKey] = settlement;
+
+  // pick the best spot for a new road.
+  var roads = this.board.cornerToEdges[cornerKey];
+  var roadChoice = _.sample(roads);
+
+  this.board.placeRoad(roadChoice, ai.color);
+
+  // return the settlement so resources may be granted
+  return settlement;
+};
+
+StatePlace.prototype.AIPlaceFirstSettlement = function() {
   _.each(this.game.ais, function(ai) {
-    var cornerKey = ai.bestAvailableCorner();
-    var corner = Corner.lookup[cornerKey];
-    
-    var settlement = new Settlement(corner, ai.color);
-    this.board.settlements[cornerKey] = settlement;
-
-    var roads = this.board.cornerToEdges[cornerKey];
-    var roadChoice = _.sample(roads);
-
-    this.board.placeRoad(roadChoice, ai.color)
+    this.AIPlaceSettlement(ai);
   }, this);
-}
+};
+
+StatePlace.prototype.AIPlaceSecondSettlement = function() {
+  _.each(this.game.ais, function(ai) {
+    var settlement = this.AIPlaceSettlement(ai);
+    this.initStartingResources(settlement);
+  }, this);
+};
 
 StatePlace.prototype.PlaceRoad = function(thing) {
   var edge = thing;
@@ -124,7 +153,6 @@ StatePlace.prototype.PlaceRoad = function(thing) {
 StatePlace.prototype.placeFirstRoad = function(edge) {
   if (this.board.placeRoad(edge, "red")) {
     $(".messages").text("Place your second Settlement.");
-    this.state = StatePlace.SecondSettlement;
   } else {
     $(".messages").text("Road can't be placed here.");
   }
@@ -136,9 +164,6 @@ StatePlace.prototype.placeSecondRoad = function(edge) {
   this.board.roads[key] = road;
 
   $(".messages").text("Roll away!!");
-
-  this.state = StatePlace.Done;
-  this.game.state = new StateBuild(this.game);
 }
 
 StatePlace.prototype.shouldGhostCorner = function(corner) {

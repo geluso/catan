@@ -1,4 +1,4 @@
-var LOG_RESOURCES = false;
+var LOG_RESOURCES = true;
 var ROBBER_LIMIT = 7;
 
 var BRICK = {
