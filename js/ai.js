@@ -43,6 +43,35 @@ AI.prototype.evaluatePostions = function() {
   return scores;
 };
 
+AI.prototype.enumerate = function() {
+  var options = _.union(
+    this.enumerateRoads(),
+    this.enumerateSettlements(),
+    this.enumerateCities(),
+    this.enumerateTrades()
+  );
+
+  // random choices for now.
+  var choice = _.sample(_.union(options));
+  console.log(this.color, "chose", choice);
+};
+
+AI.prototype.enumerateRoads = function() {
+  return [];
+};
+
+AI.prototype.enumerateSettlements = function() {
+  return [];
+};
+
+AI.prototype.enumerateCities = function() {
+  return [];
+};
+
+AI.prototype.enumerateTrades = function() {
+  return [];
+};
+
 AI.valueScore = function(value) {
   if (value === 2 || value === 12) {
     return 1;
