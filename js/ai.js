@@ -47,15 +47,18 @@ AI.prototype.enumerate = function() {
   var roads = this.enumerateRoads();
   var settlements = this.enumerateSettlements();
   var cities = this.enumerateCities();
-  var trades = this.enumerateTrades();
 
-  var allOptions = _.union(roads, settlements, cities, trades);
+  var allOptions = _.union(roads, settlements, cities);
   //var choice = _.sample(_.union(options));
 
   // random choices for now.
   if (allOptions.length === 0) {
-    if (LOG_EMPTY_TURNS) {
-      console.log(this.color, "can't do anything.");
+    if (this.game.trade.canTrade(this.color)) {
+      this.trade();
+    } else {
+      if (LOG_EMPTY_TURNS) {
+        console.log(this.color, "can't do anything.");
+      }
     }
   } else {
     if (cities.length > 0) {
@@ -171,12 +174,33 @@ AI.prototype.enumerateCities = function() {
   return newCities;
 };
 
-AI.prototype.enumerateTrades = function() {
-  if (!this.game.trade.canTrade(this.color)) {
-    return [];
-  }
+AI.prototype.trade = function() {
+  var max = 0;
+  var min = Infinity;
+  var resources = RESOURCES[this.color];
 
-  return [];
+  _.each(ALL_RESOURCES, function(resource) {
+    max = Math.max(max, resources[resource.name]);
+    min = Math.min(min, resources[resource.name]);
+  });
+
+  var maxResources = [];
+  var minResources = [];
+
+  _.each(ALL_RESOURCES, function(resource) {
+    if (resources[resource.name] === max) {
+      maxResources.push(resource);
+    }
+
+    if (resources[resource.name] === min) {
+      minResources.push(resource);
+    }
+  });
+
+  var give = _.sample(maxResources);
+  var get = _.sample(minResources);
+
+  this.game.trade.bankTrade(this.color, give, get);
 };
 
 AI.valueScore = function(value) {

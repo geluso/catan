@@ -25,8 +25,16 @@ function Trade() {
       return;
     }
 
-    RESOURCES[MAIN_PLAYER][this.offering.name] -= this.tradeRatio[this.offering.name];
-    RESOURCES[MAIN_PLAYER][this.receiving.name]++;
+    this.bankTrade(MAIN_PLAYER, this.offering, this.receiving);
+  }
+
+  this.bankTrade = function(player, offering, receiving) {
+    if (LOG_TRADING) {
+      console.log(player, "trades", offering.name, "for", receiving.name);
+    }
+
+    RESOURCES[player][offering.name] -= this.tradeRatio[offering.name];
+    RESOURCES[player][receiving.name]++;
 
     updateResources();
     this.update();
@@ -93,7 +101,14 @@ function Trade() {
   this.setStartingTradeRatios(Trade.STARTING_TRADE_RATIO);
 
   this.canTrade = function(color) {
-    return false;
+    var canTrade = false;
+    _.each(ALL_RESOURCES, function(resource) {
+      if (RESOURCES[color][resource.name] >= Trade.STARTING_TRADE_RATIO) {
+        canTrade = true;
+      }
+    });
+
+    return canTrade;
   }
 }
 
