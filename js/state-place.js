@@ -5,9 +5,10 @@ StatePlace.SecondSettlement = 3;
 StatePlace.SecondRoad = 4;
 StatePlace.Done = 5;
 
-function StatePlace(board) {
+function StatePlace(game) {
   // score all board positions according to probabilities
-  this.board = board;
+  this.game = game;
+  this.board = game.board;
   this.state = StatePlace.Start;
 }
 
@@ -116,7 +117,7 @@ StatePlace.prototype.placeSecondRoad = function(edge) {
   $(".messages").text("Roll away!!");
 
   this.state = StatePlace.Done;
-  this.board.state = new StateBuild(this.board);
+  this.game.state = new StateBuild(this.game);
 }
 
 StatePlace.prototype.shouldGhostCorner = function(corner) {

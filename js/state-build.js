@@ -1,5 +1,6 @@
-function StateBuild(board, thing) {
-  this.board = board;
+function StateBuild(game, thing) {
+  this.game = game;
+  this.board = game.board;
 }
 
 StateBuild.prototype.execute = function(thing) {
