@@ -65,11 +65,32 @@ StatePlace.prototype.PlaceSettlement = function(thing) {
     }
 
     if (this.state === StatePlace.SecondSettlement) {
+      this.initStartingResources(settlement);
+
       $(".messages").text("Place your second Road.");
       this.state = StatePlace.SecondRoad;
     }
   }
 }
+
+StatePlace.prototype.initStartingResources = function(settlement) {
+  _.each(this.board.tiles, function(tile) {
+    if (_.contains(ALL_RESOURCES, tile.resource)) {
+      var corners = tile.shape.getCorners();
+      _.each(corners, function(corner) {
+        var key = corner.key()
+
+        // award resources for second-placed settlement
+        if (this.board.settlements[key] === settlement) {
+          var player = this.board.settlements[key].player;
+          RESOURCES[player][tile.resource.name] += 1;
+        }
+      }, this);
+    }
+  }, this);
+
+  updateResources();
+};
 
 StatePlace.prototype.AIPlaceSettlement = function() {
   _.each(this.game.ais, function(ai) {
