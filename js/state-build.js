@@ -60,21 +60,27 @@ StateBuild.prototype.shouldGhostRoad = function(edge) {
   // the road can be placed if it's touching a settlement.
   _.each(this.board.settlements, function(settlement) {
     if (settlement.corner.equals(edge.c1) || settlement.corner.equals(edge.c2)) {
-      result = true;
+      if (settlement.player === MAIN_PLAYER) {
+        result = true;
+      }
     }
   });
 
   _.each(this.board.cities, function(city) {
     if (city.corner.equals(edge.c1) || city.corner.equals(edge.c2)) {
-      result = true;
+      if (city.player === MAIN_PLAYER) {
+        result = true;
+      }
     }
   });
 
   // or if it's touching an existing road network.
   _.each(this.board.roads, function(road) {
-    var neighbors = this.board.edgeGraph[road.edge.key()];
-    if (_.contains(neighbors, edge)) {
-      result = true;
+    if (road.player === MAIN_PLAYER) {
+      var neighbors = this.board.edgeGraph[road.edge.key()];
+      if (_.contains(neighbors, edge)) {
+        result = true;
+      }
     }
   }, this);
 
@@ -82,7 +88,7 @@ StateBuild.prototype.shouldGhostRoad = function(edge) {
 };
 
 StateBuild.prototype.shouldGhostCorner = function(corner) {
-  var result = true;
+  var isNearNeighbor = false;
 
   var takenCornerKeys = _.union(
     _.keys(this.board.settlements, this),
@@ -93,11 +99,18 @@ StateBuild.prototype.shouldGhostCorner = function(corner) {
   _.each(takenCornerKeys, function(key) {
     var neighbors = this.board.cornerGraph[key];
     if (_.contains(neighbors, corner)) {
-      result = false;
+      isNearNeighbor = true;
     }
   }, this);
 
-  return result;
+  var isTouchingRoad = false;
+  _.each(this.board.roads, function(road) {
+    if (road.edge.c1 === corner || road.edge.c2 === corner) {
+      isTouchingRoad = true;
+    }
+  });
+
+  return !isNearNeighbor && isTouchingRoad;
 };
 
 StateBuild.prototype.shouldGhostRobber = function(tile) {
