@@ -14,8 +14,11 @@ StateRoll.prototype.execute = function() {
   var d2 = _.sample(die);
   var roll = d1 + d2;
 
-  $(".messages").text("Rolled: " + roll);
+  if (NARRATE_TURNS) {
+    console.log(this.game.turn.currentTurn, "rolls", roll);
+  }
 
+  $(".messages").text("Rolled: " + roll);
 
   if (roll === 7) {
     $(".messages").text("Rolled: 7. All resources halved.");

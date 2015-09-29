@@ -53,11 +53,16 @@ AI.prototype.enumerate = function() {
 
   // random choices for now.
   if (options.length === 0) {
-    console.log(this.color, "ends turn.");
+    if (NARRATE_TURNS) {
+      console.log(this.color, "can't do anything.");
+    }
   } else {
     var choice = _.sample(_.union(options));
     if (choice instanceof Actions.BuildRoad) {
-      console.log(this.color, "buys road.");
+      if (NARRATE_TURNS) {
+        console.log(this.color, "buys road.");
+      }
+
       Resources.buyRoad(this.color);
       this.board.placeRoad(choice.edge, this.color);
     }

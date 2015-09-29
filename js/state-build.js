@@ -1,6 +1,8 @@
 function StateBuild(game, thing) {
   this.game = game;
   this.board = game.board;
+
+  $("button.roll").attr("disabled", false);
 }
 
 StateBuild.prototype.execute = function(thing) {

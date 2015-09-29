@@ -13,6 +13,10 @@ function StatePlace(game) {
 }
 
 StatePlace.prototype.start = function() {
+  $("button.trade").attr("disabled", true);
+  $("button.roll").attr("disabled", true);
+  $("button.endturn").attr("disabled", true);
+
   if (this.state === StatePlace.Start) {
     $(".messages").text("Place your first Settlement.");
     this.state = StatePlace.FirstSettlement;
@@ -51,6 +55,7 @@ StatePlace.prototype.execute = function(thing) {
         // game proceeds to general rolling and building phase.
         this.state = StatePlace.Done;
         this.game.state = new StateBuild(this.game);
+        this.game.turn.startTurn();
       }
     } else {
       $(".messages").text("Must place Road.");

@@ -26,19 +26,31 @@ function Game(board) {
 
   var that = this;
   var roller = new StateRoll(this);
+  var turn = new StateTurn(this);
+  this.turn = turn;
+
   $("button.roll").click(function() {
     roller.execute();
+
+    // trading is enabled after rolling.
+    $("button.trade").attr("disabled", false);
+    $("button.roll").attr("disabled", true);
+    $("button.endturn").attr("disabled", false);
   });
 
   var that = this;
   $("button.endturn").click(function() {
-    that.endTurn();
+    turn.endTurn();
+
+    _.each(that.ais, function(ai) {
+      // AIs currently only rolling, enumerate, then end.
+      turn.startTurn();
+      roller.execute();
+      ai.enumerate();
+      turn.endTurn();
+    });
+
+    // start the turn of the main player.
+    turn.startTurn();
   });
 }
-
-Game.prototype.endTurn = function() {
-  // each AI takes a turn after the player ends their turn.
-  _.each(this.ais, function(ai) {
-    ai.enumerate();
-  });
-};
