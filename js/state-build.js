@@ -49,7 +49,7 @@ StateBuild.prototype.execute = function(thing) {
   this.game.scores.update();
   this.game.trade.update();
 
-  if (game.scores.maxScore >= Scores.GOAL) {
+  if (this.game.scores.maxScore >= Scores.GOAL) {
     $(".messages").text(this.game.scores.winText());
   }
 }

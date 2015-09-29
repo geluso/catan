@@ -1,4 +1,5 @@
 var LOG_RESOURCES = false;
+var ROBBER_LIMIT = 7;
 
 var BRICK = {
   name: "brick",
@@ -89,16 +90,28 @@ function updateResources() {
   }
 }
 
+function totalResources(player) {
+  var total = 0;
+  _.each(ALL_RESOURCES, function(resource) {
+    total += RESOURCES[player][resource.name];
+  });
+
+  return total;
+}
+
 function halveResources() {
   _.each(PLAYERS, function(player) {
-    _.each(ALL_RESOURCES, function(resource) {
-      // count available
-      var available = RESOURCES[player][resource.name];
-      available = Math.ceil(available / 2);
+    var playerTotal = totalResources(player);
+    if (playerTotal > ROBBER_LIMIT) {
+      _.each(ALL_RESOURCES, function(resource) {
+        // count available
+        var available = RESOURCES[player][resource.name];
+        available = Math.ceil(available / 2);
 
-      // update what's left
-      RESOURCES[player][resource.name] = available;
-    });
+        // update what's left
+        RESOURCES[player][resource.name] = available;
+      });
+    }
   });
 
   updateResources();
