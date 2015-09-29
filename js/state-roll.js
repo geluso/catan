@@ -49,7 +49,7 @@ StateRoll.prototype.execute = function() {
         var player = this.board.settlements[key].player;
         RESOURCES[player][tile.resource.name] += 1;
       } else if (this.board.cities[key]) {
-        var player = this.board.settlements[key].player;
+        var player = this.board.cities[key].player;
         RESOURCES[player][tile.resource.name] += 2;
       }
     }, this);

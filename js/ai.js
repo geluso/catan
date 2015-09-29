@@ -74,6 +74,8 @@ AI.prototype.enumerate = function() {
       var city = new City(choice.corner, this.color);
       this.board.cities[choice.corner.key()] = city;
 
+      // remove old settlement city was built on.
+      delete this.board.settlements[choice.corner.key()];
     } else if (settlements.length > 0) {
       if (LOG_BUILDS) {
         console.log(this.color, "builds settlement.");

@@ -54,6 +54,13 @@ StateBuild.prototype.execute = function(thing) {
 
   if (this.game.scores.maxScore >= Scores.GOAL) {
     $(".messages").text(this.game.scores.winText());
+
+    $("button.trade").attr("disabled", true);
+    $("button.roll").attr("disabled", true);
+    $("button.endturn").show();
+
+    $("button.endturn").attr("disabled", true);
+    $("button.endturn").hide();
   }
 }
 
