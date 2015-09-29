@@ -119,8 +119,15 @@ function halveResources() {
 
 var Resources = {};
 
-Resources.buyRoad = function(player) {
+Resources.canBuyRoad = function(player) {
   if (RESOURCES[player][BRICK.name] > 0 && RESOURCES[player][WOOD.name] > 0) {
+    return true;
+  }
+  return false;
+}
+
+Resources.buyRoad = function(player) {
+  if (Resources.canBuyRoad(player)) {
     $(".messages").text("Built Road.");
 
     RESOURCES[player][BRICK.name] = Math.max(0, RESOURCES[player][BRICK.name] - 1);
@@ -133,10 +140,16 @@ Resources.buyRoad = function(player) {
   }
 };
 
-Resources.buySettlement = function(player) {
+Resources.canBuySettlement = function(player) {
   if (RESOURCES[player][BRICK.name] > 0 && RESOURCES[player][WOOD.name] > 0 &&
       RESOURCES[player][WHEAT.name] > 0 && RESOURCES[player][SHEEP.name] > 0) {
+    return true;
+  }
+  return false;
+};
 
+Resources.buySettlement = function(player) {
+  if (canBuySettlement(player)) {
     $(".messages").text("Built Settlement.");
 
     RESOURCES[player][BRICK.name] = Math.max(0, RESOURCES[player][BRICK.name] - 1);
@@ -151,8 +164,15 @@ Resources.buySettlement = function(player) {
   }
 };
 
-Resources.buyCity = function(player) {
+Resources.canBuyCity = function(player) {
   if (RESOURCES[player][ORE.name] > 2 && RESOURCES[player][WHEAT.name] > 1) {
+    return true;
+  }
+  return false;
+}
+
+Resources.buyCity = function(player) {
+  if (Resources.canBuyCity(player)) {
     $(".messages").text("Built City.");
 
     RESOURCES[player][ORE.name] = Math.max(0, RESOURCES[player][ORE.name] - 1);

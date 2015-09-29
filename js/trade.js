@@ -91,6 +91,10 @@ function Trade() {
   }
 
   this.setStartingTradeRatios(Trade.STARTING_TRADE_RATIO);
+
+  this.canTrade = function(color) {
+    return false;
+  }
 }
 
 Trade.STARTING_TRADE_RATIO = 4;

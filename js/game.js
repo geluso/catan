@@ -30,7 +30,15 @@ function Game(board) {
     roller.execute();
   });
 
+  var that = this;
   $("button.endturn").click(function() {
-    game.endTurn();
+    that.endTurn();
   });
 }
+
+Game.prototype.endTurn = function() {
+  // each AI takes a turn after the player ends their turn.
+  _.each(this.ais, function(ai) {
+    ai.enumerate();
+  });
+};

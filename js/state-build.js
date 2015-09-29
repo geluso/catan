@@ -119,3 +119,7 @@ StateBuild.prototype.shouldGhostCorner = function(corner) {
 StateBuild.prototype.shouldGhostRobber = function(tile) {
   return true;
 };
+
+StateBuild.prototype.AIBuildRoad = function(edge) {
+
+}

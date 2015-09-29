@@ -52,23 +52,62 @@ AI.prototype.enumerate = function() {
   );
 
   // random choices for now.
-  var choice = _.sample(_.union(options));
-  console.log(this.color, "chose", choice);
+  if (options.length === 0) {
+    console.log(this.color, "ends turn.");
+  } else {
+    var choice = _.sample(_.union(options));
+    if (choice instanceof Actions.BuildRoad) {
+      Resources.buyRoad(this.color);
+      this.board.placeRoad(choice.edge, this.color);
+    }
+  }
 };
 
 AI.prototype.enumerateRoads = function() {
-  return [];
+  if (!Resources.canBuyRoad(this.color)) {
+    return [];
+  }
+
+  var myRoads = _.filter(this.board.roads, function(road) {
+    return road.player === this.color;
+  }, this);
+
+  var roadExtensions = [];
+  _.each(myRoads, function(road) {
+    var neighbors = road.edge.getNeighborEdges(this.board);
+    _.each(neighbors, function(neighbor) {
+      if (!this.board.roads[neighbor.key()]) {
+        roadExtensions.push(
+          new Actions.BuildRoad(this.color, neighbor)
+        );
+      }
+    }, this);
+  }, this);
+
+  return roadExtensions;
 };
 
 AI.prototype.enumerateSettlements = function() {
+  if (!Resources.canBuySettlement(this.color)) {
+    return [];
+  }
+
   return [];
 };
 
 AI.prototype.enumerateCities = function() {
+  if (!Resources.canBuyCity(this.color)) {
+    return [];
+  }
+
   return [];
 };
 
 AI.prototype.enumerateTrades = function() {
+  if (!this.game.trade.canTrade(this.color)) {
+    return [];
+  }
+
   return [];
 };
 
