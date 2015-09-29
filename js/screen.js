@@ -1,7 +1,11 @@
 var MOUSE_X = 0;
 var MOUSE_Y = 0;
 
+var LAST_THING;
+
 function Screen(width, height, game) {
+  this.dirty = true;
+
   var canvas = document.getElementById("canvas")
   canvas.width = width;
   canvas.height = height;
@@ -18,8 +22,12 @@ function Screen(width, height, game) {
 
     var thing = game.board.getThing(MOUSE_X, MOUSE_Y);
 
-    if (!(thing instanceof Tile)) {
-      game.board.hovering = thing;
+    this.dirty = false;
+    if (thing !== LAST_THING) {
+      this.dirty = true;
+      if (!(thing instanceof Tile)) {
+        game.board.hovering = thing;
+      }
     }
   });
 
@@ -29,11 +37,17 @@ function Screen(width, height, game) {
 
     var thing = game.board.getThing(MOUSE_X, MOUSE_Y);
 
-    game.state.execute(thing);
-    game.scores.update(game.board);
+    this.dirty = false;
+    if (thing !== LAST_THING) {
+      this.dirty = true;
+      game.state.execute(thing);
+      game.scores.update(game.board);
+    }
   });
 }
 
 Screen.prototype.draw = function() {
-  this.boardDrawer.draw();
+  if (this.dirty) {
+    this.boardDrawer.draw();
+  }
 };
