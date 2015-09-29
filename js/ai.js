@@ -92,9 +92,19 @@ AI.prototype.enumerate = function() {
         console.log(this.color, "builds road.");
       }
 
-      var choice = _.sample(roads);
-      Resources.buyRoad(this.color);
-      this.board.placeRoad(choice.edge, this.color);
+      // naiive saving mechanism to prevent building too many roads.
+      if (this.roads().length > 3 * this.settlements().length) {
+        // small chance that the road will be built anyways
+        if (Math.random() < .2) {
+          var choice = _.sample(roads);
+          Resources.buyRoad(this.color);
+          this.board.placeRoad(choice.edge, this.color);
+        }
+      } else {
+        var choice = _.sample(roads);
+        Resources.buyRoad(this.color);
+        this.board.placeRoad(choice.edge, this.color);
+      }
     }
   }
 };
@@ -157,7 +167,7 @@ AI.prototype.enumerateSettlements = function() {
     }
   }, this);
 
-  return [];
+  return newSettlements;
 };
 
 AI.prototype.enumerateCities = function() {
