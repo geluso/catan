@@ -72,7 +72,7 @@ StatePlace.prototype.PlaceSettlement = function(thing) {
 }
 
 StatePlace.prototype.AIPlaceSettlement = function() {
-  _.each(this.board.ais, function(ai) {
+  _.each(this.game.ais, function(ai) {
     var cornerKey = ai.bestAvailableCorner();
     var corner = Corner.lookup[cornerKey];
     

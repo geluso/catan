@@ -1,7 +1,8 @@
-function AI(board, color) {
-  this.board = board;
+function AI(game, color) {
+  this.game = game;
+  this.board = game.board;
   this.color = color;
-  this.scores = this.evaluatePostions(board);
+  this.scores = this.evaluatePostions(this.board);
 }
 
 AI.prototype.bestAvailableCorner = function() {

@@ -4,6 +4,13 @@ function Game(board) {
   // set up players
   this.ais = [];
 
+  _.each(PLAYERS, function(playerColor) {
+    if (playerColor !== "red") {
+      var ai = new AI(this, playerColor);
+      this.ais.push(ai);
+    }
+  }, this);
+
   // set up resources and trades
   initResources();
   var trade = new Trade();

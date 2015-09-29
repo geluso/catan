@@ -20,8 +20,6 @@ function Board(rows, cols) {
   this.columns = cols;
   this.rows = rows;
 
-  this.ais = [];
-
   for (var row = 0; row < rows; row++) {
     this.tileLookup[row] = {};
   }
@@ -136,14 +134,6 @@ function Board(rows, cols) {
       return false;
     }
   };
-
-  _.each(PLAYERS, function(playerColor) {
-    if (playerColor !== "red") {
-      var ai = new AI(this, playerColor);
-      this.ais.push(ai);
-    }
-  }, this);
-
 }
 
 Board.prototype.canPlaceSettlement = function(cornerKey) {
