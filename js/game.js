@@ -34,8 +34,8 @@ function Game(board) {
 
     // trading is enabled after rolling.
     $("button.trade").attr("disabled", false);
-    $("button.roll").attr("disabled", true);
-    $("button.endturn").attr("disabled", false);
+    $("button.roll").hide();
+    $("button.endturn").show();
   });
 
   var that = this;

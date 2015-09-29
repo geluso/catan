@@ -13,8 +13,10 @@ StateTurn.prototype.startTurn = function() {
 
   // at the start of a turn player must roll before trading or ending turn.
   $("button.trade").attr("disabled", true);
+
+  $("button.roll").show();
   $("button.roll").attr("disabled", false);
-  $("button.endturn").attr("disabled", true);
+  $("button.endturn").hide()
 }
 
 StateTurn.prototype.endTurn = function() {

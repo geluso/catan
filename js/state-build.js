@@ -2,6 +2,7 @@ function StateBuild(game, thing) {
   this.game = game;
   this.board = game.board;
 
+  $("button.roll").show();
   $("button.roll").attr("disabled", false);
 }
 

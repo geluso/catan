@@ -56,4 +56,7 @@ StateRoll.prototype.execute = function() {
   }, this);
 
   updateResources();
+
+  $("button.roll").hide();
+  $("button.endturn").show()
 }

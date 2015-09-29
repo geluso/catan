@@ -149,7 +149,7 @@ Resources.canBuySettlement = function(player) {
 };
 
 Resources.buySettlement = function(player) {
-  if (canBuySettlement(player)) {
+  if (Resources.canBuySettlement(player)) {
     $(".messages").text("Built Settlement.");
 
     RESOURCES[player][BRICK.name] = Math.max(0, RESOURCES[player][BRICK.name] - 1);

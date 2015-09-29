@@ -15,7 +15,7 @@ function StatePlace(game) {
 StatePlace.prototype.start = function() {
   $("button.trade").attr("disabled", true);
   $("button.roll").attr("disabled", true);
-  $("button.endturn").attr("disabled", true);
+  $("button.endturn").hide();
 
   if (this.state === StatePlace.Start) {
     $(".messages").text("Place your first Settlement.");
