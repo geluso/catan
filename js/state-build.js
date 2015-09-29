@@ -92,8 +92,8 @@ StateBuild.prototype.shouldGhostCorner = function(corner) {
 
   var takenCornerKeys = _.union(
     _.keys(this.board.settlements, this),
-    _.keys(this.board.cities
-  , this));
+    _.keys(this.board.cities, this)
+  );
 
   // can't place right next to other settements or citites.
   _.each(takenCornerKeys, function(key) {
@@ -110,7 +110,10 @@ StateBuild.prototype.shouldGhostCorner = function(corner) {
     }
   });
 
-  return !isNearNeighbor && isTouchingRoad;
+  var settlement = this.board.settlements[corner.key()];
+  var cityUpgrade = settlement && settlement.player === MAIN_PLAYER;
+
+  return (!isNearNeighbor && isTouchingRoad) || cityUpgrade;
 };
 
 StateBuild.prototype.shouldGhostRobber = function(tile) {

@@ -148,6 +148,12 @@ StatePlace.prototype.shouldGhostCorner = function(corner) {
       this.state === StatePlace.SecondSettlement) {
     result = true;
 
+    // can't place a settlement over any previous settlement.
+    // this especially prevents the drawer from ghosting city upgrades.
+    if (this.board.settlements[corner.key()]) {
+      return false;
+    }
+
     var takenCornerKeys = _.union(
       _.keys(this.board.settlements),
       _.keys(this.board.cities)
