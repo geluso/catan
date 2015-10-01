@@ -96,11 +96,7 @@ function Board(rows, cols) {
     return tile.resource === DESERT;
   });
 
-  var nonwater = _.filter(this.tiles, function(tile) {
-    return tile.resource !== WATER;
-  });
-
-  var robberStart = _.sample(nonwater);
+  var robberStart = _.sample(deserts);
   this.robber = new Robber(robberStart);
 
   this.getTile = function(x, y) {

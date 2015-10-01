@@ -21,8 +21,19 @@ StateRoll.prototype.execute = function() {
   $(".messages").text("Rolled: " + roll);
 
   if (roll === 7) {
-    $(".messages").text("Rolled: 7. All resources halved.");
+    $(".messages").text("Rolled: 7. Robber!");
     halveResources();
+
+    var resourceTiles = _.filter(this.board.tiles, function(tile) {
+      return tile.resource !== WATER && tile.resource !== DESERT;
+
+    });
+    this.board.robber.tile = _.sample(resourceTiles);
+
+    if (LOG_ROBBER) {
+      console.log("robber moved to", this.board.robber.tile);
+    }
+
     return;
   }
 
@@ -30,10 +41,12 @@ StateRoll.prototype.execute = function() {
   _.each(this.board.tiles, function(tile) {
     if (tile.token) {
       if (tile.token.value === roll) {
-        tiles.push(tile);
+        if (this.board.robber.tile !== tile) {
+          tiles.push(tile);
+        }
       }
     }
-  });
+  }, this);
 
   if (tiles.length === 0) {
     $(".messages").text($(".messages").text() + " . Nothing.");

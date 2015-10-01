@@ -6,7 +6,13 @@ function RobberDrawer(ctx) {
   this.draw = function(robber) {
     this.ctx.save();
 
-    this.ctx.translate(robber.tile.x + 18, robber.tile.y);
+    // move the robber to the side so it doesn't cover up the tiles token.
+    var xOffset = 0;
+    if (robber.tile.resource !== DESERT) {
+      var xOffset = 10;
+    }
+
+    this.ctx.translate(robber.tile.x + xOffset, robber.tile.y);
 
     /// draw robber body
     var body = new Path2D();
