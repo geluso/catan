@@ -6,7 +6,7 @@ function RobberDrawer(ctx) {
   this.draw = function(robber) {
     this.ctx.save();
 
-    this.ctx.translate(robber.tile.x, robber.tile.y);
+    this.ctx.translate(robber.tile.x + 18, robber.tile.y);
 
     /// draw robber body
     var body = new Path2D();
@@ -25,7 +25,7 @@ function RobberDrawer(ctx) {
     var endAngle = 2 * Math.PI; // End point on circle
 
     var head = new Path2D();
-    head.arc(0, -12, radius, startAngle, endAngle);
+    head.arc(0, -14, radius, startAngle, endAngle);
 
     ctx.fillStyle = "DarkGray";
     ctx.fill(head);
