@@ -91,6 +91,14 @@ function Board(rows, cols) {
 
   this.everything = _.union(this.tiles, this.corners, this.edges);
 
+  // place robber
+  var deserts = _.filter(this.tiles, function(tile) {
+    return tile.resource === DESERT;
+  });
+
+  var robberStart = _.sample(deserts);
+  this.robber = new Robber(robberStart);
+
   this.getTile = function(x, y) {
     var tile;
 
@@ -158,14 +166,3 @@ Board.prototype.isTwoAway = function(cornerKey) {
 
   return result;
 };
-
-function BoardDrawer(ctx, game) {
-  this.ctx = ctx;
-  this.game = game;
-  this.board = game.board;
-
-  this.tileDrawer = new TileDrawer(ctx);
-  this.roadDrawer = new RoadDrawer(ctx);
-  this.settlementDrawer = new SettlementDrawer(ctx);
-  this.cityDrawer = new CityDrawer(ctx);
-}

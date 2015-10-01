@@ -4,10 +4,11 @@ function BoardDrawer(ctx, game) {
   this.game = game;
   this.board = game.board;
 
-   this.tileDrawer = new TileDrawer(ctx);
-   this.roadDrawer = new RoadDrawer(ctx);
-   this.settlementDrawer = new SettlementDrawer(ctx);
-   this.cityDrawer = new CityDrawer(ctx);
+  this.tileDrawer = new TileDrawer(ctx);
+  this.roadDrawer = new RoadDrawer(ctx);
+  this.settlementDrawer = new SettlementDrawer(ctx);
+  this.cityDrawer = new CityDrawer(ctx);
+  this.robberDrawer = new RobberDrawer(ctx);
 }
 
 BoardDrawer.prototype.draw = function() {
@@ -20,6 +21,7 @@ BoardDrawer.prototype.draw = function() {
   this.roadDrawer.drawRoads(board.roads);
   this.settlementDrawer.drawSettlements(board.settlements);
   this.cityDrawer.drawCities(board.cities);
+  this.robberDrawer.draw(board.robber);
 
   for (var i = 0; i < board.everything.length; i++) {
     if (board.everything[i].hover) {
