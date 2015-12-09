@@ -13,7 +13,7 @@ function main() {
   // create the board
   var rows = Math.ceil(height / (TILE_SIZE * 1.72));
   var cols = Math.ceil(width / (TILE_SIZE * Math.sqrt(2)));
-  var board = new Board(rows, cols);
+  var board = new Board(rows, cols).init();
 
   var game = new Game(board);
   var screen = new Screen(width, height, game);
