@@ -1,5 +1,6 @@
-function FourPlayerBoard(rows, cols) {
+function FourPlayerBoard() {
   this.type = "Four";
+  this.init();
 }
 
 FourPlayerBoard.prototype = new Board();

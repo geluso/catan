@@ -4,6 +4,10 @@ function RobberDrawer(ctx) {
   this.ctx = ctx;
 
   this.draw = function(robber) {
+    if (!robber) {
+      return;
+    }
+
     this.ctx.save();
 
     // move the robber to the side so it doesn't cover up the tiles token.

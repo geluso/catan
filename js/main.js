@@ -10,10 +10,8 @@ function main() {
   var width = window.innerWidth;
   var height = window.innerHeight;
 
-  // create the board
-  var rows = Math.ceil(height / (TILE_SIZE * 1.72));
-  var cols = Math.ceil(width / (TILE_SIZE * Math.sqrt(2)));
-  var board = new Board(rows, cols).init();
+  var space = new TileSpace().init(width, height);
+  var board = new Board().init(space);
 
   var game = new Game(board);
   var screen = new Screen(width, height, game);
