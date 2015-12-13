@@ -44,14 +44,7 @@ TileSpace.prototype.createHexagons = function() {
       x = Math.floor(x);
       y = Math.floor(y);
 
-      var tile;
-      if (row < 2 || row > this.rows - 3 ||
-          col < 2 || col > this.cols - 4) {
-        tile = tileGen.waterTile(x, y);
-      } else {
-        tile = tileGen.randomTile(x, y);
-      }
-
+      var tile = tileGen.waterTile(x, y);
       this.tiles.push(tile);
     }
   }
