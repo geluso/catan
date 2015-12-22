@@ -11,7 +11,7 @@ function main() {
   var height = window.innerHeight;
 
   var space = new TileSpace().init(width, height);
-  var board = new Board().init(space);
+  var board = new FourPlayerBoard().init(space);
 
   var game = new Game(board);
   var screen = new Screen(width, height, game);
