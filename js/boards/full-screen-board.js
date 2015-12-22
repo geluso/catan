@@ -8,6 +8,8 @@ function Board() {
 
 Board.prototype.init = function(tilespace) {
   // make everything available that got refactored from Board to TileSpace
+  this.tilespace = tilespace;
+
   this.tiles = tilespace.tiles;
   this.edges = tilespace.edges;
   this.corners = tilespace.corners;

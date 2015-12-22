@@ -26,10 +26,37 @@ FourPlayerBoard.prototype.init = function(tilespace) {
   // make a mutable copy of the token arrangement
   var tokens = FourPlayerBoard.TOKEN_ARRANGEMENT.slice();
 
-  // go through all our tiles and place the tokens and assign shuffled resources
-  _.each(FourPlayerBoard.TILE_ARRANGEMENT, function(position) {
-    var tile = this.getTile(position.x, position.y);
+  // find the centermost tile to the screen and place
+  // all other tiles around relative to that.
+  var width = this.tilespace.width;
+  var height = this.tilespace.height;
+
+  // target the center of the screen.
+  var target = {x: width / 2, y: height / 2};
+
+  var bestDiff = undefined;
+  var bestTile = undefined;
+
+  // compare each tile to the ideal target point to find the closest center tile.
+  _.each(this.tiles, function(tile) {
+    var diff = Math.abs(tile.x - target.x) + Math.abs(tile.y - target.y);
+    if (bestTile === undefined || diff < bestDiff) {
+      bestDiff = diff;
+      bestTile = tile;
+    }
+  });
+
+  // declare the best fit tile as the center tile.
+  var center = bestTile;
+
+  // use the relative tile arrangement with the tile we found to be in the center
+  // to look up all other tiles.
+  _.each(FourPlayerBoard.RELATIVE_TILE_ARRANGEMENT, function(position) {
+    // Get the tile and place a resource on it.
+    var tile = this.getTile(position.x + center.x, position.y + center.y);
     tile.resource = resources.pop(0);
+
+    // Place a token on every tile but the desert.
     if (tile.resource !== DESERT) {
       var value = tokens.shift();
       tile.token = new Token(value);
@@ -41,5 +68,6 @@ FourPlayerBoard.prototype.init = function(tilespace) {
 
 FourPlayerBoard.TOKEN_ARRANGEMENT = [5, 2, 6, 3, 8, 10, 9, 12, 11, 4, 8, 10, 9, 4, 5, 6, 3, 11];
 FourPlayerBoard.TILE_ARRANGEMENT = [{"x":525,"y":301},{"x":600,"y":258},{"x":675,"y":215},{"x":750,"y":258},{"x":825,"y":301},{"x":825,"y":387},{"x":825,"y":473},{"x":750,"y":516},{"x":675,"y":559},{"x":600,"y":516},{"x":525,"y":473},{"x":525,"y":387},{"x":600,"y":344},{"x":675,"y":301},{"x":750,"y":344},{"x":750,"y":430},{"x":675,"y":473},{"x":600,"y":430},{"x":675,"y":387}];
+FourPlayerBoard.RELATIVE_TILE_ARRANGEMENT = [{"x":-150,"y":-86},{"x":-75,"y":-129},{"x":0,"y":-172},{"x":75,"y":-129},{"x":150,"y":-86},{"x":150,"y":0},{"x":150,"y":86},{"x":75,"y":129},{"x":0,"y":172},{"x":-75,"y":129},{"x":-150,"y":86},{"x":-150,"y":0},{"x":-75,"y":-43},{"x":0,"y":-86},{"x":75,"y":-43},{"x":75,"y":43},{"x":0,"y":86},{"x":-75,"y":43},{"x":0,"y":0}];
 FourPlayerBoard.CENTER_TILE = {x: 675, y: 387};
 
