@@ -1,5 +1,6 @@
 function Board() {
   this.type = "board";
+  this.players = 6;
 
   this.roads = {};
   this.settlements = {};

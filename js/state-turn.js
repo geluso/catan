@@ -2,11 +2,11 @@ function StateTurn(game) {
   this.game = game;
 
   this.index = 0;
-  this.currentTurn = PLAYERS[this.index];
+  this.currentTurn = game.players[0];
 }
 
 StateTurn.prototype.startTurn = function() {
-  this.currentTurn = PLAYERS[this.index];
+  this.currentTurn = this.game.players[this.index];
   if (LOG_TURNS) {
     console.log(this.currentTurn, "starts turn");
   }
@@ -23,7 +23,7 @@ StateTurn.prototype.endTurn = function() {
   this.index++;
 
   // reset turn when reaching the end.
-  if (this.index >= PLAYERS.length) {
+  if (this.index >= this.game.players.length) {
     this.index = 0;
   }
 

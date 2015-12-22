@@ -22,7 +22,7 @@ StateRoll.prototype.execute = function() {
 
   if (roll === 7) {
     $(".messages").text("Rolled: 7. Robber!");
-    halveResources();
+    halveResources(this.game.players);
 
     var resourceTiles = _.filter(this.board.tiles, function(tile) {
       return tile.resource !== WATER && tile.resource !== DESERT;

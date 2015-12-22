@@ -2,19 +2,25 @@ function Game(board) {
   this.board = board;
 
   // set up players
+  this.players = ["red"];
   this.ais = [];
 
   _.each(PLAYERS, function(playerColor) {
     if (playerColor !== "red") {
-      var ai = new AI(this, playerColor);
-      this.ais.push(ai);
+      // make sure the total number of players doesn't exceed what the
+      // board can support
+      if ((this.ais.length + 1) < board.players) {
+        var ai = new AI(this, playerColor);
+        this.players.push(ai.color);
+        this.ais.push(ai);
+      }
     }
   }, this);
 
   this.currentPlayer = MAIN_PLAYER;
 
   // set up resources
-  initResources();
+  initResources(this.players);
 
   // set up trade and score
   this.trade = new Trade();

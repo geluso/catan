@@ -10,7 +10,7 @@ function Scores(game) {
 }
 
 Scores.prototype.update = function() {
-  _.each(PLAYERS, function(player) {
+  _.each(this.game.players, function(player) {
     this.scores[player] = 0;
   }, this);
 

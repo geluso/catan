@@ -59,7 +59,7 @@ TileSpace.prototype.gatherAndDedupeCornersAndEdges = function() {
     var tile = this.tiles[i];
 
     if (tile.resource === WATER) {
-      continue;
+      //continue;
     }
 
     var corners = tile.shape.getCorners();

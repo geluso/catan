@@ -51,14 +51,14 @@ function ResourceGenerator() {
   }
 }
 
-function initResources() {
+function initResources(players) {
   // initialize each player
-  _.each(PLAYERS, function(player) {
+  _.each(players, function(player) {
     RESOURCES[player] = {};
   });
 
   // initialize resources for each player
-  _.each(PLAYERS, function(player) {
+  _.each(players, function(player) {
     _.each(ALL_RESOURCES, function(resource) {
       RESOURCES[player][resource.name] = 0;
     });
@@ -74,7 +74,7 @@ function initResources() {
   updateResources();
 }
 
-function updateResources() {
+function updateResources(players) {
   _.each(ALL_RESOURCES, function(resource) {
     var selector = ".resources .value." + resource.name;
 
@@ -84,7 +84,7 @@ function updateResources() {
 
   if (LOG_RESOURCES) {
     console.log("");
-    _.each(PLAYERS, function(player) {
+    _.each(players, function(player) {
       console.log(totalResources(player), player, RESOURCES[player]);
     });
   }
@@ -99,8 +99,8 @@ function totalResources(player) {
   return total;
 }
 
-function halveResources() {
-  _.each(PLAYERS, function(player) {
+function halveResources(players) {
+  _.each(players, function(player) {
     var playerTotal = totalResources(player);
     if (playerTotal > ROBBER_LIMIT) {
       _.each(ALL_RESOURCES, function(resource) {

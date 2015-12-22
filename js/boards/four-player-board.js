@@ -1,5 +1,6 @@
 function FourPlayerBoard() {
   this.type = "Four";
+  this.players = 4;
 }
 
 FourPlayerBoard.prototype = new Board();
@@ -58,6 +59,9 @@ FourPlayerBoard.prototype.init = function(tilespace) {
     if (tile.resource !== DESERT) {
       var value = tokens.shift();
       tile.token = new Token(value);
+    // Place the robber on the desert.
+    } else {
+      this.robber = new Robber(tile);
     }
   }, this);
 
