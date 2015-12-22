@@ -8,8 +8,6 @@ FourPlayerBoard.prototype.init = function(tilespace) {
   // Let the original Board set up itself.
   Board.prototype.init.call(this, tilespace);
 
-  var center = this.getTile(FourPlayerBoard.CENTER_TILE.x, FourPlayerBoard.CENTER_TILE.y);
-
   // define what resources are available
   var resources = [
     DESERT,
@@ -68,5 +66,4 @@ FourPlayerBoard.prototype.init = function(tilespace) {
 
 FourPlayerBoard.TOKEN_ARRANGEMENT = [5, 2, 6, 3, 8, 10, 9, 12, 11, 4, 8, 10, 9, 4, 5, 6, 3, 11];
 FourPlayerBoard.RELATIVE_TILE_ARRANGEMENT = [{"x":-150,"y":-86},{"x":-75,"y":-129},{"x":0,"y":-172},{"x":75,"y":-129},{"x":150,"y":-86},{"x":150,"y":0},{"x":150,"y":86},{"x":75,"y":129},{"x":0,"y":172},{"x":-75,"y":129},{"x":-150,"y":86},{"x":-150,"y":0},{"x":-75,"y":-43},{"x":0,"y":-86},{"x":75,"y":-43},{"x":75,"y":43},{"x":0,"y":86},{"x":-75,"y":43},{"x":0,"y":0}];
-FourPlayerBoard.CENTER_TILE = {x: 675, y: 387};
 
