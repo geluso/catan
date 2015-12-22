@@ -13,6 +13,10 @@ function main() {
   var space = new TileSpace().init(width, height);
   var board = new FourPlayerBoard().init(space);
 
+  // hanky hacks
+  space.curateBoard();
+  board.registerTileSpace(space);
+
   var game = new Game(board);
   var screen = new Screen(width, height, game);
 

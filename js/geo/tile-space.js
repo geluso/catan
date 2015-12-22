@@ -20,14 +20,16 @@ TileSpace.prototype.init = function(width, height) {
 
   this.createHexagons();
 
+  return this;
+};
+
+TileSpace.prototype.curateBoard = function() {
   this.gatherAndDedupeCornersAndEdges();
   this.collectNieghboringEdges();
   this.collectNieghboringCorners();
 
   // make a list containing every tile, corner and edge on the board.
   this.everything = _.union(this.tiles, this.corners, this.edges);
-
-  return this;
 };
 
 TileSpace.prototype.createHexagons = function() {
@@ -59,7 +61,7 @@ TileSpace.prototype.gatherAndDedupeCornersAndEdges = function() {
     var tile = this.tiles[i];
 
     if (tile.resource === WATER) {
-      //continue;
+      continue;
     }
 
     var corners = tile.shape.getCorners();

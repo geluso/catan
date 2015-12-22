@@ -8,6 +8,13 @@ function Board() {
 };
 
 Board.prototype.init = function(tilespace) {
+  this.registerTileSpace(tilespace);
+
+  this.placeRobber();
+  return this;
+}
+
+Board.prototype.registerTileSpace = function(tilespace) {
   // make everything available that got refactored from Board to TileSpace
   this.tilespace = tilespace;
 
@@ -20,9 +27,6 @@ Board.prototype.init = function(tilespace) {
   this.cornerToEdges = tilespace.cornerToEdges;
 
   this.everything = tilespace.everything;
-
-  this.placeRobber();
-  return this;
 }
 
 Board.prototype.placeRobber = function() {
