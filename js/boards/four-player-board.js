@@ -25,34 +25,14 @@ FourPlayerBoard.prototype.init = function(tilespace) {
   // make a mutable copy of the token arrangement
   var tokens = FourPlayerBoard.TOKEN_ARRANGEMENT.slice();
 
-  // find the centermost tile to the screen and place
-  // all other tiles around relative to that.
-  var width = this.tilespace.width;
-  var height = this.tilespace.height;
-
-  // target the center of the screen.
-  var target = {x: width / 2, y: height / 2};
-
-  var bestDiff = undefined;
-  var bestTile = undefined;
-
-  // compare each tile to the ideal target point to find the closest center tile.
-  _.each(this.tiles, function(tile) {
-    var diff = Math.abs(tile.x - target.x) + Math.abs(tile.y - target.y);
-    if (bestTile === undefined || diff < bestDiff) {
-      bestDiff = diff;
-      bestTile = tile;
-    }
-  });
-
-  // declare the best fit tile as the center tile.
-  var center = bestTile;
-
   // use the relative tile arrangement with the tile we found to be in the center
   // to look up all other tiles.
   _.each(FourPlayerBoard.RELATIVE_TILE_ARRANGEMENT, function(position) {
     // Get the tile and place a resource on it.
-    var tile = this.getTile(position.x + center.x, position.y + center.y);
+    var x = position.x + tilespace.centerTile.x;
+    var y = position.y + tilespace.centerTile.y;
+
+    var tile = this.getTile(x, y);
     tile.resource = resources.pop(0);
 
     // Place a token on every tile but the desert.

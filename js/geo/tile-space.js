@@ -19,6 +19,7 @@ TileSpace.prototype.init = function(width, height) {
   this.cols = Math.ceil(width / (TILE_SIZE * Math.sqrt(2)));
 
   this.createHexagons();
+  this.centerTiles();
 
   return this;
 };
@@ -53,6 +54,41 @@ TileSpace.prototype.createHexagons = function() {
       this.tiles.push(tile);
     }
   }
+};
+
+var CENTER;
+
+// find the centermost tile and schooch all tiles so they're
+// centered in the screen.
+TileSpace.prototype.centerTiles = function() {
+  // target the center of the screen.
+  var target = {x: this.width / 2, y: this.height / 2};
+
+  var bestDiff = undefined;
+  var bestTile = undefined;
+
+  // compare each tile to the ideal target point to find the closest center tile.
+  _.each(this.tiles, function(tile) {
+    var diff = Math.abs(tile.x - target.x) + Math.abs(tile.y - target.y);
+    if (bestTile === undefined || diff < bestDiff) {
+      bestDiff = diff;
+      bestTile = tile;
+    }
+  });
+
+  // declare the best fit tile as the center tile.
+  this.centerTile = bestTile;
+  CENTER = this.centerTile;
+
+  // measure the distance between the center of the screen and the center tile.
+  var xOffset = target.x - (this.centerTile.x);
+  var yOffset = target.y - (this.centerTile.y);
+
+  // move all tiles according to the center measured distance
+  _.each(this.tiles, function(tile) {
+    tile.setX(tile.x + xOffset);
+    tile.setY(tile.y + yOffset);
+  });
 };
 
 TileSpace.prototype.gatherAndDedupeCornersAndEdges = function() {

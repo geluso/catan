@@ -17,6 +17,21 @@ function Tile(x, y, resource, token) {
   this.shape = new Hexagon(x, y, TILE_SIZE);
 }
 
+Tile.prototype.setX = function(x) {
+  this.x = x;
+  this.shape.x = x;
+}
+
+Tile.prototype.setY = function(y) {
+  this.y = y;
+  this.shape.y = y;
+}
+
+Tile.prototype.setXY = function(x, y) {
+  this.setX(x);
+  this.setY(y);
+}
+
 function TileGenerator() {
   var resources = new ResourceGenerator();
   var tokens = new TokenGenerator(2, 12);
