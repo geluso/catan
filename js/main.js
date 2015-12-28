@@ -11,7 +11,7 @@ function main() {
   var height = window.innerHeight;
 
   var space = new TileSpace().init(width, height);
-  var board = new FourPlayerBoard().init(space);
+  var board = new SixPlayerBoard().init(space);
 
   // hanky hacks
   space.curateBoard();
