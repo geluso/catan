@@ -32,10 +32,33 @@ Scores.prototype.update = function() {
     }
   }, this);
 
-  var score = this.scores[MAIN_PLAYER];
-  $(".score").text(score);
-  return score;
+  this.buildScoreboard();
 }
+
+Scores.prototype.buildScoreboard = function() {
+  // destroy old scoreboard
+  var scoreboard = document.getElementById("scoreboard");
+  while(scoreboard.lastChild) {
+    scoreboard.removeChild(scoreboard.lastChild);
+  }
+
+  // build up new scores for each player
+  _.each(this.scores, function(points, player) {
+    var color = document.createElement("div");
+    color.className = "player";
+    color.style.backgroundColor = player;
+
+    var score = document.createElement("div");
+    score.className = "score";
+    score.textContent = points;
+
+    var scoreContainer = document.createElement("div");
+    scoreContainer.appendChild(color);
+    scoreContainer.appendChild(score);
+
+    scoreboard.appendChild(scoreContainer);
+  }, this);
+};
 
 Scores.prototype.winText = function() {
   return this.leader + " won with " + this.maxScore + "!!";
