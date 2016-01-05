@@ -7,6 +7,8 @@ function Scores(game) {
 
   this.maxScore = 0;
   this.leader = MAIN_PLAYER;
+
+  this.currentLongestRoad = undefined;
 }
 
 Scores.prototype.update = function() {
@@ -43,6 +45,11 @@ Scores.prototype.update = function() {
     // award points to the player with the longest road.
     var player = longestRoad[0].player;
     this.scores[player] += 2;
+
+    if (player !== this.currentLongestRoad) {
+      GameLog("got longest road!", player);
+      this.currentLongestRoad = player;
+    }
   }
 
   this.buildScoreboard();
