@@ -32,8 +32,22 @@ Scores.prototype.update = function() {
     }
   }, this);
 
+  // determine longest road.
+  var longestRoad = this.board.longestRoad();
+  if (longestRoad.length >= MIN_LONGEST_ROAD) {
+    // mark the roads in the best chain as the longest road
+    _.each(longestRoad, function(road) {
+      road.longest = true;
+    });
+
+    // award points to the player with the longest road.
+    var player = longestRoad[0].player;
+    this.scores[player] += 2;
+  }
+
   this.buildScoreboard();
 }
+
 
 Scores.prototype.buildScoreboard = function() {
   // destroy old scoreboard

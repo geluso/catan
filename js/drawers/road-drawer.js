@@ -23,6 +23,15 @@ function RoadDrawer(ctx) {
 
     ctx.fillStyle = road.player;
     ctx.fillRect(-Road.LENGTH / 2, -Road.WIDTH / 2, Road.LENGTH, Road.WIDTH);
+
+    if (road.longest) {
+      ctx.lineWidth = 3;
+      ctx.strokeStyle = "black";
+    } else {
+      ctx.lineWidth = 1;
+      ctx.strokeStyle = "black";
+    }
+
     ctx.strokeRect(-Road.LENGTH / 2, -Road.WIDTH / 2, Road.LENGTH, Road.WIDTH);
 
     ctx.restore();

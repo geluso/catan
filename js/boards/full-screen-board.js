@@ -1,3 +1,5 @@
+var MIN_LONGEST_ROAD = 5;
+
 function Board() {
   this.type = "board";
   this.players = 6;
@@ -105,4 +107,92 @@ Board.prototype.isTwoAway = function(cornerKey) {
   }, this);
 
   return result;
+};
+
+Board.prototype.longestRoad = function() {
+  var bestChain = [];
+  _.each(this.roads, function(road) {
+    var key = road.key();
+    var road = this.roads[key];
+    var currentPlayer = this.roads[key].player;
+
+    // reset the longest property for each road as they're all counted.
+    road.longest = false;
+
+    var c1 = road.edge.c1;
+    var c2 = road.edge.c2;
+
+    var visited = {};
+    visited[key] = true;
+
+    var chain1 = [road];
+    var chain2 = [road];
+
+    var chain1 = this.countRoadByCorner(c1, currentPlayer, visited, chain1);
+    var chain2 = this.countRoadByCorner(c2, currentPlayer, visited, chain2);
+
+    if (chain1.length > bestChain.length) {
+      bestChain = chain1;
+    }
+
+    if (chain2.length > bestChain.length) {
+      bestChain = chain2;
+    }
+  }, this);
+
+  return bestChain;
+};
+
+Board.prototype.countRoadByCorner = function(corner, currentPlayer, visited, chain) {
+  var key = corner.key();
+  var roads = _.filter(this.roads, function(road) {
+    // only consider roads owned by the current player
+    if (road.player !== currentPlayer) {
+      return false;
+    }
+
+    // don't return any roads that have already been visited.
+    if (visited[road.key()]) {
+      return false;
+    }
+    
+    // only return roads that share a corner with the original corner.
+    return road.edge.c1.key() === key || road.edge.c2.key() === key;
+  }, this);
+
+
+  var bestChain = chain;
+
+  _.each(roads, function(road) {
+    // mark the road as visited.
+    visited[road.key()] = true;
+
+    // get the corners
+    var c1 = road.edge.c1;
+    var c2 = road.edge.c2;
+
+    var chain1 = chain.slice();
+    var chain2 = chain.slice();
+
+    chain1.push(road);
+    chain2.push(road);
+
+    if (c1.key() !== corner.key()) {
+      chain1 = this.countRoadByCorner(c1, currentPlayer, visited, chain1);
+    }
+
+    if (c2.key() !== corner.key()) {
+      chain2 = this.countRoadByCorner(c2, currentPlayer, visited, chain2);
+    }
+
+    if (chain1.length > bestChain.length) {
+      bestChain = chain1;
+    }
+    
+    if (chain2.length > bestChain.length) {
+      bestChain = chain2;
+    }
+  }, this);
+
+  return bestChain;
 };
