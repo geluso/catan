@@ -5,7 +5,7 @@ function StateRoll(game) {
 
 StateRoll.prototype.execute = function() {
   if (_.size(this.board.settlements, this) + _.size(this.board.cities, this) === 0) {
-    $(".messages").text("choose settlements before rolls will make any effect");
+    Banner("choose settlements before rolls will make any effect");
     return;
   }
 
@@ -15,16 +15,18 @@ StateRoll.prototype.execute = function() {
   var roll = d1 + d2;
 
   if (LOG_TURNS) {
-    var msg = "rolled " + roll;
-    GameLog(msg, this.game.turn.currentTurn);
-
     console.log(this.game.turn.currentTurn, "rolls", roll);
   }
 
-  $(".messages").text("Rolled: " + roll);
+  var msg;
+  if (roll === 7) {
+    msg = "rolled " + roll + ". Robber!";
+  } else {
+    msg = "rolled " + roll + ".";
+  }
+  GameLog(msg, this.game.turn.currentTurn);
 
   if (roll === 7) {
-    $(".messages").text("Rolled: 7. Robber!");
     halveResources(this.game.players);
 
     var resourceTiles = _.filter(this.board.tiles, function(tile) {

@@ -16,7 +16,7 @@ StateBuild.prototype.execute = function(thing) {
     // upgrade settlements to cities
     if (this.board.settlements[key]) {
       if (!Resources.buyCity(player)) {
-        $(".messages").text("Can't afford City.");
+        Banner("Can't afford City.");
       } else {
         // remove old settlement
         delete this.board.settlements[key];
@@ -31,7 +31,7 @@ StateBuild.prototype.execute = function(thing) {
       }
 
       if (!Resources.buySettlement(player)) {
-        $(".messages").text("Can't afford Settlement.");
+        Banner("Can't afford Settlement.");
       } else {
         var settlement = new Settlement(corner, "red");
         this.board.settlements[key] = settlement;
@@ -39,7 +39,7 @@ StateBuild.prototype.execute = function(thing) {
     }
   } else if (thing instanceof Edge) {
     if (!Resources.buyRoad(player)) {
-      $(".messages").text("Can't afford Road.");
+      Banner("Can't afford Road.");
     } else {
       var edge = thing;
       var key = edge.key();
@@ -53,7 +53,7 @@ StateBuild.prototype.execute = function(thing) {
   this.game.trade.update();
 
   if (this.game.scores.maxScore >= Scores.GOAL) {
-    $(".messages").text(this.game.scores.winText());
+    Banner(this.game.scores.winText());
 
     $("button.trade").attr("disabled", true);
     $("button.roll").attr("disabled", true);

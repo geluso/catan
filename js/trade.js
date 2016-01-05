@@ -21,7 +21,7 @@ function Trade() {
 
   this.trade = function() {
     if (this.tradeDisabled) {
-      $(".messages").text("Not enough resources for that trade.");
+      Banner("Not enough resources for that trade.");
       return;
     }
 

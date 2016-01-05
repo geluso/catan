@@ -18,7 +18,7 @@ StatePlace.prototype.start = function() {
   $("button.endturn").hide();
 
   if (this.state === StatePlace.Start) {
-    $(".messages").text("Place your first Settlement.");
+    Banner("Place your first Settlement.");
     this.state = StatePlace.FirstSettlement;
     return;
   }
@@ -34,7 +34,7 @@ StatePlace.prototype.execute = function(thing) {
     if (thing instanceof Corner) {
       this.PlaceSettlement(thing);
     } else {
-      $(".messages").text("Must place Settlement.");
+      Banner("Must place Settlement.");
     }
   } else if (this.state === StatePlace.FirstRoad ||
              this.state === StatePlace.SecondRoad) {
@@ -58,7 +58,7 @@ StatePlace.prototype.execute = function(thing) {
         this.game.turn.startTurn();
       }
     } else {
-      $(".messages").text("Must place Road.");
+      Banner("Must place Road.");
     }
   }
 };
@@ -78,14 +78,14 @@ StatePlace.prototype.PlaceSettlement = function(thing) {
     this.board.settlements[key] = settlement;
 
     if (this.state === StatePlace.FirstSettlement) {
-      $(".messages").text("Place your first Road.");
+      Banner("Place your first Road.");
       this.state = StatePlace.FirstRoad;
     }
 
     if (this.state === StatePlace.SecondSettlement) {
       this.initStartingResources(settlement);
 
-      $(".messages").text("Place your second Road.");
+      Banner("Place your second Road.");
       this.state = StatePlace.SecondRoad;
     }
   }
@@ -157,9 +157,9 @@ StatePlace.prototype.PlaceRoad = function(thing) {
 
 StatePlace.prototype.placeFirstRoad = function(edge) {
   if (this.board.placeRoad(edge, "red")) {
-    $(".messages").text("Place your second Settlement.");
+    Banner("Place your second Settlement.");
   } else {
-    $(".messages").text("Road can't be placed here.");
+    Banner("Road can't be placed here.");
   }
 }
 
@@ -168,7 +168,7 @@ StatePlace.prototype.placeSecondRoad = function(edge) {
   var key = edge.key();
   this.board.roads[key] = road;
 
-  $(".messages").text("Roll away!!");
+  Banner("Roll away!!");
 }
 
 StatePlace.prototype.shouldGhostCorner = function(corner) {

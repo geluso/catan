@@ -4,7 +4,7 @@ function AI(game, color) {
   this.color = color;
   this.scores = this.evaluatePostions(this.board);
 
-  GameLog("enteres the game.", color);
+  GameLog("enters game.", color);
 }
 
 AI.prototype.bestAvailableCorner = function() {

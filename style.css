@@ -25,6 +25,14 @@ body {
   top: 0;
 }
 
+.info.top .player {
+  width: 20px;
+  height: 20px;
+  border: solid black 1px;
+  margin-right: 5px;
+  display: inline-block;
+}
+
 #gamelog {
   position: absolute;
   top: 3em;

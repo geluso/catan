@@ -1,4 +1,6 @@
 function GameLog(msg, player) {
+  HideBanner();
+
   var log = document.getElementById("gamelog");
 
   var colorBlock = document.createElement("div");
@@ -21,4 +23,25 @@ function GameLog(msg, player) {
   log.appendChild(entry);
 
   log.scrollTop = Number.MAX_SAFE_INTEGER;
+}
+
+function HideBanner() {
+  $(".info.top").hide();
+}
+
+function Banner(msg, player) {
+  if (player && player !== "red") {
+    return;
+  }
+
+  $(".messages").text(msg);
+
+  if (!player) {
+    player = "red";
+  }
+
+  var colorBlock = $(".info.top .player");
+  colorBlock.css({backgroundColor: player});
+
+  $(".info.top").show();
 }

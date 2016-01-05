@@ -128,7 +128,7 @@ Resources.canBuyRoad = function(player) {
 
 Resources.buyRoad = function(player) {
   if (Resources.canBuyRoad(player)) {
-    $(".messages").text("Built Road.");
+    GameLog("built Road.", player);
 
     RESOURCES[player][BRICK.name] = Math.max(0, RESOURCES[player][BRICK.name] - 1);
     RESOURCES[player][WOOD.name] = Math.max(0, RESOURCES[player][WOOD.name] - 1);
@@ -150,7 +150,7 @@ Resources.canBuySettlement = function(player) {
 
 Resources.buySettlement = function(player) {
   if (Resources.canBuySettlement(player)) {
-    $(".messages").text("Built Settlement.");
+    GameLog("built Settlement.", player);
 
     RESOURCES[player][BRICK.name] = Math.max(0, RESOURCES[player][BRICK.name] - 1);
     RESOURCES[player][WOOD.name] = Math.max(0, RESOURCES[player][WOOD.name] - 1);
@@ -173,7 +173,7 @@ Resources.canBuyCity = function(player) {
 
 Resources.buyCity = function(player) {
   if (Resources.canBuyCity(player)) {
-    $(".messages").text("Built City.");
+    GameLog("built City.", player);
 
     RESOURCES[player][ORE.name] = Math.max(0, RESOURCES[player][ORE.name] - 1);
     RESOURCES[player][ORE.name] = Math.max(0, RESOURCES[player][ORE.name] - 1);
