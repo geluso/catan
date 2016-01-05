@@ -25,6 +25,31 @@ body {
   top: 0;
 }
 
+#gamelog {
+  position: absolute;
+  top: 3em;
+  left: 0;
+  padding-top: 2em;
+  padding: .2em;
+  background-color: rgba(0,0,0,.5);
+  height: 300px;
+  overflow-y: scroll;
+}
+
+#gamelog .player {
+  width: 10px;
+  height: 10px;
+  border: solid black 1px;
+  margin-right: 5px;
+
+  display: inline-block;
+}
+
+#gamelog .message {
+  display: inline-block;
+  font-size: 12pt;
+}
+
 #scoreboard {
   position: absolute;
   top: 3em;

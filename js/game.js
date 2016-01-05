@@ -6,7 +6,9 @@ function Game(board) {
   this.ais = [];
 
   _.each(PLAYERS, function(playerColor) {
-    if (playerColor !== "red") {
+    if (playerColor === "red") {
+      GameLog("enters the game.", playerColor);
+    } else {
       // make sure the total number of players doesn't exceed what the
       // board can support
       if ((this.ais.length + 1) < board.players) {

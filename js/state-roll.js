@@ -15,6 +15,9 @@ StateRoll.prototype.execute = function() {
   var roll = d1 + d2;
 
   if (LOG_TURNS) {
+    var msg = "rolled " + roll;
+    GameLog(msg, this.game.turn.currentTurn);
+
     console.log(this.game.turn.currentTurn, "rolls", roll);
   }
 
