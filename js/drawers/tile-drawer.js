@@ -24,6 +24,8 @@ function TileDrawer(ctx) {
     }
 
     this.ctx.save();
+    this.ctx.textAlign = "center";
+    this.ctx.textBaseLine = "hanging";
 
     if (tile.isCoast) {
       _.each(tile.shape.getEdges(), function(edge) {
