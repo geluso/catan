@@ -28,6 +28,12 @@ function TileDrawer(ctx) {
 
     if (tile.isCoast) {
       _.each(tile.shape.getEdges(), function(edge) {
+        if (edge.isPort) {
+          this.ctx.strokeStyle = "yellow";
+        } else {
+          this.ctx.strokeStyle = "black";
+        }
+
         if (edge.isCoast) {
           this.ctx.beginPath();
           this.ctx.moveTo(edge.c1.x, edge.c1.y);

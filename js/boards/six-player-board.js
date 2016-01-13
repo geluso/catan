@@ -56,6 +56,14 @@ SixPlayerBoard.prototype.init = function(tilespace) {
   return this;
 }
 
+SixPlayerBoard.prototype.placePorts = function() {
+  var ports = _.sample(this.tilespace.coastalEdges, SixPlayerBoard.NUMBER_OF_PORTS);
+  _.each(ports, function(edge) {
+    edge.isPort = true;
+  });
+};
+
+SixPlayerBoard.NUMBER_OF_PORTS = 9;
 SixPlayerBoard.TOKEN_ARRANGEMENT = [2, 5, 4, 6, 3, 9, 8, 11, 11, 10, 6, 3, 8, 4, 8, 10, 11, 12, 10, 5, 4, 9, 5, 9, 12, 3, 2, 6];
 SixPlayerBoard.RELATIVE_TILE_ARRANGEMENT = [{"x":-150,"y":-86},{"x":-75,"y":-129},{"x":0,"y":-172},{"x":75,"y":-215},{"x":150,"y":-172},{"x":225,"y":-129},{"x":300,"y":-86},{"x":300,"y":0},{"x":300,"y":86},{"x":225,"y":129},{"x":150,"y":172},{"x":75,"y":215},{"x":0,"y":172},{"x":-75,"y":129},{"x":-150,"y":86},{"x":-150,"y":0},{"x":-75,"y":-43},{"x":0,"y":-86},{"x":75,"y":-129},{"x":150,"y":-86},{"x":225,"y":-43},{"x":225,"y":43},{"x":150,"y":86},{"x":75,"y":129},{"x":0,"y":86},{"x":-75,"y":43},{"x":0,"y":0},{"x":75,"y":-43},{"x":150,"y":0},{"x":75,"y":43}];
 

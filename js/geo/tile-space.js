@@ -141,8 +141,8 @@ TileSpace.prototype.markCoastalEdges = function() {
 
   var waterEdge = {};
 
-  var coastEdges = [];
-  var coastTiles = [];
+  var coastalEdges = [];
+  var coastalTiles = [];
 
   _.each(this.tiles, function(tile) {
     if (tile.resource.name === "water") {
@@ -162,7 +162,7 @@ TileSpace.prototype.markCoastalEdges = function() {
 
     _.each(edges, function(edge) {
       if (waterEdge[edge.key()]) {
-        coastEdges.push(edge);
+        coastalEdges.push(edge);
         edge.isCoast = true;
         tile.isCoast = true;
       }
@@ -170,10 +170,10 @@ TileSpace.prototype.markCoastalEdges = function() {
 
     // add the tile to the list of coasts once.
     if (tile.isCoast) {
-      coastTiles.push(tile);
+      coastalTiles.push(tile);
     }
   }, this);
 
-  this.coastEdges = coastEdges;
-  this.coastTiles = coastTiles;
+  this.coastalEdges = coastalEdges;
+  this.coastalTiles = coastalTiles;
 };
