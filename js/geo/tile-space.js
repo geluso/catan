@@ -139,8 +139,6 @@ TileSpace.prototype.markCoastalEdges = function() {
   this.water = [];
   this.land = [];
 
-  var waterEdge = {};
-
   var coastalEdges = [];
   var coastalTiles = [];
 
@@ -150,18 +148,22 @@ TileSpace.prototype.markCoastalEdges = function() {
 
       var edges = tile.shape.getEdges();
       _.each(edges, function(edge) {
-        waterEdge[edge.key()] = true;
+        edge.hasWater = true;
       });
     } else {
       this.land.push(tile);
+      var edges = tile.shape.getEdges();
+      _.each(edges, function(edge) {
+        edge.hasLand = true;
+      });
     }
   }, this);
 
-  _.each(this.land, function(tile) {
+  _.each(this.water, function(tile) {
     var edges = tile.shape.getEdges();
 
     _.each(edges, function(edge) {
-      if (waterEdge[edge.key()]) {
+      if (edge.hasLand) {
         coastalEdges.push(edge);
         edge.isCoast = true;
         tile.isCoast = true;

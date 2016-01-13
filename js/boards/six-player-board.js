@@ -67,10 +67,21 @@ SixPlayerBoard.prototype.placePorts = function() {
   // keep track of how many ports have been placed already.
   var ports = 0;
 
+  // guarantee there are is at least one special port for each resource
+  var portTypes = [BRICK, WHEAT, ORE, SHEEP, WOOD];
+
+  // fill the remaining port slots with basic default 3:1 ports
+  while (portTypes.length < this.NUMBER_OF_PORTS) {
+    portTypes.push({name: "default", color: "white", ratio: 3});
+  }
+
+  portTypes = _.shuffle(portTypes);
+
   for (var i = 0; i < this.tilespace.coastalEdges.length; i++) {
     if (i % portSpace === offset && ports < this.NUMBER_OF_PORTS) {
       var edge = this.tilespace.coastalEdges[i];
       edge.isPort = true;
+      edge.port = portTypes.pop();
       ports++;
     }
   }
