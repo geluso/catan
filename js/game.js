@@ -1,5 +1,6 @@
 function Game(board) {
   this.board = board;
+  board.game = this;
 
   // set up players
   this.players = ["red"];

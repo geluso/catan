@@ -7,6 +7,8 @@ function Board() {
   this.roads = {};
   this.settlements = {};
   this.cities = {};
+
+  this.ports = {};
 };
 
 Board.prototype.init = function(tilespace) {
@@ -207,6 +209,16 @@ Board.prototype.buildSettlement = function(corner, player) {
   } else {
     var settlement = new Settlement(corner, player);
     this.settlements[key] = settlement;
+  }
+
+  // update available trade ratios if a player settles on a port.
+  var port = this.ports[key];
+  if (port) {
+    if (port.name === "default") {
+      this.game.trade.setPortTradeRatio();
+    } else {
+      this.game.trade.setSpecificResourceTradeRatio(port.name);
+    }
   }
 
   draw();

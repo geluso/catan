@@ -77,9 +77,10 @@ function Trade() {
       $(element).text("0");
 
       if (_.contains(element.classList, that.offering.name)) {
-        $(element).text("4");
+        var value = this.tradeRatio[that.offering.name];
+        $(element).text(value);
       }
-    });
+    }, this);
 
     _.each($(".trade .receive .resource"), function(element) {
       $(element).text("0");

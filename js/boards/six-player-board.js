@@ -83,6 +83,9 @@ SixPlayerBoard.prototype.placePorts = function() {
       edge.isPort = true;
       edge.port = portTypes.pop();
       ports++;
+
+      this.ports[edge.c1.key()] = edge.port;
+      this.ports[edge.c2.key()] = edge.port;
     }
   }
 };
