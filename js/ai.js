@@ -89,12 +89,10 @@ AI.prototype.enumerate = function() {
         // small chance that the road will be built anyways
         if (Math.random() < .2) {
           var choice = _.sample(roads);
-          Resources.buyRoad(this.color);
           this.board.buildRoad(choice.edge, this.color);
         }
       } else {
         var choice = _.sample(roads);
-        Resources.buyRoad(this.color);
         this.board.buildRoad(choice.edge, this.color);
       }
     }
