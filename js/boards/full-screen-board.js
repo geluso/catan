@@ -74,18 +74,6 @@ Board.prototype.getThing = function(x1, y1) {
   return closest;
 };
 
-Board.prototype.placeRoad = function(edge, player) {
-  var road = new Road(edge, player);
-  var key = edge.key();
-
-  if (!this.roads[key]) {
-    this.roads[key] = road;
-    return true;
-  } else {
-    return false;
-  }
-};
-
 Board.prototype.canPlaceSettlement = function(cornerKey) {
   return !this.isCornerOccupied(cornerKey) &&
          this.isTwoAway(cornerKey);
@@ -196,3 +184,44 @@ Board.prototype.countRoadByCorner = function(corner, currentPlayer, visited, cha
 
   return bestChain;
 };
+
+Board.prototype.buildRoad = function(edge, player) {
+  var key = edge.key();
+  var road = new Road(edge, player);
+  this.roads[key] = road;
+
+  draw();
+};
+
+Board.prototype.buildSettlement = function(corner, player) {
+  var key = corner.key();
+  if (this.settlements[key] instanceof City) {
+    return;
+  }
+
+  if (!Resources.buySettlement(player)) {
+    Banner("Can't afford Settlement.");
+  } else {
+    var settlement = new Settlement(corner, player);
+    this.settlements[key] = settlement;
+  }
+
+  draw();
+};
+
+Board.prototype.buildCity = function(corner, player) {
+  var key = corner.key();
+  if (!Resources.buyCity(player)) {
+    Banner("Can't afford City.");
+  } else {
+    // remove old settlement
+    delete this.settlements[key];
+
+    // replace it with the new city;
+    var city = new City(corner, player);
+    this.cities[key] = city;
+  }
+
+  draw();
+};
+

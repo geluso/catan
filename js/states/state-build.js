@@ -15,37 +15,16 @@ StateBuild.prototype.execute = function(thing) {
 
     // upgrade settlements to cities
     if (this.board.settlements[key]) {
-      if (!Resources.buyCity(player)) {
-        Banner("Can't afford City.");
-      } else {
-        // remove old settlement
-        delete this.board.settlements[key];
-
-        // replace it with the new city;
-        var city = new City(corner, "red");
-        this.board.cities[key] = city;
-      }
+      this.board.buildCity(corner, player);
     } else {
-      if (this.board.settlements[key] instanceof City) {
-        return;
-      }
-
-      if (!Resources.buySettlement(player)) {
-        Banner("Can't afford Settlement.");
-      } else {
-        var settlement = new Settlement(corner, "red");
-        this.board.settlements[key] = settlement;
-      }
+      this.board.buildSettlement(corner, player);
     }
   } else if (thing instanceof Edge) {
     if (!Resources.buyRoad(player)) {
       Banner("Can't afford Road.");
     } else {
       var edge = thing;
-      var key = edge.key();
-
-      var road = new Road(edge, "red");
-      this.board.roads[key] = road;
+      this.board.buildRoad(edge, player);
     }
   }
 

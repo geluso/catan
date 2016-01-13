@@ -73,11 +73,9 @@ AI.prototype.enumerate = function() {
 
       // build it.
       var choice = _.sample(cities);
-      var city = new City(choice.corner, this.color);
-      this.board.cities[choice.corner.key()] = city;
+      var key = choice.corner.key();
 
-      // remove old settlement city was built on.
-      delete this.board.settlements[choice.corner.key()];
+      this.board.buildCity(key, this.color);
     } else if (settlements.length > 0) {
       if (LOG_BUILDS) {
         console.log(this.color, "builds settlement.");
@@ -88,9 +86,7 @@ AI.prototype.enumerate = function() {
 
       // build it.
       var choice = _.sample(settlements);
-      var settlement = new Settlement(choice.corner, this.color);
-      this.board.settlements[choice.corner.key()] = settlement;
-
+      this.board.buildSettlement(choice.corner, this.color);
     } else if (roads.length > 0) {
       if (LOG_BUILDS) {
         console.log(this.color, "builds road.");
@@ -102,12 +98,12 @@ AI.prototype.enumerate = function() {
         if (Math.random() < .2) {
           var choice = _.sample(roads);
           Resources.buyRoad(this.color);
-          this.board.placeRoad(choice.edge, this.color);
+          this.board.buildRoad(choice.edge, this.color);
         }
       } else {
         var choice = _.sample(roads);
         Resources.buyRoad(this.color);
-        this.board.placeRoad(choice.edge, this.color);
+        this.board.buildRoad(choice.edge, this.color);
       }
     }
   }

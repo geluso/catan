@@ -62,3 +62,7 @@ function Game(board) {
     turn.startTurn();
   });
 }
+
+Game.prototype.draw = function() {
+  this.board.draw();
+};

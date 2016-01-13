@@ -14,7 +14,8 @@ function Screen(width, height, game) {
   ctx.width = width;
   ctx.height = height;
 
-  this.boardDrawer = new BoardDrawer(ctx, game);
+  var boardDrawer = new BoardDrawer(ctx, game);
+  this.boardDrawer = boardDrawer;
 
   $(document).mousemove(function(e) {
     MOUSE_X = e.offsetX;
@@ -27,6 +28,7 @@ function Screen(width, height, game) {
       this.dirty = true;
       if (!(thing instanceof Tile)) {
         game.board.hovering = thing;
+        boardDrawer.draw();
       }
     }
   });
@@ -42,12 +44,12 @@ function Screen(width, height, game) {
       this.dirty = true;
       game.state.execute(thing);
       game.scores.update(game.board);
+      boardDrawer.draw();
     }
   });
 }
 
 Screen.prototype.draw = function() {
-  if (this.dirty) {
-    this.boardDrawer.draw();
-  }
+  this.boardDrawer.draw();
+
 };

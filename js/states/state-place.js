@@ -122,7 +122,7 @@ StatePlace.prototype.AIPlaceSettlement = function(ai) {
   var roads = this.board.cornerToEdges[cornerKey];
   var roadChoice = _.sample(roads);
 
-  this.board.placeRoad(roadChoice, ai.color);
+  this.board.buildRoad(roadChoice, ai.color);
 
   // return the settlement so resources may be granted
   return settlement;
@@ -156,7 +156,7 @@ StatePlace.prototype.PlaceRoad = function(thing) {
 }
 
 StatePlace.prototype.placeFirstRoad = function(edge) {
-  if (this.board.placeRoad(edge, "red")) {
+  if (this.board.buildRoad(edge, "red")) {
     Banner("Place your second Settlement.");
   } else {
     Banner("Road can't be placed here.");
@@ -164,9 +164,7 @@ StatePlace.prototype.placeFirstRoad = function(edge) {
 }
 
 StatePlace.prototype.placeSecondRoad = function(edge) {
-  var road = new Road(edge, "red");
-  var key = edge.key();
-  this.board.roads[key] = road;
+  this.board.buildRoad(edge, "red");
 
   Banner("Roll away!!");
 }
