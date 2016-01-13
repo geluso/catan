@@ -29,6 +29,9 @@ TileSpace.prototype.curateBoard = function() {
   this.collectNieghboringEdges();
   this.collectNieghboringCorners();
 
+  // find coast
+  this.markCoastalEdges();
+
   // make a list containing every tile, corner and edge on the board.
   this.everything = _.union(this.tiles, this.corners, this.edges);
 };
@@ -132,3 +135,45 @@ TileSpace.prototype.collectNieghboringCorners = function() {
   }, this);
 };
 
+TileSpace.prototype.markCoastalEdges = function() {
+  this.water = [];
+  this.land = [];
+
+  var waterEdge = {};
+
+  var coastEdges = [];
+  var coastTiles = [];
+
+  _.each(this.tiles, function(tile) {
+    if (tile.resource.name === "water") {
+      this.water.push(tile);
+
+      var edges = tile.shape.getEdges();
+      _.each(edges, function(edge) {
+        waterEdge[edge.key()] = true;
+      });
+    } else {
+      this.land.push(tile);
+    }
+  }, this);
+
+  _.each(this.land, function(tile) {
+    var edges = tile.shape.getEdges();
+
+    _.each(edges, function(edge) {
+      if (waterEdge[edge.key()]) {
+        coastEdges.push(edge);
+        edge.isCoast = true;
+        tile.isCoast = true;
+      }
+    });
+
+    // add the tile to the list of coasts once.
+    if (tile.isCoast) {
+      coastTiles.push(tile);
+    }
+  }, this);
+
+  this.coastEdges = coastEdges;
+  this.coastTiles = coastTiles;
+};

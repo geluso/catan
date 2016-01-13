@@ -21,6 +21,9 @@ Board.prototype.registerTileSpace = function(tilespace) {
   this.tilespace = tilespace;
 
   this.tiles = tilespace.tiles;
+  this.water = tilespace.water;
+  this.land = tilespace.land;
+
   this.edges = tilespace.edges;
   this.corners = tilespace.corners;
 

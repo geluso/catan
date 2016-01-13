@@ -17,7 +17,14 @@ BoardDrawer.prototype.draw = function() {
 
   this.ctx.save();
 
-  this.tileDrawer.drawTiles(board.tiles);
+  // draw water tiles first, then land tiles.
+  if (board.land && board.water) {
+    this.tileDrawer.drawTiles(board.water);
+    this.tileDrawer.drawTiles(board.land);
+  } else {
+    this.tileDrawer.drawTiles(board.tiles);
+  }
+
   this.roadDrawer.drawRoads(board.roads);
   this.settlementDrawer.drawSettlements(board.settlements);
   this.cityDrawer.drawCities(board.cities);

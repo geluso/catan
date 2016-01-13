@@ -22,5 +22,21 @@ function TileDrawer(ctx) {
     if (tile.token) {
       this.tokenDrawer.draw(tile.token, tile.x, tile.y);
     }
+
+    this.ctx.save();
+    this.ctx.lineWidth = 5;
+
+    if (tile.isCoast) {
+      _.each(tile.shape.getEdges(), function(edge) {
+        if (edge.isCoast) {
+          this.ctx.beginPath();
+          this.ctx.moveTo(edge.c1.x, edge.c1.y);
+          this.ctx.lineTo(edge.c2.x, edge.c2.y);
+          this.ctx.stroke();
+        }
+      }, this);
+    }
+
+    this.ctx.restore();
   }
 }
