@@ -26,7 +26,7 @@ function Game(board) {
   initResources(this.players);
 
   // set up trade and score
-  this.trade = new Trade();
+  this.trade = new Trade(this);
   this.scores = new Scores(this);
 
   // begin game with first state

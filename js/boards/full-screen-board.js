@@ -217,9 +217,9 @@ Board.prototype.buildSettlement = function(corner, player) {
   var port = this.ports[key];
   if (port) {
     if (port.name === "default") {
-      this.game.trade.setPortTradeRatio();
+      this.game.trade.setPortTradeRatio(player);
     } else {
-      this.game.trade.setSpecificResourceTradeRatio(port.name);
+      this.game.trade.setSpecificResourceTradeRatio(port.name, player);
     }
   }
 
