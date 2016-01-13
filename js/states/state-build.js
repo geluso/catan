@@ -32,7 +32,7 @@ StateBuild.prototype.execute = function(thing) {
   this.game.trade.update();
 
   if (this.game.scores.maxScore >= Scores.GOAL) {
-    Banner(this.game.scores.winText());
+    Banner(this.game.scores.winText(), this.game.scores.leader, true);
 
     $("button.trade").attr("disabled", true);
     $("button.roll").attr("disabled", true);

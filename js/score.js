@@ -18,20 +18,10 @@ Scores.prototype.update = function() {
 
   _.each(this.board.settlements, function(settlement) {
     this.scores[settlement.player] += 1;
-
-    if (this.scores[settlement.player] > this.maxScore) {
-      this.maxScore = this.scores[settlement.player];
-      this.leader = settlement.player;
-    }
   }, this);
 
   _.each(this.board.cities, function(city) {
     this.scores[city.player] += 2;
-
-    if (this.scores[city.player] > this.maxScore) {
-      this.maxScore = this.scores[city.player];
-      this.leader = city.player;
-    }
   }, this);
 
   // determine longest road.
@@ -51,6 +41,14 @@ Scores.prototype.update = function() {
       this.currentLongestRoad = player;
     }
   }
+
+  // find out who is in the lead.
+  _.each(this.game.players, function(player) {
+    if (this.scores[player] > this.maxScore) {
+      this.maxScore = this.scores[player];
+      this.leader = player;
+    }
+  }, this);
 
   this.buildScoreboard();
 }
@@ -82,7 +80,7 @@ Scores.prototype.buildScoreboard = function() {
 };
 
 Scores.prototype.winText = function() {
-  return this.leader + " won with " + this.maxScore + "!!";
+  return "won with " + this.maxScore + "!!";
 }
 
 Scores.GOAL = 10;

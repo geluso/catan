@@ -29,8 +29,8 @@ function HideBanner() {
   $(".info.top").hide();
 }
 
-function Banner(msg, player) {
-  if (player && player !== "red") {
+function Banner(msg, player, forceShow) {
+  if (!forceShow && player && player !== "red") {
     return;
   }
 
