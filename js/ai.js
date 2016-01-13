@@ -68,21 +68,13 @@ AI.prototype.enumerate = function() {
         console.log(this.color, "builds city.");
       }
 
-      // pay for it.
-      Resources.buyCity(this.color);
-
       // build it.
       var choice = _.sample(cities);
-      var key = choice.corner.key();
-
-      this.board.buildCity(key, this.color);
+      this.board.buildCity(choice.corner, this.color);
     } else if (settlements.length > 0) {
       if (LOG_BUILDS) {
         console.log(this.color, "builds settlement.");
       }
-
-      // pay for it.
-      Resources.buySettlement(this.color);
 
       // build it.
       var choice = _.sample(settlements);

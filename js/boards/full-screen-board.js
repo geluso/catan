@@ -191,6 +191,8 @@ Board.prototype.countRoadByCorner = function(corner, currentPlayer, visited, cha
 };
 
 Board.prototype.buildRoad = function(edge, player) {
+  Resources.buyRoad(player);
+
   var key = edge.key();
   var road = new Road(edge, player);
   this.roads[key] = road;

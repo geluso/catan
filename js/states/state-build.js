@@ -20,7 +20,7 @@ StateBuild.prototype.execute = function(thing) {
       this.board.buildSettlement(corner, player);
     }
   } else if (thing instanceof Edge) {
-    if (!Resources.buyRoad(player)) {
+    if (!Resources.canBuyRoad(player)) {
       Banner("Can't afford Road.");
     } else {
       var edge = thing;
