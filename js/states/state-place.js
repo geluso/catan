@@ -74,8 +74,7 @@ StatePlace.prototype.PlaceSettlement = function(thing) {
     // do nothing. can't build a settlement twice.
     return;
   } else {
-    var settlement = new Settlement(corner, "red");
-    this.board.settlements[key] = settlement;
+    var settlement = this.board.buildSettlement(corner, "red", true);
 
     if (this.state === StatePlace.FirstSettlement) {
       Banner("Place your first Road.");
@@ -115,14 +114,13 @@ StatePlace.prototype.AIPlaceSettlement = function(ai) {
   var cornerKey = ai.bestAvailableCorner();
   var corner = Corner.lookup[cornerKey];
   
-  var settlement = new Settlement(corner, ai.color);
-  this.board.settlements[cornerKey] = settlement;
+  var settlement = this.board.buildSettlement(corner, ai.color, true);
 
   // pick the best spot for a new road.
   var roads = this.board.cornerToEdges[cornerKey];
   var roadChoice = _.sample(roads);
 
-  this.board.buildRoad(roadChoice, ai.color);
+  this.board.buildRoad(roadChoice, ai.color, true);
 
   // return the settlement so resources may be granted
   return settlement;
@@ -156,7 +154,7 @@ StatePlace.prototype.PlaceRoad = function(thing) {
 }
 
 StatePlace.prototype.placeFirstRoad = function(edge) {
-  if (this.board.buildRoad(edge, "red")) {
+  if (this.board.buildRoad(edge, "red"), true) {
     Banner("Place your second Settlement.");
   } else {
     Banner("Road can't be placed here.");
@@ -164,7 +162,7 @@ StatePlace.prototype.placeFirstRoad = function(edge) {
 }
 
 StatePlace.prototype.placeSecondRoad = function(edge) {
-  this.board.buildRoad(edge, "red");
+  this.board.buildRoad(edge, "red", true);
 
   Banner("Roll away!!");
 }

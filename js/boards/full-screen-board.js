@@ -190,8 +190,10 @@ Board.prototype.countRoadByCorner = function(corner, currentPlayer, visited, cha
   return bestChain;
 };
 
-Board.prototype.buildRoad = function(edge, player) {
-  Resources.buyRoad(player);
+Board.prototype.buildRoad = function(edge, player, free) {
+  if (!free) {
+    Resources.buyRoad(player);
+  }
 
   var key = edge.key();
   var road = new Road(edge, player);
@@ -200,13 +202,13 @@ Board.prototype.buildRoad = function(edge, player) {
   draw();
 };
 
-Board.prototype.buildSettlement = function(corner, player) {
+Board.prototype.buildSettlement = function(corner, player, free) {
   var key = corner.key();
   if (this.settlements[key] instanceof City) {
     return;
   }
 
-  if (!Resources.buySettlement(player)) {
+  if (!free && !Resources.buySettlement(player)) {
     Banner("Can't afford Settlement.");
   } else {
     var settlement = new Settlement(corner, player);
@@ -224,6 +226,8 @@ Board.prototype.buildSettlement = function(corner, player) {
   }
 
   draw();
+
+  return settlement;
 };
 
 Board.prototype.buildCity = function(corner, player) {

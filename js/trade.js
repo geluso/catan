@@ -34,7 +34,8 @@ function Trade(game) {
 
   this.bankTrade = function(player, offering, receiving) {
     if (LOG_TRADING) {
-      console.log(player, "trades", offering.name, "for", receiving.name);
+      var ratio = this.tradeRatio[player][offering.name];
+      console.log(player, "trades", ratio, offering.name, "for 1", receiving.name);
     }
 
     RESOURCES[player][offering.name] -= this.tradeRatio[player][offering.name];
