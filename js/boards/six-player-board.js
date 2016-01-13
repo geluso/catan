@@ -72,7 +72,7 @@ SixPlayerBoard.prototype.placePorts = function() {
 
   // fill the remaining port slots with basic default 3:1 ports
   while (portTypes.length < this.NUMBER_OF_PORTS) {
-    portTypes.push({name: "default", color: "white", ratio: 3});
+    portTypes.push({name: "default", color: "black", ratio: 3});
   }
 
   portTypes = _.shuffle(portTypes);
