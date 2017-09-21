@@ -3,11 +3,11 @@ function FourPlayerBoard() {
   this.players = 4;
 }
 
-FourPlayerBoard.prototype = new Board();
+FourPlayerBoard.prototype = new FullscreenBoard();
 
 FourPlayerBoard.prototype.init = function(tilespace) {
   // Let the original Board set up itself.
-  Board.prototype.init.call(this, tilespace);
+  FullscreenBoard.prototype.init.call(this, tilespace);
 
   // define what resources are available
   var resources = [

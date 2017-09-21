@@ -1,6 +1,6 @@
 var MIN_LONGEST_ROAD = 5;
 
-function Board() {
+function FullscreenBoard() {
   this.type = "board";
   this.players = 6;
 
@@ -11,14 +11,14 @@ function Board() {
   this.ports = {};
 };
 
-Board.prototype.init = function(tilespace) {
+FullscreenBoard.prototype.init = function(tilespace) {
   this.registerTileSpace(tilespace);
 
   this.placeRobber();
   return this;
 }
 
-Board.prototype.registerTileSpace = function(tilespace) {
+FullscreenBoard.prototype.registerTileSpace = function(tilespace) {
   // make everything available that got refactored from Board to TileSpace
   this.tilespace = tilespace;
 
@@ -36,7 +36,7 @@ Board.prototype.registerTileSpace = function(tilespace) {
   this.everything = tilespace.everything;
 }
 
-Board.prototype.placeRobber = function() {
+FullscreenBoard.prototype.placeRobber = function() {
   var deserts = _.filter(this.tiles, function(tile) {
     return tile.resource === DESERT;
   });
@@ -47,7 +47,7 @@ Board.prototype.placeRobber = function() {
   }
 }
 
-Board.prototype.getTile = function(x, y) {
+FullscreenBoard.prototype.getTile = function(x, y) {
   var tile;
 
   for (var i = 0; i < this.tiles.length; i++) {
@@ -61,7 +61,7 @@ Board.prototype.getTile = function(x, y) {
   return tile;
 };
 
-Board.prototype.getThing = function(x1, y1) {
+FullscreenBoard.prototype.getThing = function(x1, y1) {
   var closest;
   var minDistance = Infinity;
   for (var i = 0; i < this.everything.length; i++) {
@@ -79,16 +79,16 @@ Board.prototype.getThing = function(x1, y1) {
   return closest;
 };
 
-Board.prototype.canPlaceSettlement = function(cornerKey) {
+FullscreenBoard.prototype.canPlaceSettlement = function(cornerKey) {
   return !this.isCornerOccupied(cornerKey) &&
          this.isTwoAway(cornerKey);
 };
 
-Board.prototype.isCornerOccupied = function(cornerKey) {
+FullscreenBoard.prototype.isCornerOccupied = function(cornerKey) {
   return this.settlements[cornerKey] || this.cities[cornerKey];
 };
 
-Board.prototype.isTwoAway = function(cornerKey) {
+FullscreenBoard.prototype.isTwoAway = function(cornerKey) {
   // assume it is two away from anything, until proven guilty.
   var result = true;
 
@@ -102,7 +102,7 @@ Board.prototype.isTwoAway = function(cornerKey) {
   return result;
 };
 
-Board.prototype.longestRoad = function() {
+FullscreenBoard.prototype.longestRoad = function() {
   var bestChain = [];
   _.each(this.roads, function(road) {
     var key = road.key();
@@ -136,7 +136,7 @@ Board.prototype.longestRoad = function() {
   return bestChain;
 };
 
-Board.prototype.countRoadByCorner = function(corner, currentPlayer, visited, chain) {
+FullscreenBoard.prototype.countRoadByCorner = function(corner, currentPlayer, visited, chain) {
   var key = corner.key();
   var roads = _.filter(this.roads, function(road) {
     // only consider roads owned by the current player
@@ -190,7 +190,7 @@ Board.prototype.countRoadByCorner = function(corner, currentPlayer, visited, cha
   return bestChain;
 };
 
-Board.prototype.buildRoad = function(edge, player, free) {
+FullscreenBoard.prototype.buildRoad = function(edge, player, free) {
   if (!free) {
     Resources.buyRoad(player);
   }
@@ -202,7 +202,7 @@ Board.prototype.buildRoad = function(edge, player, free) {
   draw();
 };
 
-Board.prototype.buildSettlement = function(corner, player, free) {
+FullscreenBoard.prototype.buildSettlement = function(corner, player, free) {
   var key = corner.key();
   if (this.settlements[key] instanceof City) {
     return;
@@ -230,7 +230,7 @@ Board.prototype.buildSettlement = function(corner, player, free) {
   return settlement;
 };
 
-Board.prototype.buildCity = function(corner, player) {
+FullscreenBoard.prototype.buildCity = function(corner, player) {
   var key = corner.key();
   if (!Resources.buyCity(player)) {
     Banner("Can't afford City.");

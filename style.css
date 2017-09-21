@@ -33,6 +33,12 @@ body {
   display: inline-block;
 }
 
+#choose-board {
+  position: absolute;
+  left: 0;
+  margin-left: 1em;
+}
+
 #gamelog {
   position: absolute;
   top: 3em;

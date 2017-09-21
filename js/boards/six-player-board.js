@@ -3,11 +3,11 @@ function SixPlayerBoard() {
   this.players = 6;
 }
 
-SixPlayerBoard.prototype = new Board();
+SixPlayerBoard.prototype = new FullscreenBoard();
 
 SixPlayerBoard.prototype.init = function(tilespace) {
   // Let the original Board set up itself.
-  Board.prototype.init.call(this, tilespace);
+  FullscreenBoard.prototype.init.call(this, tilespace);
 
   // define what resources are available
   var resources = [

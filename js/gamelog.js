@@ -25,6 +25,10 @@ function GameLog(msg, player) {
   log.scrollTop = Number.MAX_SAFE_INTEGER;
 }
 
+function ClearLog() {
+  $("#gamelog").empty();
+}
+
 function HideBanner() {
   $(".info.top").hide();
 }
