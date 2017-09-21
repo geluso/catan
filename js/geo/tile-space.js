@@ -94,6 +94,19 @@ TileSpace.prototype.centerTiles = function() {
   });
 };
 
+TileSpace.prototype.centerOnHexCenter = function() {
+  // this is default layout
+};
+
+TileSpace.prototype.centerOnHexEdges = function() {
+  var xOffset = TILE_HEIGHT + EDGE_LENGTH;
+
+  // move all tiles according to the center measured distance
+  _.each(this.tiles, function(tile) {
+    tile.setX(tile.x - xOffset);
+  });
+};
+
 TileSpace.prototype.gatherAndDedupeCornersAndEdges = function() {
   // gather and dedupe all corners and edges
   for (var i = 0; i < this.tiles.length; i++) {

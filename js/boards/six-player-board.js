@@ -53,6 +53,8 @@ SixPlayerBoard.prototype.init = function(tilespace) {
   var desert = _.sample(deserts);
   this.robber = new Robber(desert);
 
+  tilespace.centerOnHexEdges();
+
   return this;
 }
 
