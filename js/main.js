@@ -8,7 +8,7 @@ function debug() {
 var space;
 var board;
 var game;
-var screen;
+var SCREEN;
 
 function main() {
   document.getElementById("choose-board").addEventListener("click", function(ev) {
@@ -27,6 +27,10 @@ function main() {
 }
 
 function newGame(board) {
+  if (SCREEN !== undefined) {
+    SCREEN.destoryHandlers();
+  }
+  
   ClearLog();
 
   // determine the size
@@ -44,10 +48,10 @@ function newGame(board) {
   }
 
   game = new Game(board);
-  screen = new Screen(width, height, game);
-  screen.draw();
+  SCREEN = new Screen(width, height, game);
+  SCREEN.draw();
 }
 
-function draw() { 
-  screen.draw();
+function draw() {
+  SCREEN.draw();
 }
