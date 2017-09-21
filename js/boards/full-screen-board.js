@@ -3,17 +3,17 @@ var MIN_LONGEST_ROAD = 5;
 function FullscreenBoard() {
   this.type = "board";
   this.players = 6;
+};
+
+FullscreenBoard.prototype.init = function(tilespace) {
+  this.registerTileSpace(tilespace);
 
   this.roads = {};
   this.settlements = {};
   this.cities = {};
 
   this.ports = {};
-};
-
-FullscreenBoard.prototype.init = function(tilespace) {
-  this.registerTileSpace(tilespace);
-
+  
   this.placeRobber();
   return this;
 }
@@ -245,4 +245,3 @@ FullscreenBoard.prototype.buildCity = function(corner, player) {
 
   draw();
 };
-

@@ -8,7 +8,7 @@ SixPlayerBoard.prototype = new FullscreenBoard();
 SixPlayerBoard.prototype.init = function(tilespace) {
   // Let the original Board set up itself.
   FullscreenBoard.prototype.init.call(this, tilespace);
-
+  
   // define what resources are available
   var resources = [
     DESERT, DESERT,
@@ -95,4 +95,3 @@ SixPlayerBoard.prototype.placePorts = function() {
 SixPlayerBoard.prototype.NUMBER_OF_PORTS = 9;
 SixPlayerBoard.prototype.TOKEN_ARRANGEMENT = [2, 5, 4, 6, 3, 9, 8, 11, 11, 10, 6, 3, 8, 4, 8, 10, 11, 12, 10, 5, 4, 9, 5, 9, 12, 3, 2, 6];
 SixPlayerBoard.prototype.RELATIVE_TILE_ARRANGEMENT = [{"x":-150,"y":-86},{"x":-75,"y":-129},{"x":0,"y":-172},{"x":75,"y":-215},{"x":150,"y":-172},{"x":225,"y":-129},{"x":300,"y":-86},{"x":300,"y":0},{"x":300,"y":86},{"x":225,"y":129},{"x":150,"y":172},{"x":75,"y":215},{"x":0,"y":172},{"x":-75,"y":129},{"x":-150,"y":86},{"x":-150,"y":0},{"x":-75,"y":-43},{"x":0,"y":-86},{"x":75,"y":-129},{"x":150,"y":-86},{"x":225,"y":-43},{"x":225,"y":43},{"x":150,"y":86},{"x":75,"y":129},{"x":0,"y":86},{"x":-75,"y":43},{"x":0,"y":0},{"x":75,"y":-43},{"x":150,"y":0},{"x":75,"y":43}];
-
